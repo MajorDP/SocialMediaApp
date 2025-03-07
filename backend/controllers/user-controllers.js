@@ -3,6 +3,23 @@ const User = require("../models/User");
 const HttpError = require("../models/HttpError");
 const bcrypt = require("bcrypt");
 
+const getCurrentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select(
+      "-password -friends -preferences -requests -token"
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(user.toObject({ getters: true }));
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -211,6 +228,7 @@ const followUnfollowUser = async (req, res) => {
   //TODO: Handle following/unfollowing users
 };
 
+exports.getCurrentUser = getCurrentUser;
 exports.login = login;
 exports.register = register;
 exports.getFriends = getFriends;

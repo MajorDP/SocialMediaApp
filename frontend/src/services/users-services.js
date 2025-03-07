@@ -1,3 +1,29 @@
+export const getCurrentUser = async () => {
+  const token = sessionStorage.getItem("session");
+  if (!token) return null;
+
+  try {
+    const response = await fetch("http://localhost:5000/auth/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user data");
+    }
+
+    const data = await response.json();
+    return {
+      ...data,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const signIn = async (authData) => {
   const res = await fetch("http://localhost:5000/auth/login", {
     method: "POST",
@@ -10,7 +36,6 @@ export const signIn = async (authData) => {
   const data = await res.json();
 
   if (!res.ok) {
-    console.log(data);
     return { data: null, error: data.message };
   }
   return { data: data, error: null };
@@ -28,7 +53,6 @@ export const signUp = async (authData) => {
   const data = await res.json();
 
   if (!res.ok) {
-    console.log(data);
     return { data: null, error: data.message };
   }
   return { data: data, error: null };

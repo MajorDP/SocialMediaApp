@@ -5,8 +5,6 @@ interface IAddFriendForm {
   id: string | null;
 }
 function AddFriendForm({ id }: IAddFriendForm) {
-  console.log(id);
-
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState<{
     success: boolean | null;
@@ -16,7 +14,6 @@ function AddFriendForm({ id }: IAddFriendForm) {
     e.preventDefault();
 
     const { success, message } = await sendFriendRequest(id, username);
-    console.log(success);
 
     setMessage({ success, message });
     setTimeout(() => {

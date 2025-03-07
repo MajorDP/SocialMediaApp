@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/UserContext";
-import usePosts from "../hooks/usePosts";
 import Error from "./Error";
 import Spinner from "./Spinner";
 import PostSmall from "./PostSmall";
@@ -17,7 +16,6 @@ const ProfilePreview = () => {
   //TODO: getting posts of current user
   useEffect(() => {
     async function getPosts() {
-      console.log("gaga");
       const res = await fetch(
         `http://localhost:5000/posts/postedBy/${user?.id}`
       );
@@ -29,10 +27,12 @@ const ProfilePreview = () => {
     }
     getPosts();
   }, [user?.id]);
-  // const { posts, error, isLoading, setPosts } = usePosts("friends", user.id);
 
-  if (isLoading) return <Spinner />;
-  if (error)
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (error) {
     return (
       <Error
         error="User could not be found"
@@ -40,6 +40,7 @@ const ProfilePreview = () => {
         navigateMsg="Back to dashboard"
       />
     );
+  }
 
   return (
     <div className="w-full h-screen overflow-y-auto scrollbar-hide pb-20">
@@ -63,10 +64,10 @@ const ProfilePreview = () => {
 
       <div className="flex flex-col">
         <ul className="flex flex-col gap-4 items-center">
-          {posts?.map((post) => (
-            <PostSmall post={post} setPosts={setPosts} isEditable />
+          {posts?.map((post, index) => (
+            <PostSmall post={post} setPosts={setPosts} isEditable key={index} />
           ))}
-          {posts.length === 0 && (
+          {posts?.length === 0 && (
             <p>
               No posts yet,{" "}
               <Link to="/create" className="underline">

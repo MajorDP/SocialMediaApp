@@ -6,12 +6,10 @@ function usePosts(sortValue: string, userId: string) {
   const [postsData, setPostsData] = useState<IPosts[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  console.log(sortValue, userId);
 
   useEffect(() => {
     async function fetchPosts() {
       const { data, error } = await getPosts(sortValue, userId);
-      console.log(data);
       if (data) {
         setPostsData(data);
       }

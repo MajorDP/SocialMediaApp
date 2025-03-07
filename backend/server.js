@@ -13,24 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) {
-    return next(new HttpError("Session expired.", 422));
-  }
-
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) {
-      return next(new HttpError("Session expired invalid.", 422));
-    }
-
-    req.user = user;
-    next();
-  });
-};
-
 app.use("/posts", postRoutes);
 app.use("/auth", userRoutes);
 

@@ -1,6 +1,6 @@
-import { createContext, ReactNode, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signIn, signUp } from "../services/users-services";
+import { getCurrentUser, signIn, signUp } from "../services/users-services";
 import { jwtDecode } from "jwt-decode";
 
 interface IUserData {
@@ -23,10 +23,6 @@ interface IAuthData {
   repeatPassword?: string;
 }
 
-interface IAuthProviderProps {
-  children: ReactNode;
-}
-
 export const AuthContext = createContext<{
   error: string | null;
   user: IUserData | null;
@@ -42,18 +38,35 @@ export const AuthContext = createContext<{
   logout: () => {},
   updateUser: () => {},
 });
-
-export const AuthProvider = ({ children }: IAuthProviderProps) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
-  const session = sessionStorage.getItem("session");
+  const storedSession = sessionStorage.getItem("session");
 
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<IUserData | null>(
-    session ? jwtDecode(JSON.parse(session)) : null
+    storedSession ? jwtDecode(JSON.parse(storedSession)) : null
   );
+
+  const refreshUserData = async () => {
+    if (!storedSession) return;
+
+    try {
+      const freshUserData = await getCurrentUser();
+      if (freshUserData) {
+        setUser(freshUserData);
+      }
+    } catch (err) {
+      console.error("Failed to refresh user data:", err);
+    }
+  };
+
+  useEffect(() => {
+    refreshUserData();
+  }, []);
 
   const login = async (authData: IAuthData) => {
     const { data, error } = await signIn(authData);
+
     if (error) {
       setError(error);
       return;
@@ -78,8 +91,8 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   const logout = () => {
     sessionStorage.removeItem("session");
+    setUser(null);
     navigate("/auth");
-    //TODO: logout functionality
   };
 
   const updateUser = (userData: IUserData) => {

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { IPosts } from "../interfaces/posts";
 import { AuthContext } from "../context/UserContext";
+import { postComment } from "../services/posts-services";
 
 interface ICommentForm {
   pid: string;
@@ -10,13 +11,19 @@ function CommentForm({ pid, handleSetPosts }: ICommentForm) {
   const { user } = useContext(AuthContext);
   const [error, setError] = useState<string | null>(null);
   const [comment, setComment] = useState("");
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
-    setComment("");
 
-    //TODO: Comment posting funcionality
-    console.log(pid, handleSetPosts, user);
+    const { data, error } = await postComment(user?.id, pid, comment);
+
+    if (error) {
+      setError(error.message);
+    } else {
+      handleSetPosts(data);
+      setComment("");
+      setError(null);
+    }
   };
   return (
     <form

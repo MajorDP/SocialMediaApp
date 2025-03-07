@@ -16,11 +16,10 @@ function FriendList() {
     username: string;
   } | null>(null);
 
-  console.log(friends);
   const handleFriendRequest = async (type: string, friendId: string) => {
     const { success, data } = await handleFriendRequests(
       type,
-      user.id,
+      user?.id,
       friendId
     );
 

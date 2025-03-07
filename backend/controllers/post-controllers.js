@@ -1,5 +1,7 @@
+const { default: mongoose } = require("mongoose");
 const HttpError = require("../models/HttpError");
 const Post = require("../models/Posts");
+const User = require("../models/User");
 
 const getPosts = async (req, res, next) => {
   let posts;
@@ -11,15 +13,13 @@ const getPosts = async (req, res, next) => {
   } catch (error) {
     return next(new HttpError("Couldn't get posts.", 500));
   }
-  console.log(posts);
 
   res.json(posts.map((post) => post.toObject({ getters: true })));
 };
 
 const getPostsByUserId = async (req, res, next) => {
-  //TODO get posts by user
+  //TODO: Get posts by user
   const { uid } = req.params;
-  console.log(uid);
   let posts;
   try {
     posts = await Post.find()
@@ -93,9 +93,9 @@ const likePost = async (req, res, next) => {
 
   const userResponse = {
     id: user.id,
+    email: user.email,
     username: user.username,
     img: user.img,
-    email: user.email,
     votes: user.votes,
   };
   res.json({
@@ -161,8 +161,29 @@ const dislikePost = async (req, res, next) => {
   });
 };
 
-const postComment = async (req, res) => {
-  //TODO: Handle commenting on posts
+const postComment = async (req, res, next) => {
+  const pid = req.params.pid;
+  const { uid, comment } = req.body;
+
+  let post;
+  let user;
+  try {
+    post = await Post.findById(pid).populate("user", "username img");
+    user = await User.findById(uid);
+  } catch (error) {
+    return next(new HttpError("Couldn't find post or user.", 500));
+  }
+
+  const commentObj = {
+    user: new mongoose.Types.ObjectId(uid),
+    comment: comment,
+    datePosted: new Date().toISOString().split("T")[0],
+  };
+
+  post.comments.push(commentObj);
+  post.save();
+  await post.populate("comments.user", "username img");
+  res.json(post.toObject({ getters: true }));
 };
 
 exports.getPosts = getPosts;
