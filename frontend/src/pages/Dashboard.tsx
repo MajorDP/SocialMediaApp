@@ -13,8 +13,8 @@ function Dashboard() {
   const { posts, error, isLoading, setPosts } = usePosts("friends", user?.id);
 
   return (
-    <div className="w-full flex flex-col md:flex-row gap-4 rounded-xl bg-gray-900 shadow-lg shadow-cyan-500/30">
-      <div className="w-full md:w-1/2 rounded-lg shadow-md overflow-hidden">
+    <div className="w-full flex flex-col md:flex-row gap-4 rounded-xl bg-gray-900 shadow-lg shadow-cyan-500 justify-around">
+      <div className="w-full md:w-1/2 rounded-lg overflow-hidden">
         {isLoading ? (
           <div className="h-[50vh] flex items-center justify-center">
             <Spinner />
@@ -29,7 +29,7 @@ function Dashboard() {
           </div>
         ) : null}
       </div>
-      <div className="hidden md:block w-1/2 rounded-lg shadow-md min-h-[60vh]  overflow-hidden">
+      <div className="hidden md:block w-1/3 rounded-lg min-h-[60vh]  overflow-hidden">
         <div className="w-full h-full overflow-y-auto scrollbar-hide">
           <FriendList />
         </div>

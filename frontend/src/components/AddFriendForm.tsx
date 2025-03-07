@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { sendFriendRequest } from "../services/users-services";
 
 interface IAddFriendForm {
   id: string | null;
@@ -13,11 +14,15 @@ function AddFriendForm({ id }: IAddFriendForm) {
   }>({ success: null, message: "" });
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //TODO: Send friend request functionality
-    setMessage({ success: true, message: "Friend request sent!" });
+
+    const { success, message } = await sendFriendRequest(id, username);
+    console.log(success);
+
+    setMessage({ success, message });
     setTimeout(() => {
       setMessage({ success: null, message: "" });
     }, 2000);
+
     setUsername("");
   };
   return (

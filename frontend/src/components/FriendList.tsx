@@ -5,6 +5,7 @@ import Spinner from "./Spinner";
 import Error from "./Error";
 import useFriends from "../hooks/useFriends";
 import AddFriendForm from "./AddFriendForm";
+import { handleFriendRequests } from "../services/users-services";
 
 function FriendList() {
   const { user } = useContext(AuthContext);
@@ -15,13 +16,31 @@ function FriendList() {
     username: string;
   } | null>(null);
 
+  console.log(friends);
   const handleFriendRequest = async (type: string, friendId: string) => {
-    //TODO: Handle accepting/rejecting friend requests
-    console.log(type, friendId);
-    setFriends({
-      friends: [],
-      requests: [],
-    });
+    const { success, data } = await handleFriendRequests(
+      type,
+      user.id,
+      friendId
+    );
+
+    if (!success) {
+      return;
+    }
+
+    if (type === "accept") {
+      setFriends({
+        friends: [...friends.friends, data.friends],
+        requests: data.requests,
+      });
+    }
+
+    if (type === "reject") {
+      setFriends({
+        friends: [...friends.friends],
+        requests: data.requests,
+      });
+    }
   };
 
   const handleRemoveFriend = async (friendId: string) => {

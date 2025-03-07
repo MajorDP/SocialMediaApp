@@ -6,20 +6,17 @@ function usePosts(sortValue: string, userId: string) {
   const [postsData, setPostsData] = useState<IPosts[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  console.log(sortValue, userId);
 
   useEffect(() => {
     async function fetchPosts() {
-      setError(null);
-      try {
-        const { data, error } = await getPosts(sortValue, userId);
-        if (error) {
-          throw new Error(error);
-        }
+      const { data, error } = await getPosts(sortValue, userId);
+      console.log(data);
+      if (data) {
         setPostsData(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An error occurred");
-      } finally {
-        setIsLoading(false);
+      }
+      if (error) {
+        setError(error);
       }
     }
     fetchPosts();

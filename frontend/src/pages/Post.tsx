@@ -21,8 +21,10 @@ function PostPage() {
 
   useEffect(() => {
     const getPost = async () => {
-      //TODO: Get post by pid functionality
-      setPost(mockPost);
+      const res = await fetch(`http://localhost:5000/posts/${pid}`);
+      const data = await res.json();
+      setPost(data);
+      setIsLoading(false);
     };
     getPost();
     setIsLoading(false);

@@ -35,20 +35,54 @@ export const signUp = async (authData) => {
 };
 
 export const getFriends = async (uid) => {
-  //TODO: Get friends of current user
-  return { data: {}, error: null };
+  const res = await fetch(`http://localhost:5000/auth/friends/${uid}`);
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    return { data: null, error: errorData.message };
+  }
+
+  const data = await res.json();
+  return { data: data, error: null };
 };
 
 export const sendFriendRequest = async (id, username) => {
-  //TODO: Handle sending friend requests
-  return { success: true, message: "" };
+  const res = await fetch(`http://localhost:5000/auth/friends/add`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id, username }),
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    return { success: false, message: errorData.message };
+  }
+
+  const data = await res.json();
+  return { success: true, message: data.message };
 };
 
 export const handleFriendRequests = async (type, userId, friendId) => {
-  //TODO: Handle accepting/rejecting of friend requests
-  return { success: true, data: {} };
-};
+  const res = await fetch("http://localhost:5000/auth/friends/handle", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: userId,
+      friendId: friendId,
+      type: type,
+    }),
+  });
 
+  if (!res.ok) {
+    return { success: false, data: null };
+  }
+
+  const data = await res.json();
+  return { success: true, data: data };
+};
 export const handleRemoveFriend = async (userId, friendId) => {
   //TODO: Handle removing a user from friends list
   return { success: true, data: {} };

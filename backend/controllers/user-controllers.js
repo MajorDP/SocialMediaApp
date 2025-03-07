@@ -94,16 +94,113 @@ const register = async (req, res, next) => {
   }
 };
 
-const getFriends = async (req, res) => {
-  //TODO: Handle getting friends of current user
+const getFriends = async (req, res, next) => {
+  const uid = req.params.uid;
+  let existingUser;
+
+  try {
+    existingUser = await User.findById(uid, "friends requests")
+      .populate("friends", "username img")
+      .populate("requests", "username img");
+  } catch (error) {
+    return next(new HttpError("Sign in failed, please try again later.", 500));
+  }
+
+  res.json({
+    friends: existingUser.friends.map((friend) =>
+      friend.toObject({ getters: true })
+    ),
+    requests: existingUser.requests.map((request) =>
+      request.toObject({ getters: true })
+    ),
+  });
 };
 
-const sendFriendRequest = async (req, res) => {
-  //TODO: Handle sending friend requests
+const sendFriendRequest = async (req, res, next) => {
+  const { id, username } = req.body;
+
+  let foundUser;
+  let currentUser;
+  try {
+    currentUser = await User.findById(id, "username");
+    foundUser = await User.findOne({ username }).populate("requests");
+  } catch (error) {
+    return next(new HttpError("Could not find user.", 500));
+  }
+
+  if (!foundUser || !currentUser) {
+    return next(new HttpError("Could not find user.", 404));
+  }
+
+  if (currentUser.username === username) {
+    return next(new HttpError("That's you.", 400));
+  }
+
+  if (foundUser.requests.find((req) => req.id === id)) {
+    return next(new HttpError("Request already sent.", 500));
+  }
+
+  try {
+    foundUser.requests.push(id);
+    await foundUser.save();
+  } catch (error) {
+    return next(new HttpError("Could not send request.", 500));
+  }
+
+  res.json({ message: "Request sent" });
 };
 
-const acceptRejectFriendRequest = async (req, res) => {
-  //TODO: Handle accepting/rejecting friend requests
+const acceptRejectFriendRequest = async (req, res, next) => {
+  const { userId, friendId, type } = req.body;
+
+  let currentUser;
+  let friend;
+
+  try {
+    currentUser = await User.findById(userId);
+    friend = await User.findById(friendId);
+  } catch (error) {
+    return next(new HttpError("Could not find user.", 500));
+  }
+
+  if (type === "accept") {
+    currentUser.friends.push(friendId);
+    friend.friends.push(userId);
+    currentUser.requests = currentUser.requests.filter(
+      (request) => request.toString() !== friendId
+    );
+
+    try {
+      await currentUser.save();
+      await friend.save();
+    } catch (error) {
+      return next(new HttpError("Could not add friend.", 500));
+    }
+    res.json({
+      friends: {
+        id: friend.id.toString(),
+        username: friend.username,
+        img: friend.img,
+      },
+      requests: currentUser.requests.map((request) => request.toString()),
+    });
+  }
+
+  if (type === "reject") {
+    currentUser.requests = currentUser.requests.filter(
+      (request) => request.toString() !== friendId
+    );
+    try {
+      await currentUser.save();
+      await friend.save();
+    } catch (error) {
+      return next(new HttpError("Could not reject request.", 500));
+    }
+    res.json({
+      friends: null,
+      requests: currentUser.requests.map((request) => request.toString()),
+    });
+  }
 };
 
 const removeFriend = async (req, res) => {

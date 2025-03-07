@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getFriends } from "../services/users-services";
 
 interface IFriends {
   friends:
@@ -30,34 +31,22 @@ function useFriends(id: string | null) {
 
   useEffect(() => {
     const getUserFriends = async () => {
-      //TODO: Get friends of current user
+      if (!id) return;
 
       try {
-        setFriends({
-          friends: [
-            {
-              id: "1",
-              img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
-              username: "username",
-            },
-            {
-              id: "1",
-              img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
-              username: "username",
-            },
-            {
-              id: "1",
-              img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
-              username: "username",
-            },
-          ],
-          requests: [],
-        });
+        const { data, error } = await getFriends(id);
+        if (error) {
+          setError(error);
+          return;
+        }
+
+        setFriends(data || []);
       } catch (err) {
         console.log(err);
-        setError("Failed to get friends. Please try again.");
+        setError("Failed to fetch friends. Please try again.");
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     getUserFriends();

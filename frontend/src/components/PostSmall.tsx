@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/UserContext";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
+import { updateVote } from "../services/posts-services";
 
 interface IPostItem {
   post: IPosts;
@@ -12,17 +13,28 @@ interface IPostItem {
 }
 
 function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
-  const { user } = useContext(AuthContext);
-  console.log(user);
+  const { user, updateUser } = useContext(AuthContext);
   const [error, setError] = useState<string | null>(null);
   const [showComments, setShowComments] = useState(false);
-
+  console.log(user);
   const handleVote = async (voteType: string) => {
-    console.log(voteType);
-    setError(null);
-    //TODO: Handle voting functionality
-  };
+    console.log("as");
+    const { data, error } = await updateVote(user?.id, post.id, voteType);
 
+    if (error) {
+      setError(error.message);
+    } else {
+      // setPosts(
+      //   (posts) =>
+      //     posts?.map((currPost) =>
+      //       currPost.id === post.id ? data.post : currPost
+      //     ) || []
+      // );
+      console.log(data);
+      // updateUser(data?.user);
+      setError(null);
+    }
+  };
   const handleSetPosts = (data: IPosts) => {
     setPosts(
       (posts) =>

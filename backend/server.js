@@ -13,16 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const mockData = [
-  {
-    username: "John",
-    post: "post1",
-  },
-  {
-    username: "newus",
-    post: "post2",
-  },
-];
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -40,12 +30,6 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
-
-app.get("/test", authenticateToken, (req, res) => {
-  console.log("user:", req.user);
-
-  res.json(mockData.filter((data) => data.username === req.user.username));
-});
 
 app.use("/posts", postRoutes);
 app.use("/auth", userRoutes);

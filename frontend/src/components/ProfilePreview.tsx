@@ -1,14 +1,35 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/UserContext";
 import usePosts from "../hooks/usePosts";
 import Error from "./Error";
 import Spinner from "./Spinner";
 import PostSmall from "./PostSmall";
+import { Link } from "react-router-dom";
+import { IPosts } from "../interfaces/posts";
 
 const ProfilePreview = () => {
   const { user } = useContext(AuthContext);
-  //@ts-expect-error page wont load if no user
-  const { posts, error, isLoading, setPosts } = usePosts("friends", user.id);
+
+  const [posts, setPosts] = useState<IPosts[] | null>(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setisLoading] = useState(true);
+
+  //TODO: getting posts of current user
+  useEffect(() => {
+    async function getPosts() {
+      console.log("gaga");
+      const res = await fetch(
+        `http://localhost:5000/posts/postedBy/${user?.id}`
+      );
+
+      const data = await res.json();
+
+      setPosts(data);
+      setisLoading(false);
+    }
+    getPosts();
+  }, [user?.id]);
+  // const { posts, error, isLoading, setPosts } = usePosts("friends", user.id);
 
   if (isLoading) return <Spinner />;
   if (error)
@@ -45,6 +66,14 @@ const ProfilePreview = () => {
           {posts?.map((post) => (
             <PostSmall post={post} setPosts={setPosts} isEditable />
           ))}
+          {posts.length === 0 && (
+            <p>
+              No posts yet,{" "}
+              <Link to="/create" className="underline">
+                Maybe make one?
+              </Link>
+            </p>
+          )}
         </ul>
       </div>
     </div>

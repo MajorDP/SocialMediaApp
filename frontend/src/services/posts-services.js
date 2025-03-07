@@ -46,8 +46,21 @@ const mockPosts = [
 ];
 
 export const updateVote = async (uid, pid, voteType) => {
-  //TODO: Post-rating functionality
-  return { data: {}, error: null };
+  const res = await fetch(`http://localhost:5000/posts/${voteType}/${pid}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId: uid }),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    return { data: null, error: errorData };
+  }
+
+  const data = await res.json();
+  return { data: data, error: null };
 };
 
 export const postComment = async (uid, pid, comment) => {
@@ -56,6 +69,17 @@ export const postComment = async (uid, pid, comment) => {
 };
 
 export const getPosts = async (sortValue, userId) => {
-  //TODO: get posts with filters/sort values
-  return { data: mockPosts, error: null };
+  const res = await fetch(
+    `http://localhost:5000/posts/?sortValue=${sortValue}${
+      sortValue === "friends" ? `&uid=${userId}` : ""
+    }`
+  );
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    return { data: null, error: errorData.message };
+  }
+
+  const data = await res.json();
+  return { data, error: null };
 };
