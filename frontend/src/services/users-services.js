@@ -107,6 +107,7 @@ export const handleFriendRequests = async (type, userId, friendId) => {
   const data = await res.json();
   return { success: true, data: data };
 };
+
 export const removeFriend = async (userId, friendId) => {
   const res = await fetch("http://localhost:5000/auth/friends/remove", {
     method: "PATCH",

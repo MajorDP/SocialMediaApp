@@ -76,7 +76,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
               </p>
               <div className="max-w-[20rem] lg:max-w-[30rem] xl:max-w-[40rem] flex items-start justify-start">
                 <img
-                  src={post?.img}
+                  src={post?.postImg}
                   className="w-fit max-h-[20rem] object-left rounded-md border border-blue-800 shadow-lg shadow-cyan-500/40"
                 />
               </div>
@@ -105,7 +105,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           </p>
           <div className="max-w-[30rem] flex items-center justify-center">
             <img
-              src={post?.img}
+              src={post?.postImg}
               className="w-full h-full object-contain rounded-md border border-blue-800 shadow-lg shadow-cyan-500/40"
             />
           </div>

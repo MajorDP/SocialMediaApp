@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getPostById } from "../services/posts-services";
 
 const mockPost = {
   id: "1",
@@ -15,25 +16,33 @@ const mockPost = {
   categories: ["Technology"],
 };
 
-const Create = () => {
-  const { id } = useParams(); // Get the post ID from URL (if editing)
+const CreateEdit = () => {
+  const { pid } = useParams(); // Get the post ID from URL (if editing)
   const [message, setMessage] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
   const [isEditing, setIsEditing] = useState(false); // Track edit mode
-
+  console.log(message);
   useEffect(() => {
-    if (id) {
-      // Simulating fetching the post data (replace this with actual API call)
-      setMessage(mockPost.message);
-      if (mockPost.img) {
-        setImage(mockPost.img);
+    async function getPost() {
+      //TODO: Post categories
+      if (pid) {
+        const { data, error } = await getPostById(pid);
+        if (error) {
+          setError(error.message);
+        }
+        console.log(data);
+        setMessage(data.message);
+        if (mockPost.img) {
+          setImage(data.postImg);
+        }
+        setCategories(mockPost.categories);
+        setIsEditing(true);
       }
-      setCategories(mockPost.categories);
-      setIsEditing(true);
     }
-  }, [id]);
+    getPost();
+  }, [pid]);
 
   const categoryOptions = [
     "Technology",
@@ -51,7 +60,6 @@ const Create = () => {
   ];
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError(null);
     const file = e.target.files?.[0];
     if (file) {
       setImage(URL.createObjectURL(file));
@@ -59,7 +67,6 @@ const Create = () => {
   };
 
   const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setError(null);
     setMessage(e.target.value);
   };
 
@@ -113,7 +120,7 @@ const Create = () => {
           {image && (
             <div className="flex items-center justify-center">
               <img
-                src={image}
+                src={image || ""}
                 className="max-h-40 rounded-md border border-blue-800 shadow-lg shadow-cyan-500/40"
                 alt="Preview"
               />
@@ -147,7 +154,9 @@ const Create = () => {
           <button
             type="submit"
             className="disabled:bg-gray-600 disabled:shadow-none disabled:border-none bg-cyan-500 hover:bg-cyan-400 px-4 py-2 rounded-lg transition-all duration-200 shadow-md shadow-cyan-500 border border-cyan-500 cursor-pointer text-black"
-            disabled={(!message && !image) || categories.length > 5}
+            disabled={
+              (!message && !image) || categories.length > 5 || error !== null
+            }
           >
             {isEditing ? "Update Post" : "Post"}
           </button>
@@ -157,4 +166,4 @@ const Create = () => {
   );
 };
 
-export default Create;
+export default CreateEdit;

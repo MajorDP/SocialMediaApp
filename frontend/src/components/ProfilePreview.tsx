@@ -8,6 +8,7 @@ import { IPosts } from "../interfaces/posts";
 
 const ProfilePreview = () => {
   const { user } = useContext(AuthContext);
+  console.log(user);
 
   const [posts, setPosts] = useState<IPosts[] | null>(null);
   const [error, setError] = useState(null);

@@ -6,7 +6,7 @@ export interface IPosts {
     img: string;
   };
   message?: string;
-  img?: string;
+  postImg?: string;
   video?: string;
   likes: number;
   comments: IComment[] | [];

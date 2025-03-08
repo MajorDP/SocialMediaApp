@@ -45,6 +45,17 @@ const mockPosts = [
   },
 ];
 
+export const getPostById = async (pid) => {
+  const res = await fetch(`http://localhost:5000/posts/${pid}`);
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    return { data: null, error: { message: "Post was not found." } };
+  }
+
+  return { data: data, error: null };
+};
 export const updateVote = async (uid, pid, voteType) => {
   const res = await fetch(`http://localhost:5000/posts/${voteType}/${pid}`, {
     method: "PATCH",

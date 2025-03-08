@@ -18,17 +18,17 @@ const getPosts = async (req, res, next) => {
 };
 
 const getPostsByUserId = async (req, res, next) => {
-  //TODO: Get posts by user
   const { uid } = req.params;
+
   let posts;
   try {
-    posts = await Post.find()
+    posts = await Post.find({ user: uid })
       .populate("user", "username img")
       .populate("comments.user", "username img");
   } catch (error) {
     return next(new HttpError("Couldn't get posts.", 500));
   }
-
+  console.log("Found: ", posts);
   res.json(posts.map((post) => post.toObject({ getters: true })));
 };
 
