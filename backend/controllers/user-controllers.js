@@ -221,7 +221,33 @@ const acceptRejectFriendRequest = async (req, res, next) => {
 };
 
 const removeFriend = async (req, res) => {
-  //TODO: Handle removing friends
+  const { currentUserId, friendId } = req.body;
+
+  let currentUser;
+  let friend;
+
+  try {
+    currentUser = await User.findById(currentUserId);
+    friend = await User.findById(friendId);
+  } catch (error) {
+    return next(new HttpError("Could not find user.", 500));
+  }
+
+  currentUser.friends = currentUser.friends.filter(
+    (id) => id.toString() !== friendId
+  );
+  friend.friends = friend.friends.filter(
+    (id) => id.toString() !== currentUserId
+  );
+
+  try {
+    await currentUser.save();
+    await friend.save();
+  } catch (error) {
+    return next(new HttpError("Could not remove friend.", 500));
+  }
+
+  res.json({ currentUser });
 };
 
 const followUnfollowUser = async (req, res) => {

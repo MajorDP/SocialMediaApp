@@ -13,7 +13,7 @@ function Dashboard() {
   const { posts, error, isLoading, setPosts } = usePosts("friends", user?.id);
 
   return (
-    <div className="w-full flex flex-col md:flex-row gap-4 rounded-xl bg-gray-900 shadow-lg shadow-cyan-500 justify-around">
+    <div className="w-full flex flex-col md:flex-row gap-4 rounded-xl bg-gray-900 h-screen justify-around">
       <div className="w-full md:w-1/2 rounded-lg overflow-hidden">
         {isLoading ? (
           <div className="h-[50vh] flex items-center justify-center">

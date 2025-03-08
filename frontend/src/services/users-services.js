@@ -107,9 +107,23 @@ export const handleFriendRequests = async (type, userId, friendId) => {
   const data = await res.json();
   return { success: true, data: data };
 };
-export const handleRemoveFriend = async (userId, friendId) => {
-  //TODO: Handle removing a user from friends list
-  return { success: true, data: {} };
+export const removeFriend = async (userId, friendId) => {
+  const res = await fetch("http://localhost:5000/auth/friends/remove", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      currentUserId: userId,
+      friendId: friendId,
+    }),
+  });
+  const data = await res.json();
+
+  if (!res.ok) {
+    return { success: false, data: null };
+  }
+  return { success: true, data: data };
 };
 
 export const handleFollow = async (type, userId, friendId) => {
