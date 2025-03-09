@@ -44,6 +44,27 @@ export const editPost = async (post) => {
   return { success: true, postId: data.postId };
 };
 
+export const deletePost = async (pid) => {
+  const token = sessionStorage.getItem("session");
+  if (!token) {
+    return { success: false };
+  }
+
+  const res = await fetch("http://localhost:5000/posts/delete", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(token)}`,
+    },
+    body: JSON.stringify({ pid: pid }),
+  });
+
+  if (!res.ok) {
+    return { success: false };
+  }
+  return { success: true };
+};
+
 export const getPostsByUser = async (uid) => {
   const res = await fetch(`http://localhost:5000/posts/postedBy/${uid}`);
 
@@ -91,10 +112,10 @@ export const postComment = async (uid, pid, comment) => {
   return { data: data, error: null };
 };
 
-export const getPosts = async (sortValue, userId) => {
+export const getPosts = async (sortValue, uid) => {
   const res = await fetch(
     `http://localhost:5000/posts/?sortValue=${sortValue}${
-      sortValue === "friends" ? `&uid=${userId}` : ""
+      sortValue === "friends" ? `&uid=${uid}` : ""
     }`
   );
 

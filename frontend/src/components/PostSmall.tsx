@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/UserContext";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
-import { updateVote } from "../services/posts-services";
+import { deletePost, updateVote } from "../services/posts-services";
 
 interface IPostItem {
   post: IPosts;
@@ -41,9 +41,14 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
     );
   };
 
-  const handleDelete = (id: string) => {
-    console.log(id);
-    //TODO: Handle deleting functionality
+  const handleDelete = async (pid: string) => {
+    const { success } = await deletePost(pid);
+
+    if (!success) {
+      return;
+    }
+
+    setPosts((posts) => posts?.filter((post) => post.id !== pid) || []);
   };
 
   const isVoted = user?.votes.liked.includes(post.id)

@@ -83,6 +83,7 @@ export const getUser = async (userId) => {
 
   return { success: true, user: data.user };
 };
+
 export const getFriends = async (uid) => {
   const res = await fetch(`http://localhost:5000/auth/friends/${uid}`);
 

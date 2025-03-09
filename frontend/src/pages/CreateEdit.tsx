@@ -3,19 +3,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { createPost, editPost, getPostById } from "../services/posts-services";
 import { AuthContext } from "../context/UserContext";
 
-const mockPost = {
-  id: "1",
-  datePosted: "2025-02-20",
-  user: {
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
-    username: "user1",
-  },
-  img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
-  message: "This is my first post!",
-  likes: 200,
-  comments: [],
-  categories: ["Technology"],
-};
+const categoryOptions = [
+  "Technology",
+  "Health",
+  "Education",
+  "Entertainment",
+  "Sports",
+  "News",
+  "MMA",
+  "Parties",
+  "Politics",
+  "Games",
+  "Reality",
+  "Popular",
+];
 
 const CreateEdit = () => {
   const navigate = useNavigate();
@@ -27,7 +28,6 @@ const CreateEdit = () => {
   const [categories, setCategories] = useState<string[]>([]);
   const [isEditing, setIsEditing] = useState(false);
 
-  //TODO: create/edit functionality
   useEffect(() => {
     async function getPost() {
       if (pid) {
@@ -37,30 +37,15 @@ const CreateEdit = () => {
         }
 
         setMessage(data.message);
-        if (mockPost.img) {
+        if (data.img) {
           setImage(data.postImg);
         }
-        setCategories(mockPost.categories);
+        setCategories(data.categories);
         setIsEditing(true);
       }
     }
     getPost();
   }, [pid]);
-
-  const categoryOptions = [
-    "Technology",
-    "Health",
-    "Education",
-    "Entertainment",
-    "Sports",
-    "News",
-    "MMA",
-    "Parties",
-    "Politics",
-    "Games",
-    "Reality",
-    "Popular",
-  ];
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

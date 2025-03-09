@@ -41,6 +41,7 @@ const getUser = async (req, res, next) => {
 
   res.json({ user: user.toObject({ getters: true }) });
 };
+
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 

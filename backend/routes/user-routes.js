@@ -26,8 +26,8 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
-router.get("/getUser/:uid", userController.getUser);
 router.get("/me", authenticateToken, userController.getCurrentUser);
+router.get("/getUser/:uid", userController.getUser);
 router.post("/login", userController.login);
 router.post("/register", userController.register);
 router.patch("/preferences", userController.setPreferences);

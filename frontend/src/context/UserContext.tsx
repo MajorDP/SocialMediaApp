@@ -38,6 +38,7 @@ export const AuthContext = createContext<{
   logout: () => {},
   updateUser: () => {},
 });
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const storedSession = sessionStorage.getItem("session");

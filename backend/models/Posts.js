@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const HttpError = require("./HttpError");
 
 const Schema = mongoose.Schema;
 
@@ -24,4 +25,26 @@ const Post = new Schema({
   ],
 });
 
+Post.pre("findOneAndDelete", async function (next) {
+  const pid = this.getQuery()._id;
+  if (!pid) {
+    return next();
+  }
+
+  try {
+    await mongoose.model("User").updateMany(
+      { $or: [{ "votes.liked": pid }, { "votes.disliked": pid }] },
+      {
+        $pull: {
+          "votes.liked": pid,
+          "votes.disliked": pid,
+        },
+      }
+    );
+
+    next();
+  } catch (error) {
+    return next(error);
+  }
+});
 module.exports = mongoose.model("Post", Post);

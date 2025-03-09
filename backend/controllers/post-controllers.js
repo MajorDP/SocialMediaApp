@@ -61,6 +61,22 @@ const getPosts = async (req, res, next) => {
   res.json(posts.map((post) => post.toObject({ getters: true })));
 };
 
+const deletePost = async (req, res, next) => {
+  const { pid } = req.body;
+
+  try {
+    const deletedPost = await Post.findByIdAndDelete(pid);
+
+    if (!deletedPost) {
+      return next(new HttpError("Couldn't find post.", 404));
+    }
+
+    res.json({ message: "deleted!" });
+  } catch (error) {
+    return next(new HttpError("Couldn't delete post.", 500));
+  }
+};
+
 const getPostsByUserId = async (req, res, next) => {
   const { uid } = req.params;
   console.log(uid);
@@ -232,6 +248,7 @@ const postComment = async (req, res, next) => {
 
 exports.createPost = createPost;
 exports.editPost = editPost;
+exports.deletePost = deletePost;
 exports.getPosts = getPosts;
 exports.getPostsByUserId = getPostsByUserId;
 exports.getPostById = getPostById;
