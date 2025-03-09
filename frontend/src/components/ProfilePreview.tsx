@@ -5,25 +5,24 @@ import Spinner from "./Spinner";
 import PostSmall from "./PostSmall";
 import { Link } from "react-router-dom";
 import { IPosts } from "../interfaces/posts";
+import { getPostsByUser } from "../services/posts-services";
 
 const ProfilePreview = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   const [posts, setPosts] = useState<IPosts[] | null>(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [isLoading, setisLoading] = useState(true);
 
-  //TODO: getting posts of current user
   useEffect(() => {
     async function getPosts() {
-      const res = await fetch(
-        `http://localhost:5000/posts/postedBy/${user?.id}`
-      );
+      const { success, posts } = await getPostsByUser(user?.id);
 
-      const data = await res.json();
-
-      setPosts(data);
+      if (!success) {
+        setError("Could not get posts by that user.");
+        return;
+      }
+      setPosts(posts);
       setisLoading(false);
     }
     getPosts();
@@ -45,7 +44,7 @@ const ProfilePreview = () => {
 
   return (
     <div className="w-full h-screen overflow-y-auto scrollbar-hide pb-20">
-      <div className="flex flex-col gap-4 p-5 border-b border-gray-700 items-center justify-center">
+      <div className="flex flex-col gap-4 p-5 items-center justify-center">
         <div className="w-16 sm:w-[5rem]">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s"

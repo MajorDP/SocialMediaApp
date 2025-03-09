@@ -86,7 +86,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     setUser(jwtDecode(data.accessToken));
     sessionStorage.setItem("session", JSON.stringify(data.accessToken));
-    navigate("/");
   };
 
   const logout = () => {

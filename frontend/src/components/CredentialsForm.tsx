@@ -13,47 +13,6 @@ const categoryOptions = [
   "Games",
   "Reality",
   "Popular",
-  "MMA",
-  "Parties",
-  "Politics",
-  "Games",
-  "Games",
-  "Reality",
-  "Popular",
-  "MMA",
-  "Parties",
-  "Politics",
-  "Games",
-  "Games",
-  "Entertainment",
-  "Sports",
-  "News",
-  "MMA",
-  "Parties",
-  "Politics",
-  "Games",
-  "Reality",
-  "Popular",
-  "MMA",
-  "Parties",
-  "Politics",
-  "Games",
-  "Games",
-  "Reality",
-  "Popular",
-  "MMA",
-  "Parties",
-  "Politics",
-  "Games",
-  "Games",
-  "Reality",
-  "Popular",
-  "MMA",
-  "Parties",
-  "Politics",
-  "Games",
-  "Reality",
-  "Popular",
 ];
 
 function CredentialsForm() {
@@ -64,20 +23,20 @@ function CredentialsForm() {
   const [error, setError] = useState<string | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setError(null);
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(URL.createObjectURL(file));
-    }
-  };
-
   const handleCategoryChange = (category: string) => {
     setSelectedCategories((prev) =>
       prev.includes(category)
         ? prev.filter((c) => c !== category)
         : [...prev, category]
     );
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError(null);
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(URL.createObjectURL(file));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

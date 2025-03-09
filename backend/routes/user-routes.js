@@ -29,6 +29,7 @@ const authenticateToken = async (req, res, next) => {
 router.get("/me", authenticateToken, userController.getCurrentUser);
 router.post("/login", userController.login);
 router.post("/register", userController.register);
+router.patch("/preferences", userController.setPreferences);
 router.get("/friends/:uid", userController.getFriends);
 router.patch("/friends/add", userController.sendFriendRequest);
 router.patch("/friends/handle", userController.acceptRejectFriendRequest);

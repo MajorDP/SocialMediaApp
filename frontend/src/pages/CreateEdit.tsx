@@ -17,22 +17,22 @@ const mockPost = {
 };
 
 const CreateEdit = () => {
-  const { pid } = useParams(); // Get the post ID from URL (if editing)
+  const { pid } = useParams();
   const [message, setMessage] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
-  const [isEditing, setIsEditing] = useState(false); // Track edit mode
-  console.log(message);
+  const [isEditing, setIsEditing] = useState(false);
+
+  //TODO: create/edit functionality
   useEffect(() => {
     async function getPost() {
-      //TODO: Post categories
       if (pid) {
         const { data, error } = await getPostById(pid);
         if (error) {
           setError(error.message);
         }
-        console.log(data);
+
         setMessage(data.message);
         if (mockPost.img) {
           setImage(data.postImg);

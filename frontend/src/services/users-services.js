@@ -58,6 +58,23 @@ export const signUp = async (authData) => {
   return { data: data, error: null };
 };
 
+export const setPreferences = async (preferences, userId) => {
+  const res = await fetch("http://localhost:5000/auth/preferences", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ preferences: preferences, uid: userId }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    return { success: false, userResponse: null };
+  }
+
+  return { success: true, userResponse: data.userResponse };
+};
 export const getFriends = async (uid) => {
   const res = await fetch(`http://localhost:5000/auth/friends/${uid}`);
 

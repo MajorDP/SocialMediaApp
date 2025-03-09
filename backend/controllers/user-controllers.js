@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const getCurrentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select(
-      "-password -friends -preferences -requests -token"
+      "-password -friends -requests -token"
     );
 
     if (!user) {
@@ -47,10 +47,12 @@ const login = async (req, res, next) => {
 
   const user = {
     id: foundUser.id,
-    img: foundUser.img,
     email: foundUser.email,
     username: foundUser.username,
     votes: foundUser.votes,
+    friends: foundUser.friends,
+    requests: foundUser.requests,
+    preferences: foundUser.preferences,
   };
 
   const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
@@ -92,23 +94,59 @@ const register = async (req, res, next) => {
 
   try {
     await newUser.save();
-    const accessToken = await jwt.sign(
-      {
-        userId: newUser._id,
-        email: newUser.email,
-        username: newUser.username,
-        votes: newUser.votes,
-        friends: newUser.friends,
-        requests: newUser.requests,
-        preferences: newUser.preferences,
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1h" }
-    );
+
+    const user = {
+      id: newUser._id,
+      email: newUser.email,
+      username: newUser.username,
+      votes: newUser.votes,
+      friends: newUser.friends,
+      requests: newUser.requests,
+      preferences: newUser.preferences,
+    };
+
+    const accessToken = await jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1h",
+    });
+
     res.json({ accessToken: accessToken });
   } catch (error) {
     return next(new HttpError("Sign up failed, please try again.", 500));
   }
+};
+
+const setPreferences = async (req, res, next) => {
+  const { preferences, uid } = req.body;
+  console.log(preferences, uid);
+
+  let user;
+  try {
+    user = await User.findById(uid, "-password");
+  } catch (error) {
+    return next(new HttpError("Could not get user.", 500));
+  }
+
+  user.preferences = preferences;
+
+  try {
+    await user.save();
+  } catch (error) {
+    return next(new HttpError("Could not save user preferences.", 500));
+  }
+
+  const userResponse = {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+    votes: user.votes,
+    friends: user.friends,
+    requests: user.requests,
+    preferences: user.preferences,
+  };
+  console.log("userResponse");
+  console.log(userResponse);
+
+  res.json({ userResponse });
 };
 
 const getFriends = async (req, res, next) => {
@@ -120,7 +158,7 @@ const getFriends = async (req, res, next) => {
       .populate("friends", "username img")
       .populate("requests", "username img");
   } catch (error) {
-    return next(new HttpError("Sign in failed, please try again later.", 500));
+    return next(new HttpError("Could not get user.", 500));
   }
 
   res.json({
@@ -257,6 +295,7 @@ const followUnfollowUser = async (req, res) => {
 exports.getCurrentUser = getCurrentUser;
 exports.login = login;
 exports.register = register;
+exports.setPreferences = setPreferences;
 exports.getFriends = getFriends;
 exports.sendFriendRequest = sendFriendRequest;
 exports.acceptRejectFriendRequest = acceptRejectFriendRequest;
