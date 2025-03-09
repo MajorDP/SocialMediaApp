@@ -69,7 +69,9 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
             >
               {post.user.username}
             </Link>
-            <p className="text-xs text-blue-300">{post.datePosted}</p>
+            <p className="text-xs text-blue-300">
+              {post.datePosted.split("T")[0]}
+            </p>
             <div className="hidden sm:flex flex-col w-full">
               <p className="break-words w-full my-2 text-gray-300 text-xs lg:text-[20px]">
                 {post.message}

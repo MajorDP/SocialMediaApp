@@ -5,6 +5,7 @@ interface IPostsList {
   posts: IPosts[] | null;
   setPosts: React.Dispatch<React.SetStateAction<IPosts[] | null>>;
 }
+
 function PostsList({ posts, setPosts }: IPostsList) {
   return (
     <ul className="flex flex-col w-full md:w-full lg:max-w-full gap-y-5 items-center h-full overflow-y-scroll scrollbar-hide pt-2 md:pl-2">

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getPostById } from "../services/posts-services";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { createPost, editPost, getPostById } from "../services/posts-services";
+import { AuthContext } from "../context/UserContext";
 
 const mockPost = {
   id: "1",
@@ -17,6 +18,8 @@ const mockPost = {
 };
 
 const CreateEdit = () => {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const { pid } = useParams();
   const [message, setMessage] = useState("");
   const [image, setImage] = useState<string | null>(null);
@@ -78,6 +81,7 @@ const CreateEdit = () => {
     );
   };
 
+  //TODO: Image uploading on post creation/edit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (message === "" && !image) {
@@ -85,10 +89,34 @@ const CreateEdit = () => {
       return;
     }
 
+    const postObj = {
+      datePosted: new Date(),
+      user: user?.id,
+      message: message,
+      postImg: image,
+      categories: categories,
+    };
+
     if (isEditing) {
-      // TODO: Add API request to update post
+      //@ts-expect-error id added to object only on edit
+      postObj.id = pid;
+      const { success, postId } = await editPost(postObj);
+
+      if (!success) {
+        setError("Editing post failed.");
+        return;
+      }
+
+      navigate(`/post/${postId}`);
     } else {
-      // TODO: Add API request to create post
+      const { success, postId } = await createPost(postObj);
+
+      if (!success) {
+        setError("Creating post failed.");
+        return;
+      }
+
+      navigate(`/post/${postId}`);
     }
   };
 

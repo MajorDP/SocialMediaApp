@@ -3,6 +3,51 @@ const HttpError = require("../models/HttpError");
 const Post = require("../models/Posts");
 const User = require("../models/User");
 
+const createPost = async (req, res, next) => {
+  const { post } = req.body;
+
+  const newPost = new Post({
+    ...post,
+  });
+
+  try {
+    await newPost.save();
+  } catch (error) {
+    console.log(error);
+    return next(new HttpError("Creating post failed, please try again.", 400));
+  }
+
+  res.json({ postId: newPost.id });
+};
+
+const editPost = async (req, res, next) => {
+  const { post } = req.body;
+  console.log(post);
+
+  let existingPost;
+
+  try {
+    existingPost = await Post.findById(post.id);
+  } catch (error) {
+    return next(new HttpError("Could not find post.", 404));
+  }
+
+  if (!existingPost) {
+    return next(new HttpError("Could not find post.", 404));
+  }
+
+  Object.assign(existingPost, post);
+
+  try {
+    await existingPost.save();
+  } catch (error) {
+    console.log(error);
+    return next(new HttpError("Creating post failed, please try again.", 400));
+  }
+
+  res.json({ postId: existingPost.id });
+};
+
 const getPosts = async (req, res, next) => {
   let posts;
   const { sortValue, uid } = req.query;
@@ -186,6 +231,8 @@ const postComment = async (req, res, next) => {
   res.json(post.toObject({ getters: true }));
 };
 
+exports.createPost = createPost;
+exports.editPost = editPost;
 exports.getPosts = getPosts;
 exports.getPostsByUserId = getPostsByUserId;
 exports.getPostById = getPostById;

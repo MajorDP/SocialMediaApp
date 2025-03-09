@@ -10,6 +10,40 @@ export const getPostById = async (pid) => {
   return { data: data, error: null };
 };
 
+export const createPost = async (post) => {
+  const res = await fetch("http://localhost:5000/posts/create", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ post: post }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    return { success: false, postId: null };
+  }
+
+  return { success: true, postId: data.postId };
+};
+
+export const editPost = async (post) => {
+  const res = await fetch("http://localhost:5000/posts/edit", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ post: post }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    return { success: false, postId: null };
+  }
+
+  return { success: true, postId: data.postId };
+};
+
 export const getPostsByUser = async (uid) => {
   const res = await fetch(`http://localhost:5000/posts/postedBy/${uid}`);
 
@@ -20,6 +54,7 @@ export const getPostsByUser = async (uid) => {
 
   return { success: true, posts: data };
 };
+
 export const updateVote = async (uid, pid, voteType) => {
   const res = await fetch(`http://localhost:5000/posts/${voteType}/${pid}`, {
     method: "PATCH",
