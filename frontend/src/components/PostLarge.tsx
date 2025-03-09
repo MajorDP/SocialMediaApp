@@ -4,6 +4,7 @@ import { AuthContext } from "../context/UserContext";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 import { Link } from "react-router-dom";
+import { updateVote } from "../services/posts-services";
 
 interface IPostItem {
   post: IPosts;
@@ -11,13 +12,18 @@ interface IPostItem {
 }
 
 function PostLarge({ post, setPost }: IPostItem) {
-  const { user } = useContext(AuthContext);
+  const { user, updateUser } = useContext(AuthContext);
   const [error, setError] = useState<string | null>(null);
 
   const handleVote = async (voteType: string) => {
-    console.log(voteType);
-    setError(null);
-    //TODO: Handle voting functionality
+    const { data, error } = await updateVote(user?.id, post.id, voteType);
+    if (error) {
+      setError(error.message);
+    } else {
+      console.log(data);
+      setPost(data.post);
+      updateUser(data.user);
+    }
   };
 
   const handleSetPosts = (data: IPosts) => {
@@ -35,7 +41,7 @@ function PostLarge({ post, setPost }: IPostItem) {
       <div className="w-full">
         <div className="flex flex-row w-full p-3">
           <Link
-            to="/user/1"
+            to={`/user/${post.user.id}`}
             className="w-[20%] sm:max-w-[10%] md:max-w-[12%] xl:max-w-[15%]"
           >
             <img
@@ -45,19 +51,21 @@ function PostLarge({ post, setPost }: IPostItem) {
           </Link>
           <div className="flex flex-col justify-start ml-2 w-[80%] xl:max-w-[85%]">
             <Link
-              to="/user/1"
+              to={`/user/${post.user.id}`}
               className="text-lg font-semibold text-cyan-400 cursor-pointer"
             >
               {post?.user.username}
             </Link>
-            <p className="text-sm text-blue-300">{post?.datePosted}</p>
+            <p className="text-sm text-blue-300">
+              {post?.datePosted.split("T")[0]}
+            </p>
             <div className="hidden sm:flex flex-col w-full">
               <p className="break-words w-full my-2 text-gray-300 text-sm lg:text-lg">
                 {post?.message}
               </p>
               <div className="max-w-[20rem] lg:max-w-[30rem] xl:max-w-[40rem] flex items-start justify-start">
                 <img
-                  src={post?.img}
+                  src={post?.postImg}
                   className="w-fit max-h-[20rem] object-left rounded-md border border-blue-800 shadow-lg shadow-cyan-500/40"
                 />
               </div>
@@ -70,7 +78,7 @@ function PostLarge({ post, setPost }: IPostItem) {
           </p>
           <div className="max-w-[30rem] flex items-center justify-center">
             <img
-              src={post?.img}
+              src={post?.postImg}
               className="w-full h-full object-contain rounded-md border border-blue-800 shadow-lg shadow-cyan-500/40"
             />
           </div>

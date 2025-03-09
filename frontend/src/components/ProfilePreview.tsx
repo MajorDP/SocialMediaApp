@@ -20,6 +20,7 @@ const ProfilePreview = () => {
 
       if (!success) {
         setError("Could not get posts by that user.");
+        setisLoading(false);
         return;
       }
       setPosts(posts);

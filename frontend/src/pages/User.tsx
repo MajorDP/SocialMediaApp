@@ -1,12 +1,38 @@
-import usePosts from "../hooks/usePosts";
 import PostsList from "../components/PostsList";
 import Error from "../components/Error";
 import Spinner from "../components/Spinner";
 import { useParams } from "react-router-dom";
+import { getPostsByUser } from "../services/posts-services";
+import { useEffect, useState } from "react";
+import { IPosts } from "../interfaces/posts";
+import { getUser } from "../services/users-services";
 
 function User() {
   const { id } = useParams();
-  const { posts, error, isLoading, setPosts } = usePosts("friends", id);
+
+  const [posts, setPosts] = useState<IPosts[] | null>(null);
+  const [user, setUser] = useState<{ username: string; id: string } | null>(
+    null
+  );
+  console.log(user);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setisLoading] = useState(true);
+
+  useEffect(() => {
+    async function getPosts() {
+      const { success, user } = await getUser(id);
+      const { success: success1, posts } = await getPostsByUser(id);
+
+      if (!success || !success1) {
+        setError("Could not get posts by that user.");
+        return;
+      }
+      setPosts(posts);
+      setUser(user);
+      setisLoading(false);
+    }
+    getPosts();
+  }, [id]);
 
   if (isLoading) {
     return <Spinner />;
@@ -37,7 +63,7 @@ function User() {
           </div>
           <div className="flex flex-col justify-center sm:justify-around sm:my-auto text-center">
             <p className="truncate text-cyan-400 font-medium text-lg sm:text-2xl">
-              Username
+              {user?.username}
             </p>
             <p className="text-xs sm:text-sm truncate text-blue-300">
               Status/Description of user goes here

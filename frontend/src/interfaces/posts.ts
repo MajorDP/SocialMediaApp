@@ -4,10 +4,13 @@ export interface IPosts {
   user: {
     username: string;
     img: string;
+    id: string;
   };
   message?: string;
   postImg?: string;
   video?: string;
+  isEdited: boolean;
+  categories: string[];
   likes: number;
   comments: IComment[] | [];
 }

@@ -16,9 +16,9 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
   const { user, updateUser } = useContext(AuthContext);
   const [error, setError] = useState<string | null>(null);
   const [showComments, setShowComments] = useState(false);
+
   const handleVote = async (voteType: string) => {
     const { data, error } = await updateVote(user?.id, post.id, voteType);
-
     if (error) {
       setError(error.message);
     } else {
@@ -29,7 +29,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           ) || []
       );
 
-      updateUser(data?.user);
+      updateUser(data.user);
       setError(null);
     }
   };
@@ -56,7 +56,10 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
     <li className="border border-blue-900 flex flex-col w-full md:min-w-fit lg:w-full bg-gradient-to-b from-gray-900 to-blue-950 p-2 sm:p-3 rounded-2xl shadow-lg">
       <div>
         <div className="flex flex-row w-full p-3">
-          <Link to="/user/1" className="w-[5rem] md:max-w-[15%] xl:max-w-[8%]">
+          <Link
+            to={`/user/${post.user.id}`}
+            className="w-[5rem] md:max-w-[15%] xl:max-w-[8%]"
+          >
             <img
               src={post.user.img}
               className="rounded-full w-fit border-2 border-cyan-400 cursor-pointer"
@@ -64,13 +67,14 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           </Link>
           <div className="flex flex-col justify-start ml-2 w-[75%] xl:max-w-[85%]">
             <Link
-              to="/user/1"
-              className="text-sm sm:text-lg font-semibold text-cyan-400 cursor-pointer"
+              to={`/user/${post.user.id}`}
+              className="text-sm sm:text-lg font-semibold text-cyan-400 cursor-pointer w-fit"
             >
               {post.user.username}
             </Link>
             <p className="text-xs text-blue-300">
               {post.datePosted.split("T")[0]}
+              <span> {post.isEdited && "(Edited)"}</span>
             </p>
             <div className="hidden sm:flex flex-col w-full">
               <p className="break-words w-full my-2 text-gray-300 text-xs lg:text-[20px]">

@@ -63,7 +63,7 @@ const getPosts = async (req, res, next) => {
 
 const getPostsByUserId = async (req, res, next) => {
   const { uid } = req.params;
-
+  console.log(uid);
   let posts;
   try {
     posts = await Post.find({ user: uid })

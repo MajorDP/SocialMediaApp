@@ -75,6 +75,14 @@ export const setPreferences = async (preferences, userId) => {
 
   return { success: true, userResponse: data.userResponse };
 };
+
+export const getUser = async (userId) => {
+  const res = await fetch(`http://localhost:5000/auth/getUser/${userId}`);
+
+  const data = await res.json();
+
+  return { success: true, user: data.user };
+};
 export const getFriends = async (uid) => {
   const res = await fetch(`http://localhost:5000/auth/friends/${uid}`);
 

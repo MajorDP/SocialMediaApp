@@ -3,7 +3,7 @@ const User = require("../models/User");
 const HttpError = require("../models/HttpError");
 const bcrypt = require("bcrypt");
 
-const getCurrentUser = async (req, res) => {
+const getCurrentUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.user.id).select(
       "-password -friends -requests -token"
@@ -20,6 +20,27 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
+const getUser = async (req, res, next) => {
+  const uid = req.params.uid;
+  console.log(uid);
+
+  if (!uid) {
+    return next(new HttpError("User ID is missing.", 400));
+  }
+
+  let user;
+
+  try {
+    user = await User.findById(uid, "username");
+    if (!user) {
+      return next(new HttpError("User not found.", 404));
+    }
+  } catch (error) {
+    return next(new HttpError("Could not get user.", 500));
+  }
+
+  res.json({ user: user.toObject({ getters: true }) });
+};
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -293,6 +314,7 @@ const followUnfollowUser = async (req, res) => {
 };
 
 exports.getCurrentUser = getCurrentUser;
+exports.getUser = getUser;
 exports.login = login;
 exports.register = register;
 exports.setPreferences = setPreferences;
