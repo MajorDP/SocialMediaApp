@@ -61,9 +61,6 @@ const getPosts = async (req, res, next) => {
     return next(new HttpError("Couldn't get posts.", 500));
   }
 
-  console.log(posts[2].user._id.toString());
-  console.log(uid);
-
   if (filterValue === "dashboard") {
     posts = posts.filter(
       (post) =>
