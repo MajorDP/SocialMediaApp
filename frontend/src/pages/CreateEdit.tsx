@@ -100,6 +100,8 @@ const CreateEdit = () => {
     if (isEditing) {
       //@ts-expect-error id added to object only on edit
       postObj.id = pid;
+      //@ts-expect-error isEdited added to object only on edit
+      postObj.isEdited = true;
       const { success, postId } = await editPost(postObj);
 
       if (!success) {

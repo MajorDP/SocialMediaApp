@@ -22,7 +22,6 @@ const createPost = async (req, res, next) => {
 
 const editPost = async (req, res, next) => {
   const { post } = req.body;
-  console.log(post);
 
   let existingPost;
 
@@ -73,7 +72,7 @@ const getPostsByUserId = async (req, res, next) => {
   } catch (error) {
     return next(new HttpError("Couldn't get posts.", 500));
   }
-  console.log("Found: ", posts);
+
   res.json(posts.map((post) => post.toObject({ getters: true })));
 };
 
