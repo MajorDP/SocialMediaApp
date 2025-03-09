@@ -10,7 +10,7 @@ function Dashboard() {
   const { user } = useContext(AuthContext);
 
   //@ts-expect-error page wont load if no user
-  const { posts, error, isLoading, setPosts } = usePosts("friends", user?.id);
+  const { posts, error, isLoading, setPosts } = usePosts("dashboard", user?.id);
 
   return (
     <div className="w-full flex flex-col md:flex-row gap-4 rounded-xl bg-gray-900 h-screen justify-around">

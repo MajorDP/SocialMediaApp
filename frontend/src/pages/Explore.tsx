@@ -8,7 +8,7 @@ import { AuthContext } from "../context/UserContext";
 function Explore() {
   const { user } = useContext(AuthContext);
   //@ts-expect-error page wont load if no user
-  const { posts, error, isLoading, setPosts } = usePosts("all", user.id);
+  const { posts, error, isLoading, setPosts } = usePosts("explore", user?.id);
   return (
     <>
       {isLoading && (

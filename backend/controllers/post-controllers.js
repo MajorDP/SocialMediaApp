@@ -49,13 +49,32 @@ const editPost = async (req, res, next) => {
 
 const getPosts = async (req, res, next) => {
   let posts;
-  const { sortValue, uid } = req.query;
+  let user;
+  const { filterValue, uid } = req.query;
+
   try {
+    user = await User.findById(uid);
     posts = await Post.find()
       .populate("user", "username img")
       .populate("comments.user", "username img");
   } catch (error) {
     return next(new HttpError("Couldn't get posts.", 500));
+  }
+
+  console.log(posts[2].user._id.toString());
+  console.log(uid);
+
+  if (filterValue === "dashboard") {
+    posts = posts.filter(
+      (post) =>
+        post.categories.find((category) =>
+          user.preferences.includes(category)
+        ) && post.user._id.toString() !== uid
+    );
+  }
+
+  if (filterValue === "explore") {
+    posts = posts.filter((post) => post.user._id.toString() !== uid);
   }
 
   res.json(posts.map((post) => post.toObject({ getters: true })));
