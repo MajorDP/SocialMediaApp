@@ -58,6 +58,7 @@ function PostLarge({ post, setPost }: IPostItem) {
             </Link>
             <p className="text-sm text-blue-300">
               {post?.datePosted.split("T")[0]}
+              <span> {post.isEdited && "(Edited)"}</span>
             </p>
             <div className="hidden sm:flex flex-col w-full">
               <p className="break-words w-full my-2 text-gray-300 text-sm lg:text-lg">

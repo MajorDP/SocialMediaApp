@@ -3,12 +3,17 @@ import Error from "../components/Error";
 import Spinner from "../components/Spinner";
 import { useParams } from "react-router-dom";
 import { getPostsByUser } from "../services/posts-services";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IPosts } from "../interfaces/posts";
 import { getUser } from "../services/users-services";
+import { AuthContext } from "../context/UserContext";
+import useFriends from "../hooks/useFriends";
 
 function User() {
   const { id } = useParams();
+  const { user: currentUser } = useContext(AuthContext);
+  const { friends } = useFriends(currentUser.id);
+  console.log(friends);
 
   const [posts, setPosts] = useState<IPosts[] | null>(null);
   const [user, setUser] = useState<{ username: string; id: string } | null>(
@@ -70,22 +75,26 @@ function User() {
             </p>
           </div>
         </div>
-        <div className="m-auto flex flex-col sm:flex-row items-center gap-2 justify-between mb-2 sm:mb-8 text-xs sm:text-sm">
-          <button className=" px-2 py-1 bg-green-600 hover:bg-green-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg shadow-green-600 border border-green-900">
-            Add as friend
-          </button>
+        {user.id !== currentUser?.id && (
+          <div className="m-auto flex flex-col sm:flex-row items-center gap-2 justify-between mb-2 sm:mb-8 text-xs sm:text-sm">
+            {!friends.friends.includes(user?.id) ? (
+              <button className=" px-2 py-1 bg-green-600 hover:bg-green-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg shadow-green-600 border border-green-900">
+                Add as friend
+              </button>
+            ) : (
+              <button className=" px-2 py-1 bg-red-600 hover:bg-red-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg shadow-red-600 border border-red-900">
+                Remove friend
+              </button>
+            )}
 
-          <button className=" px-2 py-1 bg-red-600 hover:bg-red-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg shadow-red-600 border border-red-900">
-            Remove friend
-          </button>
-
-          <button className=" px-2 py-1 bg-blue-600 hover:bg-blue-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg shadow-blue-600 border border-blue-900">
-            Follow
-          </button>
-          <button className=" px-2 py-1 bg-blue-600 hover:bg-blue-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg shadow-blue-600 border border-blue-900">
-            Unfollow
-          </button>
-        </div>
+            <button className=" px-2 py-1 bg-blue-600 hover:bg-blue-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg shadow-blue-600 border border-blue-900">
+              Follow
+            </button>
+            <button className=" px-2 py-1 bg-blue-600 hover:bg-blue-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg shadow-blue-600 border border-blue-900">
+              Unfollow
+            </button>
+          </div>
+        )}
         <div className=" border-b border-gray-700 w-[90%] m-auto"></div>
         <div className="flex flex-col gap-4 h-fit">
           <PostsList posts={posts} setPosts={setPosts} />

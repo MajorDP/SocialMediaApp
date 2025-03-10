@@ -34,7 +34,7 @@ function PostPage() {
   }
 
   return (
-    <div className="w-full overflow-hidden flex flex-row items-center justify-center rounded-xl mb-16">
+    <div className="w-full overflow-hidden flex flex-row items-center justify-center rounded-xl h-full mb-16">
       <div className="w-full md:w-full m-auto flex items-center justify-center">
         {post && <PostLarge post={post} setPost={setPost} />}
         {error && (
