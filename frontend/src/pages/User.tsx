@@ -12,14 +12,13 @@ import useFriends from "../hooks/useFriends";
 function User() {
   const { id } = useParams();
   const { user: currentUser } = useContext(AuthContext);
-  const { friends } = useFriends(currentUser.id);
-  console.log(friends);
+  const { friends } = useFriends(currentUser?.id as string);
 
   const [posts, setPosts] = useState<IPosts[] | null>(null);
   const [user, setUser] = useState<{ username: string; id: string } | null>(
     null
   );
-  console.log(user);
+
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setisLoading] = useState(true);
 
@@ -71,11 +70,11 @@ function User() {
               {user?.username}
             </p>
             <p className="text-xs sm:text-sm truncate text-blue-300">
-              Status/Description of user goes here
+              {user?.status}
             </p>
           </div>
         </div>
-        {user.id !== currentUser?.id && (
+        {user?.id !== currentUser?.id && (
           <div className="m-auto flex flex-col sm:flex-row items-center gap-2 justify-between mb-2 sm:mb-8 text-xs sm:text-sm">
             {!friends.friends.includes(user?.id) ? (
               <button className=" px-2 py-1 bg-green-600 hover:bg-green-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg shadow-green-600 border border-green-900">

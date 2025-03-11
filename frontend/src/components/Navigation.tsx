@@ -26,7 +26,7 @@ function Navigation() {
                 {user?.username}
               </p>
               <p className="text-[15px] truncate text-blue-300">
-                {/* TODO: Add status */} status later
+                {user?.status}
               </p>
             </div>
           </div>

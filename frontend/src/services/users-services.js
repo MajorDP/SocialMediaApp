@@ -157,3 +157,25 @@ export const handleFollow = async (type, userId, friendId) => {
   //TODO: Handle following/unfollowing users
   return { success: true, data: {} };
 };
+
+export const handleUpdateUser = async (userData) => {
+  const token = sessionStorage.getItem("session");
+  if (!token) return null;
+
+  const res = await fetch("http://localhost:5000/auth/update", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(token)}`,
+    },
+    body: JSON.stringify({ userData: userData }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    return { success: false, data: data.message };
+  }
+
+  return { success: true, data: data };
+};

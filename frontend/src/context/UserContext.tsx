@@ -14,6 +14,8 @@ interface IUserData {
     liked: string[];
     disliked: string[];
   };
+  status: string;
+  preferences: string[];
 }
 
 interface IAuthData {

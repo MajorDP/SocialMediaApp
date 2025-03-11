@@ -18,7 +18,7 @@ interface IFriends {
     | [];
 }
 
-function useFriends(id: string | null) {
+function useFriends(id: string) {
   const [friends, setFriends] = useState<
     IFriends | { friends: []; requests: [] }
   >({

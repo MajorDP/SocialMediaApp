@@ -20,7 +20,6 @@ function PostLarge({ post, setPost }: IPostItem) {
     if (error) {
       setError(error.message);
     } else {
-      console.log(data);
       setPost(data.post);
       updateUser(data.user);
     }

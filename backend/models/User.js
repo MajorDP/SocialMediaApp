@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const User = new Schema({
   email: { type: String, required: true },
   username: { type: String, required: true },
+  status: { type: String, default: "" },
   img: {
     type: String,
     default:

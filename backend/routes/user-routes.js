@@ -30,6 +30,7 @@ router.get("/me", authenticateToken, userController.getCurrentUser);
 router.get("/getUser/:uid", userController.getUser);
 router.post("/login", userController.login);
 router.post("/register", userController.register);
+router.patch("/update", authenticateToken, userController.updateAccount);
 router.patch("/preferences", userController.setPreferences);
 router.get("/friends/:uid", userController.getFriends);
 router.patch("/friends/add", userController.sendFriendRequest);

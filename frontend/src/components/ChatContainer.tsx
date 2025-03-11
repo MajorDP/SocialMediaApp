@@ -54,7 +54,6 @@ function ChatContainer({
 }: IChatContainer) {
   const [chatMessages, setChatMessages] = useState<IChat | null>(null);
   useEffect(() => {
-    console.log(currentUserId, selectedFriend);
     //TODO: Get chat between current user and chosen friend
     setChatMessages(mockChats);
   }, [currentUserId, selectedFriend]);
@@ -87,7 +86,7 @@ function ChatContainer({
           </svg>
         </button>
         <h2 className="text-center mt-2 text-lg">{selectedFriend.username}</h2>{" "}
-        {/* //TODO: CHANGE LATER */}
+        {/* TODO: CHANGE LATER */}
         <div className="h-full rounded-b-xl">
           <Chat chat={chatMessages} currentUserId={currentUserId} />
           <div className="h-[10%] px-2 py-1 rounded-b-xl border-t border-blue-900">

@@ -70,11 +70,13 @@ const login = async (req, res, next) => {
   const user = {
     id: foundUser.id,
     email: foundUser.email,
+    img: foundUser.img,
     username: foundUser.username,
     votes: foundUser.votes,
     friends: foundUser.friends,
     requests: foundUser.requests,
     preferences: foundUser.preferences,
+    status: foundUser.status,
   };
 
   const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
@@ -120,11 +122,13 @@ const register = async (req, res, next) => {
     const user = {
       id: newUser._id,
       email: newUser.email,
+      img: foundUser.img,
       username: newUser.username,
       votes: newUser.votes,
       friends: newUser.friends,
       requests: newUser.requests,
       preferences: newUser.preferences,
+      status: foundUser.status,
     };
 
     const accessToken = await jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
@@ -139,7 +143,6 @@ const register = async (req, res, next) => {
 
 const setPreferences = async (req, res, next) => {
   const { preferences, uid } = req.body;
-  console.log(preferences, uid);
 
   let user;
   try {
@@ -280,7 +283,7 @@ const acceptRejectFriendRequest = async (req, res, next) => {
   }
 };
 
-const removeFriend = async (req, res) => {
+const removeFriend = async (req, res, next) => {
   const { currentUserId, friendId } = req.body;
 
   let currentUser;
@@ -310,8 +313,56 @@ const removeFriend = async (req, res) => {
   res.json({ currentUser });
 };
 
-const followUnfollowUser = async (req, res) => {
+const followUnfollowUser = async (req, res, next) => {
   //TODO: Handle following/unfollowing users
+};
+
+const updateAccount = async (req, res, next) => {
+  const { userData } = req.body;
+
+  let user;
+
+  try {
+    user = await User.findById(userData.id);
+  } catch (error) {
+    return next(new HttpError("Could not find user.", 500));
+  }
+
+  if (!user) {
+    return next(new HttpError("Could not find user.", 404));
+  }
+
+  const isMatch = await bcrypt.compare(userData.confirmPassword, user.password);
+
+  if (!isMatch) {
+    return next(new HttpError("Invalid credentials", 422));
+  }
+
+  user.img = userData.img || user.img;
+  user.email = userData.email || user.email;
+  user.username = userData.username || userData.username;
+  user.password = userData.password || user.password;
+  user.preferences = userData.categories;
+
+  try {
+    await user.save();
+  } catch (error) {
+    return next(new HttpError("Could not save user data.", 500));
+  }
+
+  const userResponse = {
+    id: user.id,
+    email: user.email,
+    img: user.img,
+    username: user.username,
+    votes: user.votes,
+    friends: user.friends,
+    requests: user.requests,
+    preferences: user.preferences,
+    status: user.status,
+  };
+
+  res.json({ userResponse });
 };
 
 exports.getCurrentUser = getCurrentUser;
@@ -324,3 +375,4 @@ exports.sendFriendRequest = sendFriendRequest;
 exports.acceptRejectFriendRequest = acceptRejectFriendRequest;
 exports.removeFriend = removeFriend;
 exports.followUnfollowUser = followUnfollowUser;
+exports.updateAccount = updateAccount;

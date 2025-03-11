@@ -22,7 +22,7 @@ const categoryOptions = [
 function CategorySetterSignUp() {
   const navigate = useNavigate();
   const { user, updateUser } = useContext(AuthContext);
-  console.log(user);
+
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 

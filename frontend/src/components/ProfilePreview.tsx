@@ -55,10 +55,10 @@ const ProfilePreview = () => {
         </div>
         <div className="flex flex-col justify-center sm:justify-around sm:my-auto text-center">
           <p className="truncate text-cyan-400 font-medium text-lg sm:text-2xl">
-            Username
+            {user?.username}
           </p>
           <p className="text-xs sm:text-sm truncate text-blue-300">
-            Status/Description of user goes here
+            {user?.status}
           </p>
         </div>
       </div>
