@@ -387,7 +387,7 @@ const updateAccount = async (req, res, next) => {
   user.email = userData.email || user.email;
   user.username = userData.username || userData.username;
   user.password = userData.password || user.password;
-  user.preferences = userData.categories;
+  user.preferences = userData.categories || user.preferences;
 
   try {
     await user.save();
@@ -410,6 +410,32 @@ const updateAccount = async (req, res, next) => {
   res.json({ userResponse });
 };
 
+const updateStatus = async (req, res, next) => {
+  const { uid, status } = req.body;
+
+  let user;
+
+  try {
+    user = await User.findById(uid);
+  } catch (error) {
+    return next(new HttpError("Could not find user.", 500));
+  }
+
+  if (!user) {
+    return next(new HttpError("Could not find user.", 404));
+  }
+
+  user.status = status;
+
+  try {
+    await user.save();
+  } catch (error) {
+    return next(new HttpError("Could not change user status.", 500));
+  }
+
+  res.json({ success: true, newStatus: status });
+};
+
 exports.getCurrentUser = getCurrentUser;
 exports.getUser = getUser;
 exports.login = login;
@@ -421,3 +447,4 @@ exports.acceptRejectFriendRequest = acceptRejectFriendRequest;
 exports.removeFriend = removeFriend;
 exports.followUnfollowUser = followUnfollowUser;
 exports.updateAccount = updateAccount;
+exports.updateStatus = updateStatus;

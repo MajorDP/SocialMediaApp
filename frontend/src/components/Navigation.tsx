@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
 import { Home, BadgePlus, Compass, User, LogOut } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/UserContext";
+import { changeStatus } from "../services/users-services";
 
 function Navigation() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, updateUser, logout } = useContext(AuthContext);
+  const [status, setStatus] = useState(user?.status);
+
+  const handleChangeStatus = async () => {
+    const { success, newStatus } = await changeStatus(user?.id, status);
+
+    if (success) {
+      //@ts-expect-error user is of expected type
+      updateUser({ ...user, status: newStatus });
+    }
+  };
 
   return (
     <>
@@ -25,9 +36,14 @@ function Navigation() {
               <p className="truncate text-cyan-400 font-medium">
                 {user?.username}
               </p>
-              <p className="text-[15px] truncate text-blue-300">
-                {user?.status}
-              </p>
+              <input
+                value={status}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setStatus(e.target.value)
+                }
+                onBlur={handleChangeStatus}
+                className="truncate text-cyan-400 font-medium text-[15px] py-[1px]"
+              />
             </div>
           </div>
           <ul className="flex flex-col pl-3 items-start h-40 justify-between mt-4 gap-5">

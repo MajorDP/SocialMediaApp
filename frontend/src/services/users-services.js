@@ -179,3 +179,22 @@ export const handleUpdateUser = async (userData) => {
 
   return { success: true, data: data };
 };
+
+export const changeStatus = async (uid, status) => {
+  console.log(uid, status);
+  const res = await fetch("http://localhost:5000/auth/status", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ uid, status }),
+  });
+
+  if (!res.ok) {
+    return { success: false, newStatus: null };
+  }
+
+  const data = await res.json();
+
+  return { success: true, newStatus: data.newStatus };
+};
