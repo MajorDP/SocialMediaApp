@@ -11,6 +11,7 @@ function FriendList() {
   const { user } = useContext(AuthContext);
   //@ts-expect-error page wont load if no user
   const { friends, error, isLoading, setFriends } = useFriends(user.id);
+
   const [selectedFriend, setSelectedFriend] = useState<{
     id: string;
     username: string;
@@ -131,7 +132,7 @@ function FriendList() {
                     <p className="truncate text-xs">{friend.username}</p>
                   </div>
                   <p className="text-[12px] truncate text-gray-400">
-                    {/* {friend.status} */}status later
+                    {friend.status}
                   </p>
                 </div>
                 <button

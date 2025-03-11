@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const HttpError = require("../models/HttpError");
 const bcrypt = require("bcrypt");
+const Chat = require("../models/Chat");
 
 const getCurrentUser = async (req, res, next) => {
   try {
@@ -43,10 +44,15 @@ const getUser = async (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
+  const EMAIL_REGEX = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
   const { email, password } = req.body;
 
   if (!email || !password) {
     return next(new HttpError("Invalid credentials.", 500));
+  }
+
+  if (!EMAIL_REGEX.test(email)) {
+    return next(new HttpError("Invalid email.", 400));
   }
 
   let foundUser;
@@ -87,10 +93,15 @@ const login = async (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
+  const EMAIL_REGEX = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
   const { email, username, password, repeatPassword } = req.body;
 
   if (!email || !username || !password || !repeatPassword) {
     return next(new HttpError("Invalid credentials.", 400));
+  }
+
+  if (!EMAIL_REGEX.test(email)) {
+    return next(new HttpError("Invalid email.", 400));
   }
 
   if (password !== repeatPassword) {
@@ -180,7 +191,7 @@ const getFriends = async (req, res, next) => {
 
   try {
     existingUser = await User.findById(uid, "friends requests")
-      .populate("friends", "username img")
+      .populate("friends", "username img status")
       .populate("requests", "username img");
   } catch (error) {
     return next(new HttpError("Could not get user.", 500));
@@ -256,6 +267,20 @@ const acceptRejectFriendRequest = async (req, res, next) => {
     } catch (error) {
       return next(new HttpError("Could not add friend.", 500));
     }
+
+    try {
+      const newChat = new Chat({
+        participants: [userId, friendId],
+        messages: [],
+        lastMessageDate: new Date().toISOString(),
+        seen: true,
+      });
+
+      await newChat.save();
+    } catch (error) {
+      return next(new HttpError("Could not create chat.", 500));
+    }
+
     res.json({
       friends: {
         id: friend.id.toString(),
@@ -296,6 +321,10 @@ const removeFriend = async (req, res, next) => {
     return next(new HttpError("Could not find user.", 500));
   }
 
+  if (!currentUser || !friend) {
+    return next(new HttpError("User not found.", 404));
+  }
+
   currentUser.friends = currentUser.friends.filter(
     (id) => id.toString() !== friendId
   );
@@ -310,7 +339,23 @@ const removeFriend = async (req, res, next) => {
     return next(new HttpError("Could not remove friend.", 500));
   }
 
-  res.json({ currentUser });
+  try {
+    await Chat.findOneAndDelete({
+      participants: { $all: [currentUserId, friendId] },
+    });
+  } catch (error) {
+    return next(new HttpError("Could not delete chat.", 500));
+  }
+
+  try {
+    const userResponse = await currentUser.populate(
+      "friends",
+      "img username status"
+    );
+    res.json({ currentUser: userResponse });
+  } catch (error) {
+    return next(new HttpError("Could not fetch updated friend list.", 500));
+  }
 };
 
 const followUnfollowUser = async (req, res, next) => {

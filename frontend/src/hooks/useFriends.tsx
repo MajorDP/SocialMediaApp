@@ -7,6 +7,7 @@ interface IFriends {
         id: string;
         img: string;
         username: string;
+        status: string;
       }>
     | [];
   requests:
