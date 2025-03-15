@@ -19,21 +19,18 @@ function Navigation() {
 
   return (
     <>
-      <header className="hidden md:block h-screen min-w-[13rem] lg:min-w-[15rem] bg-gradient-to-b from-gray-900 to-blue-950 border-r border-blue-950 text-[20px] shadow-lg">
+      <header className="hidden md:block h-screen min-w-[13rem] lg:min-w-[15rem] bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 text-[20px] shadow-lg rounded-tr-sm rounded-br-sm">
         <nav>
-          <div className="flex flex-row justify-between p-3 border-b border-blue-950 mb-3">
+          <div className="flex flex-row justify-between p-3 border-b border-[#00E5FF] mb-3">
             <div className="w-[4rem]">
               <img
-                src={
-                  user?.img ||
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s"
-                }
+                src={user?.img || "https://example.com/user.jpg"}
                 alt="userImg"
-                className="w-full rounded-full border-2 border-cyan-500 shadow-md shadow-cyan-600/50"
+                className="w-full rounded-full shadow-md hover:shadow-[#D500F9] duration-200 cursor-pointer"
               />
             </div>
             <div className="flex justify-around pl-2 flex-col w-[70%]">
-              <p className="truncate text-cyan-400 font-medium">
+              <p className="truncate text-cyan-200 font-medium">
                 {user?.username}
               </p>
               <input
@@ -42,7 +39,7 @@ function Navigation() {
                   setStatus(e.target.value)
                 }
                 onBlur={handleChangeStatus}
-                className="truncate text-cyan-400 font-medium text-[15px] py-[1px]"
+                className="truncate text-cyan-200 font-medium text-[15px] py-[1px] bg-transparent border-none outline-none"
               />
             </div>
           </div>
@@ -50,45 +47,45 @@ function Navigation() {
             <li>
               <Link
                 to="/"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-300 hover:text-cyan-500"
+                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
               >
-                <Home className="w-6 h-6 text-cyan-300 mr-2" />
+                <Home className="w-6 h-6 text-cyan-200 mr-2" />
                 Dashboard
               </Link>
             </li>
             <li>
               <Link
                 to="/create"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-300 hover:text-cyan-500"
+                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
               >
-                <BadgePlus className="w-6 h-6 text-cyan-300 mr-2" />
+                <BadgePlus className="w-6 h-6 text-cyan-200 mr-2" />
                 Create a Post
               </Link>
             </li>
             <li>
               <Link
                 to="/explore"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-300 hover:text-cyan-500"
+                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
               >
-                <Compass className="w-6 h-6 text-cyan-300 mr-2" />
+                <Compass className="w-6 h-6 text-cyan-200 mr-2" />
                 Explore
               </Link>
             </li>
             <li>
               <Link
                 to="/user"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-300 hover:text-cyan-500"
+                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
               >
-                <User className="w-6 h-6 text-cyan-300 mr-2" />
+                <User className="w-6 h-6 text-cyan-200 mr-2" />
                 Account
               </Link>
             </li>
             <li>
               <button
-                className="cursor-pointer flex flex-row items-center hover:scale-110 duration-300 text-red-400 hover:text-red-500"
+                className="cursor-pointer flex flex-row items-center hover:scale-110 duration-300 text-[#e48ff3] hover:text-[#9C1D7E]"
                 onClick={logout}
               >
-                <LogOut className="w-6 h-6 text-red-400 mr-2" />
+                <LogOut className="w-6 h-6 text-[#e48ff3] mr-2" />
                 Sign out
               </button>
             </li>
@@ -96,30 +93,30 @@ function Navigation() {
         </nav>
       </header>
 
-      <header className="block md:hidden w-full bg-gradient-to-b from-gray-900 to-blue-950 bottom-0 fixed border-t border-blue-800 shadow-lg">
+      <header className="block md:hidden w-full bg-gray-800 bottom-0 fixed shadow-lg">
         <nav>
           <ul className="py-3 w-[80%] m-auto flex flex-row justify-between items-center">
             <li>
               <Link to="/" className="hover:scale-110 duration-300">
-                <Home className="w-6 h-6 text-cyan-300 hover:text-cyan-500" />
+                <Home className="w-6 h-6 text-cyan-200 hover:text-[#D500F9]" />
               </Link>
             </li>
             <li>
               <Link
                 to="/create"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-300 hover:text-cyan-500"
+                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
               >
-                <BadgePlus className="w-6 h-6 text-cyan-300 mr-2" />
+                <BadgePlus className="w-6 h-6 text-cyan-200 mr-2" />
               </Link>
             </li>
             <li>
               <Link to="/explore" className="hover:scale-110 duration-300">
-                <Compass className="w-6 h-6 text-cyan-300 hover:text-cyan-500" />
+                <Compass className="w-6 h-6 text-cyan-200 hover:text-[#D500F9]" />
               </Link>
             </li>
             <li>
               <Link to="/user" className="hover:scale-110 duration-300">
-                <User className="w-6 h-6 text-cyan-300 hover:text-cyan-500" />
+                <User className="w-6 h-6 text-cyan-200 hover:text-[#D500F9]" />
               </Link>
             </li>
             <li>
@@ -127,7 +124,7 @@ function Navigation() {
                 className="cursor-pointer hover:scale-110 duration-300"
                 onClick={logout}
               >
-                <LogOut className="w-6 h-6 text-red-400 hover:text-red-500" />
+                <LogOut className="w-6 h-6 text-[#D500F9] hover:text-[#9C1D7E]" />
               </button>
             </li>
           </ul>

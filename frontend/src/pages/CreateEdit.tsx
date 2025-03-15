@@ -1,32 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createPost, editPost, getPostById } from "../services/posts-services";
 import { AuthContext } from "../context/UserContext";
+import { ImageIcon, Loader2, Send, Smile, X } from "lucide-react";
 
-const categoryOptions = [
-  "Technology",
-  "Health",
-  "Education",
-  "Entertainment",
-  "Sports",
-  "News",
-  "MMA",
-  "Parties",
-  "Politics",
-  "Games",
-  "Reality",
-  "Popular",
+const moods = [
+  { name: "Happy", emoji: "😊", gradient: "from-yellow-400 to-orange-500" },
+  { name: "Sad", emoji: "😔", gradient: "from-blue-400 to-blue-600" },
+  { name: "Stressed", emoji: "😰", gradient: "from-red-400 to-red-600" },
+  {
+    name: "Motivated",
+    emoji: "💪",
+    gradient: "from-emerald-400 to-emerald-600",
+  },
+  { name: "Relaxed", emoji: "😌", gradient: "from-purple-400 to-purple-600" },
+  { name: "Anxious", emoji: "😟", gradient: "from-pink-400 to-pink-600" },
 ];
-
 const CreateEdit = () => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { pid } = useParams();
+  const isEditing = pid ? true : false;
+
   const [message, setMessage] = useState("");
   const [image, setImage] = useState<string | null>(null);
+  const [mood, setMood] = useState<string | null>(null);
+
+  const [showMoodSelector, setShowMoodSelector] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     async function getPost() {
@@ -40,8 +43,6 @@ const CreateEdit = () => {
         if (data.img) {
           setImage(data.postImg);
         }
-        setCategories(data.categories);
-        setIsEditing(true);
       }
     }
     getPost();
@@ -58,17 +59,10 @@ const CreateEdit = () => {
     setMessage(e.target.value);
   };
 
-  const handleCategoryChange = (category: string) => {
-    setCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
-
   //TODO: Image uploading on post creation/edit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true);
     if (message === "" && !image) {
       setError("Post must contain either a picture or a message.");
       return;
@@ -79,7 +73,7 @@ const CreateEdit = () => {
       user: user?.id,
       message: message,
       postImg: image,
-      categories: categories,
+      mood: mood,
     };
 
     if (isEditing) {
@@ -91,6 +85,7 @@ const CreateEdit = () => {
 
       if (!success) {
         setError("Editing post failed.");
+        setIsSubmitting(false);
         return;
       }
 
@@ -100,6 +95,7 @@ const CreateEdit = () => {
 
       if (!success) {
         setError("Creating post failed.");
+        setIsSubmitting(false);
         return;
       }
 
@@ -108,73 +104,133 @@ const CreateEdit = () => {
   };
 
   return (
-    <div className="w-full h-fit sm:h-screen flex items-center justify-center rounded-xl pb-14 sm:pb-0">
-      <div className="border border-blue-900 flex flex-col w-full md:max-w-[80%] bg-gradient-to-b from-gray-900 to-blue-950 p-4 sm:p-5 rounded-2xl shadow-lg">
-        <h2 className="text-cyan-400 text-xl font-semibold mb-4 text-center">
-          {isEditing ? "Edit Post" : "Create a Post"}
-        </h2>
-
-        {error && <p className="text-center text-xs text-red-500">{error}</p>}
-
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <textarea
-            className="w-full p-3 rounded-md bg-gray-800 text-white border border-cyan-400"
-            rows={4}
-            placeholder="Write something..."
-            value={message}
-            onChange={handleMessageChange}
-          ></textarea>
-
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="text-white"
-          />
+    <div className="w-full h-full flex items-center ">
+      <div className="min-w-[40rem] m-auto bg-gradient-to-br from-[#032f5a] via-blue-950 to-fuchsia-950 rounded-lg shadow-xl border border-gray-700">
+        <p className="text-center p-2 text-xl text-cyan-200">Create a Post</p>
+        <form onSubmit={handleSubmit} className="p-6">
+          <div className="mb-6">
+            <textarea
+              value={message}
+              onChange={(e) => handleMessageChange(e)}
+              placeholder="What's on your mind?"
+              className="w-full min-h-[120px] bg-gray-900 border border-gray-700 rounded-lg p-4 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent resize-none"
+            />
+            {error && (
+              <p className="text-center text-sm text-red-500 font-light">
+                {error}
+              </p>
+            )}
+          </div>
 
           {image && (
-            <div className="flex items-center justify-center">
+            <div className="relative mb-6 group">
               <img
-                src={image || ""}
-                className="max-h-40 rounded-md border border-blue-800 shadow-lg shadow-cyan-500/40"
-                alt="Preview"
+                src={image}
+                alt="Selected"
+                className="rounded-lg w-full max-h-[300px] object-cover"
               />
+              <button
+                type="button"
+                onClick={() => setImage(null)}
+                className="absolute top-2 right-2 p-1 bg-gray-900 bg-opacity-75 rounded-full text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer"
+              >
+                <X size={20} />
+              </button>
             </div>
           )}
 
-          <div className="flex flex-col gap-2">
-            <h3 className="text-cyan-400 text-sm font-semibold">
-              Select Categories (up to 5):
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-5 p-2 bg-gray-900 rounded-md text-sm overflow-y-scroll scrollbar-hide max-h-[15rem] sm:max-h-[20rem]">
-              {categoryOptions.map((category) => (
-                <label
-                  key={category}
-                  className="flex items-center gap-2 text-white truncate"
-                  title={category}
+          {mood && (
+            <div className="mb-6 flex items-center">
+              <div
+                className={`px-4 py-2 rounded-full bg-gradient-to-r ${
+                  moods.find((m) => m.name === mood)?.gradient
+                } text-white flex items-center space-x-2`}
+              >
+                <span>{moods.find((m) => m.name === mood)?.emoji}</span>
+                <span>Feeling {mood}</span>
+                <button
+                  type="button"
+                  onClick={() => setMood(null)}
+                  className="ml-2 hover:text-gray-200 transition-colors duration-200"
                 >
-                  <input
-                    type="checkbox"
-                    value={category}
-                    checked={categories.includes(category)}
-                    onChange={() => handleCategoryChange(category)}
-                    className="accent-cyan-500 sm:min-w-5 sm:min-h-5"
-                  />
-                  <span className="truncate w-full block">{category}</span>
-                </label>
-              ))}
+                  <X size={16} />
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
-          <button
-            type="submit"
-            className="disabled:bg-gray-600 disabled:shadow-none disabled:border-none bg-cyan-500 hover:bg-cyan-400 px-4 py-2 rounded-lg transition-all duration-200 shadow-md shadow-cyan-500 border border-cyan-500 cursor-pointer text-black"
-            disabled={
-              (!message && !image) || categories.length > 5 || error !== null
-            }
-          >
-            {isEditing ? "Update Post" : "Post"}
-          </button>
+          <div className="flex items-center justify-between">
+            <div className="flex space-x-4">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                ref={fileInputRef}
+                className="hidden"
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="text-gray-400 hover:text-indigo-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800 cursor-pointer"
+              >
+                <ImageIcon size={24} />
+              </button>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setShowMoodSelector(!showMoodSelector)}
+                  className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800 cursor-pointer"
+                >
+                  <Smile size={24} />
+                </button>
+
+                {showMoodSelector && (
+                  <div className="absolute h-fit bottom-full top-10 mb-2 bg-gray-900 rounded-lg shadow-xl border border-gray-700 p-2 grid grid-cols-3 gap-2 min-w-[500px]">
+                    {moods.map((m) => (
+                      <button
+                        key={m.name}
+                        type="button"
+                        onClick={() => {
+                          setMood(m.name);
+                          setShowMoodSelector(false);
+                        }}
+                        className={`flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800 transition-colors duration-200 cursor-pointer ${
+                          mood === m.name ? "bg-gray-800" : ""
+                        }`}
+                      >
+                        <span className="text-xl">{m.emoji}</span>
+                        <span className="text-sm text-gray-300">{m.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting || (!message.trim() && !image)}
+              className={`px-6 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium flex items-center space-x-2 
+                ${
+                  !message.trim() && !image
+                    ? "opacity-50 cursor-not-allowed"
+                    : "hover:from-indigo-600 hover:to-purple-600"
+                } 
+                transition-all duration-200 transform hover:scale-105 cursor-pointer`}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 size={20} className="animate-spin" />
+                  <span>Posting...</span>
+                </>
+              ) : (
+                <>
+                  <Send size={20} />
+                  <span>Post</span>
+                </>
+              )}
+            </button>
+          </div>
         </form>
       </div>
     </div>

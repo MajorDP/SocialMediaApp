@@ -2,11 +2,11 @@
 @import "tailwindcss";
 
 body {
-  background-color: rgb(34, 34, 34);
+  background: linear-gradient(to bottom, #78a6d4, #382dd8);
   color: white;
   font-family: "Montserrat";
 }
-
+/* 535353 */
 /* Hide scrollbar but keep scrolling functionality */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;

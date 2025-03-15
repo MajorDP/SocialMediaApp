@@ -27,7 +27,7 @@ function CommentForm({ pid, handleSetPosts }: ICommentForm) {
   };
   return (
     <form
-      className="my-5 flex flex-col justify-center w-full sm:w-[90%] m-auto bg-gradient-to-b from-gray-900 to-blue-950 p-3 rounded-xl shadow-lg border border-blue-900"
+      className="my-5 flex flex-col justify-center w-full sm:w-[90%] m-auto bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 p-3 rounded-xl shadow-lg"
       onSubmit={(e) => handleSubmit(e)}
     >
       <p className="text-[14px] sm:text-xs mb-2 text-white font-medium">
@@ -39,7 +39,7 @@ function CommentForm({ pid, handleSetPosts }: ICommentForm) {
       <textarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        className="bg-gray-800 text-white text-sm px-3 py-2 resize-none rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-all duration-200 scrollbar-hide border border-blue-700 shadow-inner shadow-blue-900"
+        className="bg-gray-800 text-white text-sm px-3 py-2 resize-none rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-all duration-200 scrollbar-hide"
         maxLength={200}
       />
       {error && <p className="text-center text-xs text-red-500">{error}</p>}

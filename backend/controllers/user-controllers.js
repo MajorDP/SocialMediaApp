@@ -133,13 +133,13 @@ const register = async (req, res, next) => {
     const user = {
       id: newUser._id,
       email: newUser.email,
-      img: foundUser.img,
+      img: newUser.img,
       username: newUser.username,
       votes: newUser.votes,
       friends: newUser.friends,
       requests: newUser.requests,
       preferences: newUser.preferences,
-      status: foundUser.status,
+      status: newUser.status,
     };
 
     const accessToken = await jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {

@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
+import { Heart, ThumbsDown } from "lucide-react";
 import { IPosts } from "../interfaces/posts";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/UserContext";
-import CommentForm from "./CommentForm";
-import Comments from "./Comments";
 import { deletePost, updateVote } from "../services/posts-services";
+import { Link } from "react-router-dom";
+import Comments from "./Comments";
+import CommentForm from "./CommentForm";
 
 interface IPostItem {
   post: IPosts;
@@ -58,103 +59,79 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
     : null;
 
   return (
-    <li className="border border-blue-900 flex flex-col w-full md:min-w-fit lg:w-full bg-gradient-to-b from-gray-900 to-blue-950 p-2 sm:p-3 rounded-2xl shadow-lg">
-      <div>
-        <div className="flex flex-row w-full p-3">
-          <Link
-            to={`/user/${post.user.id}`}
-            className="w-[5rem] md:max-w-[15%] xl:max-w-[8%]"
-          >
-            <img
-              src={post.user.img}
-              className="rounded-full w-fit border-2 border-cyan-400 cursor-pointer"
-            />
-          </Link>
-          <div className="flex flex-col justify-start ml-2 w-[75%] xl:max-w-[85%]">
-            <Link
-              to={`/user/${post.user.id}`}
-              className="text-sm sm:text-lg font-semibold text-cyan-400 cursor-pointer w-fit"
-            >
+    <div className="bg-gradient-to-br hover:to-green-700 from-[#032f5a] via-blue-950 to-violet-950 p-4 rounded-lg shadow-lg w-full">
+      <div className="flex items-center space-x-3 mb-4 justify-between">
+        <div className="flex flex-row gap-3">
+          <img
+            src={post.user.img}
+            alt="Profile"
+            className="h-12 w-12 rounded-full"
+          />
+          <div>
+            <h3 className="font-semibold text-gray-100 flex flex-row items-center gap-2">
               {post.user.username}
-            </Link>
-            <p className="text-xs text-blue-300">
-              {post.datePosted.split("T")[0]}
-              <span> {post.isEdited && "(Edited)"}</span>
-            </p>
-            <div className="hidden sm:flex flex-col w-full">
-              <p className="break-words w-full my-2 text-gray-300 text-xs lg:text-[20px]">
-                {post.message}
-              </p>
-              <div className="max-w-[20rem] lg:max-w-[30rem] xl:max-w-[40rem] flex items-start justify-start">
-                <img
-                  src={post?.postImg}
-                  className="w-fit max-h-[20rem] object-left rounded-md border border-blue-800 shadow-lg shadow-cyan-500/40"
-                />
-              </div>
-            </div>
-          </div>
-          {isEditable && (
-            <div className=" gap-2 flex flex-col sm:flex-row text-xs sm:text-sm h-fit">
-              <Link
-                to={`/create/${post.id}`}
-                className="text-center px-2 py-1 bg-orange-400 hover:bg-orange-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl border border-orange-400"
-              >
-                Edit
-              </Link>
-              <button
-                className=" px-2 py-1 bg-red-500 hover:bg-red-600 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl border border-red-900"
-                onClick={() => handleDelete(post.id)}
-              >
-                Delete
-              </button>
-            </div>
-          )}
-        </div>
-        <div className="sm:hidden flex flex-col items-center w-full mt-2">
-          <p className="break-words w-full ml-10 my-[0.4rem] text-gray-300 text-[20px]">
-            {post.message}
-          </p>
-          <div className="max-w-[30rem] flex items-center justify-center">
-            <img
-              src={post?.postImg}
-              className="w-full h-full object-contain rounded-md border border-blue-800 shadow-lg shadow-cyan-500/40"
-            />
+              <span className="text-gray-400 text-xs">
+                {post.datePosted.split("T")[0]}
+                <span> {post.isEdited && "(Edited)"}</span>
+              </span>
+            </h3>
+
+            <span className="text-sm text-gray-400">Status will go here</span>
           </div>
         </div>
-        {error && <p className="text-center text-xs text-red-500">{error}</p>}
-        <div className="flex flex-row gap-3 mt-2 w-fit">
-          <button
-            className={`${
-              isVoted === "liked"
-                ? "bg-cyan-500 text-black"
-                : "bg-transparent text-cyan-400"
-            } hover:bg-cyan-400 hover:text-black px-2 sm:px-3 py-1 rounded-lg transition-all duration-200 shadow-md shadow-cyan-500 border border-cyan-500 cursor-pointer`}
-            onClick={() => handleVote("like")}
-          >
-            👍
-          </button>
-          <p className="text-gray-400 font-medium flex items-center text-[14px]">
-            {post.likes} {post.likes === 1 ? "Like" : "Likes"}
-          </p>
-          <button
-            className={`${
-              isVoted === "disliked" ? "bg-red-500" : "bg-transparent"
-            } hover:bg-red-400 hover:text-black px-2 sm:px-3 py-1 rounded-lg transition-all duration-200 shadow-md shadow-red-500 border border-red-500 cursor-pointer`}
-            onClick={() => handleVote("dislike")}
-          >
-            👎
-          </button>
-          <div className="flex items-center">
-            <button
-              className="underline text-cyan-300 hover:text-cyan-400 cursor-pointer transition-all duration-150 text-[14px]"
-              onClick={() => setShowComments(!showComments)}
+        {isEditable && (
+          <div className="flex flex-col gap-2 sm:flex-row text-xs sm:text-sm h-fit">
+            <Link
+              to={`/create/${post.id}`}
+              className="text-center px-2 py-1 bg-orange-400 hover:bg-orange-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl border border-orange-400"
             >
-              {post.comments.length}{" "}
-              {post.comments.length === 1 ? "Comment" : "Comments"}
+              Edit
+            </Link>
+            <button
+              className="px-2 py-1 bg-red-500 hover:bg-red-600 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl border border-red-900"
+              onClick={() => handleDelete(post.id)}
+            >
+              Delete
             </button>
           </div>
-        </div>
+        )}
       </div>
+      <p className="text-gray-300">{post.message}</p>
+      <div className="mt-4 flex items-center sm:justify-start justify-center space-x-4">
+        <button
+          className={`${
+            isVoted === "liked"
+              ? "text-green-500"
+              : "bg-transparent text-cyan-400"
+          } hover:text-green-500 px-3 py-2 rounded-lg transition-all duration-300 shadow-md cursor-pointer flex items-center space-x-2`}
+          onClick={() => handleVote("like")}
+        >
+          <Heart size={20} />
+          <span>{post.likes}</span>
+        </button>
+        <p className="text-gray-400 font-medium flex items-center text-[14px]">
+          {post.likes} {post.likes === 1 ? "Like" : "Likes"}
+        </p>
+        <button
+          className={`${
+            isVoted === "disliked" ? "text-red-800" : "text-red-400"
+          } hover:text-red-800 px-3 py-2 rounded-lg transition-all duration-300 shadow-md cursor-pointer flex items-center space-x-2`}
+          onClick={() => handleVote("dislike")}
+        >
+          <ThumbsDown size={20} />
+        </button>
+      </div>
+      <div className="flex items-center justify-center">
+        <button
+          onClick={() => setShowComments(!showComments)}
+          className="text-xs text-gray-400 cursor-pointer "
+        >
+          View comments
+        </button>
+      </div>
+      {error && (
+        <p className="text-center w-48 text-xs text-red-500">{error}</p>
+      )}
       <div
         className={`overflow-hidden transition-all duration-300 w-full mt-4 ${
           showComments ? "h-[35rem]" : "h-0"
@@ -164,14 +141,14 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
         <div className="w-full mt-5 flex justify-center underline">
           <Link
             to={`/post/${post.id}`}
-            className="text-[14px] text-cyan-300 hover:text-cyan-400 transition-all duration-150"
+            className="text-xs text-cyan-300 hover:text-cyan-400 transition-all duration-150"
           >
             See All Comments ({post.comments.length})
           </Link>
         </div>
         <CommentForm pid={post.id} handleSetPosts={handleSetPosts} />
       </div>
-    </li>
+    </div>
   );
 }
 
