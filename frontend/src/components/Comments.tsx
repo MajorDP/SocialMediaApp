@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { IComment } from "../interfaces/posts";
 
 interface IComments {
@@ -20,7 +21,7 @@ function Comments({ comments, showAll }: IComments) {
       )}
       {displayedComments.map((comment, index) => (
         <li className="flex flex-row gap-2" key={index}>
-          <div className="w-[15%] sm:w-[6%] xl:w-[2%]">
+          <div className="w-[15%] sm:w-[6%] lg:w-[8%] xl:w-[6%]">
             <img
               src={comment.user.img}
               className="w-full rounded-full cursor-pointer"
@@ -29,9 +30,12 @@ function Comments({ comments, showAll }: IComments) {
 
           <div className="flex gap-2 flex-col text-sm w-full">
             <div className="flex flex-row gap-2">
-              <p className="truncate text-xs cursor-pointer">
+              <Link
+                to={`/user/${comment.user?.id}`}
+                className="truncate text-xs cursor-pointer"
+              >
                 {comment.user.username}
-              </p>
+              </Link>
               <p className="text-[12px] truncate text-gray-400">
                 {comment.datePosted}
               </p>

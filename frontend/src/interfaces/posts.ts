@@ -19,6 +19,7 @@ export interface IComment {
   user: {
     username: string;
     img: string;
+    id: string;
   };
   datePosted: string;
   comment: string;

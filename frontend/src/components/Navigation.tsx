@@ -46,7 +46,7 @@ function Navigation() {
           <ul className="flex flex-col pl-3 items-start h-40 justify-between mt-4 gap-5">
             <li>
               <Link
-                to="/"
+                to="/dashboard"
                 className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
               >
                 <Home className="w-6 h-6 text-cyan-200 mr-2" />
@@ -97,7 +97,7 @@ function Navigation() {
         <nav>
           <ul className="py-3 w-[80%] m-auto flex flex-row justify-between items-center">
             <li>
-              <Link to="/" className="hover:scale-110 duration-300">
+              <Link to="/dashboard" className="hover:scale-110 duration-300">
                 <Home className="w-6 h-6 text-cyan-200 hover:text-[#D500F9]" />
               </Link>
             </li>

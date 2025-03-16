@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/UserContext";
 import Input from "./Input";
+import { Link } from "react-router-dom";
 
 interface ILoginForm {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,7 +23,19 @@ function LoginForm({ setIsLogin }: ILoginForm) {
       className="w-full flex flex-col items-center mt-20 sm:mt-0 text-xs sm:text-base"
       onSubmit={handleSubmit}
     >
-      <h2 className="text-center mt-4 text-xl font-semibold text-cyan-200">
+      <Link
+        to="/"
+        className="text-4xl md:text-5xl font-bold text-cyan-200 mb-6"
+      >
+        <span className="bg-gradient-to-r from-blue-800 to-fuchsia-500 bg-clip-text text-transparent">
+          ~
+        </span>
+        <span className=" text-white">MoodShare</span>
+        <span className="bg-gradient-to-r from-blue-800 to-fuchsia-500 bg-clip-text text-transparent">
+          ~
+        </span>
+      </Link>
+      <h2 className="text-center text-xl font-semibold text-cyan-200">
         Sign In
       </h2>
 

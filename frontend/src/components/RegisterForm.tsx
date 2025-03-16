@@ -7,15 +7,13 @@ import {
   isValidLengthPassword,
   isValidLengthUsername,
 } from "../validation/validation";
-
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface IRegisterForm {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function RegisterForm({ setIsLogin }: IRegisterForm) {
-  const navigate = useNavigate();
   const { error, register } = useContext(AuthContext);
   const [authData, setAuthData] = useState({
     email: "",
@@ -31,10 +29,6 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
     if (isFormValid) {
       await register(authData);
     }
-
-    if (!error) {
-      navigate("/");
-    }
   };
 
   return (
@@ -42,7 +36,19 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
       className="w-full flex flex-col items-center mt-20 text-xs sm:text-base"
       onSubmit={handleSubmit}
     >
-      <h2 className="text-center mt-4 text-lg font-semibold text-cyan-200">
+      <Link
+        to="/"
+        className="text-4xl md:text-5xl font-bold text-cyan-200 mb-6"
+      >
+        <span className="bg-gradient-to-r from-blue-800 to-fuchsia-500 bg-clip-text text-transparent">
+          ~
+        </span>
+        <span className=" text-white">MoodShare</span>
+        <span className="bg-gradient-to-r from-blue-800 to-fuchsia-500 bg-clip-text text-transparent">
+          ~
+        </span>
+      </Link>
+      <h2 className="text-center text-xl font-semibold text-cyan-200">
         Create an Account
       </h2>
 

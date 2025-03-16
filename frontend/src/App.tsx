@@ -9,6 +9,7 @@ import { AuthProvider } from "./context/UserContext";
 import Create from "./pages/CreateEdit";
 import User from "./pages/User";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Intro from "./pages/Intro";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
         <Routes>
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/user" element={<Account />} />
               <Route path="/user/:id" element={<User />} />
               <Route path="/create" element={<Create />} />
@@ -27,6 +28,7 @@ function App() {
             </Route>
           </Route>
           <Route path="/auth" element={<Auth />} />
+          <Route path="/" element={<Intro />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

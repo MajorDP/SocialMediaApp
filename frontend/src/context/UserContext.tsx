@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     setUser(jwtDecode(data.accessToken));
     sessionStorage.setItem("session", JSON.stringify(data.accessToken));
-    navigate("/");
+    navigate("/dashboard");
   };
 
   const register = async (authData: IAuthData) => {
@@ -89,6 +89,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     setUser(jwtDecode(data.accessToken));
     sessionStorage.setItem("session", JSON.stringify(data.accessToken));
+    navigate("/dashboard");
   };
 
   const logout = () => {
