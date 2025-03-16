@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const freshUserData = await getCurrentUser();
       if (freshUserData) {
-        setUser(freshUserData);
+        updateUser(freshUserData);
       }
     } catch (err) {
       console.error("Failed to refresh user data:", err);

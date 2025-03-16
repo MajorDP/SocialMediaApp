@@ -22,7 +22,9 @@ function LoginForm({ setIsLogin }: ILoginForm) {
       className="w-full flex flex-col items-center mt-20 sm:mt-0 text-xs sm:text-base"
       onSubmit={handleSubmit}
     >
-      <h2 className="text-center mt-4 text-xl font-semibold">Sign In</h2>
+      <h2 className="text-center mt-4 text-xl font-semibold text-cyan-200">
+        Sign In
+      </h2>
 
       <div className="flex flex-col w-fit mt-10">
         <Input
@@ -51,7 +53,7 @@ function LoginForm({ setIsLogin }: ILoginForm) {
       <button
         type="submit"
         disabled={!isFormValid}
-        className="mt-5 border px-4 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 disabled:bg-gray-800 cursor-pointer"
+        className="mt-5 disabled:bg-gray-600 disabled:shadow-none disabled:border-none bg-cyan-800 hover:bg-cyan-700 px-4 py-2 rounded-lg transition-all duration-200 shadow-md enabled:shadow-cyan-800 disabled:shadow-gray-600 cursor-pointer text-white"
       >
         Sign In
       </button>

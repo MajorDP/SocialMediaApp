@@ -104,16 +104,18 @@ const CreateEdit = () => {
   };
 
   return (
-    <div className="w-full h-full flex items-center ">
-      <div className="min-w-[40rem] m-auto bg-gradient-to-br from-[#032f5a] via-blue-950 to-fuchsia-950 rounded-lg shadow-xl border border-gray-700">
-        <p className="text-center p-2 text-xl text-cyan-200">Create a Post</p>
-        <form onSubmit={handleSubmit} className="p-6">
-          <div className="mb-6">
+    <div className="w-full h-full flex items-center px-2 sm:px-4">
+      <div className="w-full max-w-2xl m-auto bg-gradient-to-br from-[#032f5a] via-blue-950 to-fuchsia-950 rounded-lg shadow-xl border border-gray-700">
+        <p className="text-center p-2 text-lg sm:text-xl text-cyan-200">
+          Create a Post
+        </p>
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6">
+          <div className="mb-4 sm:mb-6">
             <textarea
               value={message}
               onChange={(e) => handleMessageChange(e)}
               placeholder="What's on your mind?"
-              className="w-full min-h-[120px] bg-gray-900 border border-gray-700 rounded-lg p-4 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent resize-none"
+              className="w-full min-h-[100px] sm:min-h-[120px] bg-gray-800 border border-gray-700 rounded-lg p-3 sm:p-4 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:border-transparent resize-none"
             />
             {error && (
               <p className="text-center text-sm text-red-500 font-light">
@@ -123,11 +125,11 @@ const CreateEdit = () => {
           </div>
 
           {image && (
-            <div className="relative mb-6 group">
+            <div className="relative mb-4 sm:mb-6 group">
               <img
                 src={image}
                 alt="Selected"
-                className="rounded-lg w-full max-h-[300px] object-cover"
+                className="rounded-lg w-full max-h-[250px] sm:max-h-[300px] object-cover"
               />
               <button
                 type="button"
@@ -140,14 +142,14 @@ const CreateEdit = () => {
           )}
 
           {mood && (
-            <div className="mb-6 flex items-center">
+            <div className="mb-4 sm:mb-6 flex items-center">
               <div
-                className={`px-4 py-2 rounded-full bg-gradient-to-r ${
+                className={`px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r ${
                   moods.find((m) => m.name === mood)?.gradient
                 } text-white flex items-center space-x-2`}
               >
                 <span>{moods.find((m) => m.name === mood)?.emoji}</span>
-                <span>Feeling {mood}</span>
+                <span className="text-sm sm:text-base">Feeling {mood}</span>
                 <button
                   type="button"
                   onClick={() => setMood(null)}
@@ -160,7 +162,7 @@ const CreateEdit = () => {
           )}
 
           <div className="flex items-center justify-between">
-            <div className="flex space-x-4">
+            <div className="flex space-x-3 sm:space-x-4">
               <input
                 type="file"
                 accept="image/*"
@@ -173,7 +175,7 @@ const CreateEdit = () => {
                 onClick={() => fileInputRef.current?.click()}
                 className="text-gray-400 hover:text-indigo-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800 cursor-pointer"
               >
-                <ImageIcon size={24} />
+                <ImageIcon size={22} />
               </button>
               <div className="relative">
                 <button
@@ -181,11 +183,11 @@ const CreateEdit = () => {
                   onClick={() => setShowMoodSelector(!showMoodSelector)}
                   className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800 cursor-pointer"
                 >
-                  <Smile size={24} />
+                  <Smile size={22} />
                 </button>
 
                 {showMoodSelector && (
-                  <div className="absolute h-fit bottom-full top-10 mb-2 bg-gray-900 rounded-lg shadow-xl border border-gray-700 p-2 grid grid-cols-3 gap-2 min-w-[500px]">
+                  <div className="absolute h-fit bottom-full left-[-79px] sm:left-auto top-10 mb-2 bg-gray-900 rounded-lg shadow-xl border border-gray-700 p-2 flex  flex-col flex-wrap sm:grid-cols-4 gap-2 min-w-[300px] sm:min-w-[500px]">
                     {moods.map((m) => (
                       <button
                         key={m.name}
@@ -210,22 +212,22 @@ const CreateEdit = () => {
             <button
               type="submit"
               disabled={isSubmitting || (!message.trim() && !image)}
-              className={`px-6 py-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-medium flex items-center space-x-2 
-                ${
-                  !message.trim() && !image
-                    ? "opacity-50 cursor-not-allowed"
-                    : "hover:from-indigo-600 hover:to-purple-600"
-                } 
-                transition-all duration-200 transform hover:scale-105 cursor-pointer`}
+              className={`px-4 sm:px-6 py-2 rounded-full bg-gradient-to-r from-blue-800 to-fuchsia-950 text-cyan-200 font-medium flex items-center space-x-2 
+              ${
+                !message.trim() && !image
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:from-blue-800 hover:to-fuchsia-800"
+              } 
+              transition-all duration-200 transform hover:scale-105 cursor-pointer`}
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 size={20} className="animate-spin" />
+                  <Loader2 size={18} className="animate-spin" />
                   <span>Posting...</span>
                 </>
               ) : (
                 <>
-                  <Send size={20} />
+                  <Send size={18} />
                   <span>Post</span>
                 </>
               )}

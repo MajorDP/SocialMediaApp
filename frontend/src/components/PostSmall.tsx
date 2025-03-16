@@ -68,15 +68,19 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
             className="h-12 w-12 rounded-full"
           />
           <div>
-            <h3 className="font-semibold text-gray-100 flex flex-row items-center gap-2">
+            <Link
+              to={`/user/${post.user.id}`}
+              className="font-semibold text-gray-100 flex flex-row flex-wrap items-center gap-2"
+            >
               {post.user.username}
               <span className="text-gray-400 text-xs">
                 {post.datePosted.split("T")[0]}
                 <span> {post.isEdited && "(Edited)"}</span>
               </span>
-            </h3>
-
-            <span className="text-sm text-gray-400">Status will go here</span>
+            </Link>
+            <span className="text-xs md:text-sm text-gray-400">
+              Status will go here
+            </span>
           </div>
         </div>
         {isEditable && (
@@ -121,7 +125,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           <ThumbsDown size={20} />
         </button>
       </div>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center mt-2 sm:mt-0">
         <button
           onClick={() => setShowComments(!showComments)}
           className="text-xs text-gray-400 cursor-pointer "

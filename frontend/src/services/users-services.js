@@ -16,6 +16,7 @@ export const getCurrentUser = async () => {
     }
 
     const data = await response.json();
+
     return {
       ...data,
     };
@@ -181,7 +182,6 @@ export const handleUpdateUser = async (userData) => {
 };
 
 export const changeStatus = async (uid, status) => {
-  console.log(uid, status);
   const res = await fetch("http://localhost:5000/auth/status", {
     method: "PATCH",
     headers: {

@@ -23,7 +23,6 @@ const getCurrentUser = async (req, res, next) => {
 
 const getUser = async (req, res, next) => {
   const uid = req.params.uid;
-  console.log(uid);
 
   if (!uid) {
     return next(new HttpError("User ID is missing.", 400));
@@ -32,7 +31,7 @@ const getUser = async (req, res, next) => {
   let user;
 
   try {
-    user = await User.findById(uid, "username");
+    user = await User.findById(uid, "username status");
     if (!user) {
       return next(new HttpError("User not found.", 404));
     }

@@ -36,7 +36,7 @@ function PostLarge({ post, setPost }: IPostItem) {
     : null;
 
   return (
-    <div className="border border-blue-900 flex flex-col lg:flex-row w-full md:max-w-[80%] bg-gradient-to-b from-gray-900 to-blue-950 p-2 sm:p-3 rounded-2xl shadow-lg">
+    <div className="flex flex-col lg:flex-row w-full md:max-w-[80%] bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 p-2 sm:p-3 rounded-2xl shadow-lg">
       <div className="w-full">
         <div className="flex flex-row w-full p-3">
           <Link
@@ -45,7 +45,7 @@ function PostLarge({ post, setPost }: IPostItem) {
           >
             <img
               src={post?.user.img}
-              className="rounded-full w-fit border-2 border-cyan-400 shadow-cyan-500 cursor-pointer"
+              className="rounded-full w-fit shadow-cyan-500 cursor-pointer"
             />
           </Link>
           <div className="flex flex-col justify-start ml-2 w-[80%] xl:max-w-[85%]">

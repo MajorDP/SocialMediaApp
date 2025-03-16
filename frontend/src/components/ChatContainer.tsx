@@ -47,6 +47,7 @@ interface IChatContainer {
   selectedFriend: { id: string; username: string };
   onClose: () => void;
 }
+
 function ChatContainer({
   currentUserId,
   selectedFriend,
@@ -61,11 +62,11 @@ function ChatContainer({
   return ReactDOM.createPortal(
     <>
       <div
-        className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-10"
+        className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-60"
         onClick={onClose}
       ></div>
 
-      <div className="h-screen fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full md:w-[80%] md:h-[90%] bg-gradient-to-b from-gray-900 to-blue-950 rounded-xl  border border-blue-900 z-20">
+      <div className="h-screen fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full md:w-[80%] md:h-[90%] bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 rounded-xl  border border-slate-600 z-70">
         <button
           className="absolute right-3 top-2 text-lg bg-gray-800 hover:bg-gray-700 p-1 rounded-full"
           onClick={onClose}
@@ -89,7 +90,7 @@ function ChatContainer({
         {/* TODO: CHANGE LATER */}
         <div className="h-full rounded-b-xl">
           <Chat chat={chatMessages} currentUserId={currentUserId} />
-          <div className="h-[10%] px-2 py-1 rounded-b-xl border-t border-blue-900">
+          <div className="w-full h-[10%] px-2 py-1 rounded-b-xl border-t border-slate-600 bg-gradient-to-b from via-violet-950 to-gray-900">
             <ChatInput />
           </div>
         </div>

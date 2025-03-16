@@ -19,7 +19,7 @@ function Navigation() {
 
   return (
     <>
-      <header className="hidden md:block h-screen min-w-[13rem] lg:min-w-[15rem] bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 text-[20px] shadow-lg rounded-tr-sm rounded-br-sm">
+      <header className="z-10 hidden md:block h-screen min-w-[13rem] lg:min-w-[15rem] bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 text-[20px] shadow-lg rounded-tr-sm rounded-br-sm">
         <nav>
           <div className="flex flex-row justify-between p-3 border-b border-[#00E5FF] mb-3">
             <div className="w-[4rem]">
@@ -93,7 +93,7 @@ function Navigation() {
         </nav>
       </header>
 
-      <header className="block md:hidden w-full bg-gray-800 bottom-0 fixed shadow-lg">
+      <header className="block md:hidden w-full bg-gray-800 bottom-0 fixed shadow-lg z-10">
         <nav>
           <ul className="py-3 w-[80%] m-auto flex flex-row justify-between items-center">
             <li>

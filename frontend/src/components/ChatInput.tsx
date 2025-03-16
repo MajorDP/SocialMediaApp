@@ -30,7 +30,7 @@ function ChatInput() {
 
   return (
     <form
-      className="w-[80%] flex flex-row items-center m-auto border border-blue-700 rounded-xl px-2 py-1 gap-3 h-fit relative"
+      className="w-full sm:w-[80%] flex flex-row items-center m-auto border border-cyan-200 rounded-xl px-2 py-1 gap-3 h-fit relative bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800"
       onSubmit={handleSend}
     >
       {image && (
@@ -74,13 +74,13 @@ function ChatInput() {
 
       <div className="w-full h-10">
         <textarea
-          className="border border-blue-700 rounded-md px-2 py-1 h-full w-full resize-none scrollbar-hide focus:outline-0 leading-relaxed text-xs"
+          className="border border-cyan-200 rounded-md px-2 py-1 h-full w-full resize-none scrollbar-hide focus:outline-0 leading-relaxed text-xs"
           value={message}
           onChange={handleMessageChange}
         />
       </div>
 
-      <button className="border border-blue-800 px-1 sm:px-2 py-1 rounded-xl hover:scale-105 hover:bg-cyan-500 text-black font-medium text-xs bg-cyan-400 cursor-pointer duration-200">
+      <button className="border border-cyan-200 px-1 sm:px-2 py-1 rounded-xl hover:scale-105 hover:bg-cyan-500 text-black font-medium text-xs bg-cyan-400 cursor-pointer duration-200">
         Send
       </button>
     </form>

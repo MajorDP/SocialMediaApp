@@ -44,7 +44,7 @@ function CommentForm({ pid, handleSetPosts }: ICommentForm) {
       />
       {error && <p className="text-center text-xs text-red-500">{error}</p>}
       <button
-        className="hover:bg-cyan-500 text-black font-medium text-xs bg-cyan-400 mt-3 px-4 py-2 rounded-xl w-44 m-auto hover:scale-105 cursor-pointer duration-300 shadow-md shadow-cyan-500/50 border border-cyan-600 disabled:bg-gray-500 disabled:cursor-default"
+        className="hover:bg-cyan-500 text-black font-medium text-xs bg-cyan-400 mt-3 px-4 py-2 rounded-xl w-24 sm:w-44 m-auto hover:scale-105 cursor-pointer duration-300 shadow-md shadow-cyan-500/50 border border-cyan-600 disabled:bg-gray-500 disabled:cursor-default"
         disabled={!comment}
       >
         Comment
