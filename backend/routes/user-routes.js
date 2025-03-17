@@ -32,7 +32,7 @@ router.post("/login", userController.login);
 router.post("/register", userController.register);
 router.patch("/update", authenticateToken, userController.updateAccount);
 router.patch("/status", userController.updateStatus);
-router.patch("/preferences", userController.setPreferences);
+router.patch("/mood", userController.setMood);
 router.get("/friends/:uid", userController.getFriends);
 router.patch("/friends/add", userController.sendFriendRequest);
 router.patch("/friends/handle", userController.acceptRejectFriendRequest);

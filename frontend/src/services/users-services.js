@@ -59,13 +59,13 @@ export const signUp = async (authData) => {
   return { data: data, error: null };
 };
 
-export const setPreferences = async (preferences, userId) => {
-  const res = await fetch("http://localhost:5000/auth/preferences", {
+export const setMood = async (currentMood, desc, userId) => {
+  const res = await fetch("http://localhost:5000/auth/mood", {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ preferences: preferences, uid: userId }),
+    body: JSON.stringify({ currentMood: currentMood, desc: desc, uid: userId }),
   });
 
   const data = await res.json();

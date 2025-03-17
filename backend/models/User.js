@@ -18,7 +18,11 @@ const User = new Schema({
   },
   friends: [{ type: mongoose.Types.ObjectId, ref: "User", default: [] }],
   requests: [{ type: mongoose.Types.ObjectId, ref: "User", default: [] }],
-  preferences: [{ type: String, default: [] }],
+  mood: {
+    currentMoods: [{ type: String, default: [] }],
+    desc: { type: String, default: "" },
+    lastUpdated: { type: Date, required: true },
+  },
 });
 
 module.exports = mongoose.model("User", User);

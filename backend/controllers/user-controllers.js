@@ -80,7 +80,7 @@ const login = async (req, res, next) => {
     votes: foundUser.votes,
     friends: foundUser.friends,
     requests: foundUser.requests,
-    preferences: foundUser.preferences,
+    mood: foundUser.mood,
     status: foundUser.status,
   };
 
@@ -137,11 +137,11 @@ const register = async (req, res, next) => {
       votes: newUser.votes,
       friends: newUser.friends,
       requests: newUser.requests,
-      preferences: newUser.preferences,
+      mood: newUser.mood,
       status: newUser.status,
     };
 
-    const accessToken = await jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "1h",
     });
 
@@ -151,8 +151,8 @@ const register = async (req, res, next) => {
   }
 };
 
-const setPreferences = async (req, res, next) => {
-  const { preferences, uid } = req.body;
+const setMood = async (req, res, next) => {
+  const { currentMood, desc, uid } = req.body;
 
   let user;
   try {
@@ -161,7 +161,13 @@ const setPreferences = async (req, res, next) => {
     return next(new HttpError("Could not get user.", 500));
   }
 
-  user.preferences = preferences;
+  user.mood = {
+    currentMoods: [currentMood],
+    desc: desc || "",
+    lastUpdated: new Date(),
+  };
+
+  console.log(user.mood);
 
   try {
     await user.save();
@@ -172,11 +178,12 @@ const setPreferences = async (req, res, next) => {
   const userResponse = {
     id: user.id,
     email: user.email,
+    img: user.img,
     username: user.username,
     votes: user.votes,
     friends: user.friends,
     requests: user.requests,
-    preferences: user.preferences,
+    mood: user.mood,
   };
   console.log("userResponse");
   console.log(userResponse);
@@ -439,7 +446,7 @@ exports.getCurrentUser = getCurrentUser;
 exports.getUser = getUser;
 exports.login = login;
 exports.register = register;
-exports.setPreferences = setPreferences;
+exports.setMood = setMood;
 exports.getFriends = getFriends;
 exports.sendFriendRequest = sendFriendRequest;
 exports.acceptRejectFriendRequest = acceptRejectFriendRequest;

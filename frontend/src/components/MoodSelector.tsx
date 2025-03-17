@@ -1,5 +1,7 @@
 import { Smile, Frown, Brain, Trophy, Coffee, Heart } from "lucide-react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/UserContext";
+import { setMood } from "../services/users-services";
 
 const moods = [
   {
@@ -41,12 +43,40 @@ const moods = [
 ];
 
 function MoodSelector() {
-  const [selectedMood, setSelectedMood] = useState("");
-  const [isOpen, setisOpen] = useState(true);
+  const { user, updateUser } = useContext(AuthContext);
+
+  // Check if the last mood update was within the last 24 hours
+  const isUpdatedToday =
+    Date.now() - new Date(user?.mood?.lastUpdated || "").getTime() <
+    24 * 60 * 60 * 1000;
+
+  const [selectedMood, setSelectedMood] = useState({
+    mood: "",
+    desc: "",
+  });
+
+  const [isOpen, setIsOpen] = useState(!isUpdatedToday);
+
+  useEffect(() => {
+    if (isUpdatedToday && user?.mood) {
+      setSelectedMood({
+        mood: user.mood.currentMoods[0],
+        desc: user.mood.desc,
+      });
+    }
+  }, [isUpdatedToday, user?.mood]);
 
   const handleSubmitMood = async () => {
     //TODO: Update user's mood for posts algorithm and 24h chats
-    setisOpen(false);
+    const { success, userResponse } = await setMood(
+      selectedMood.mood,
+      selectedMood.desc,
+      user?.id
+    );
+    if (success) {
+      updateUser(userResponse);
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -57,9 +87,9 @@ function MoodSelector() {
     >
       <h2
         className="text-sm text-center sm:text-xl mb-4 text-cyan-200 cursor-pointer"
-        onClick={() => setisOpen(!isOpen)}
+        onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? "How are you feeling today?" : "Select another mood"}
+        How are you feeling today?
       </h2>
 
       <div
@@ -72,9 +102,13 @@ function MoodSelector() {
             <button
               key={mood.label}
               className={`${mood.color} ${
-                mood.label === selectedMood && "scale-95 duration-200"
+                mood.label === selectedMood.mood && "scale-95 duration-200"
               } p-4 rounded-lg flex items-center justify-center space-x-2 hover:opacity-90 shadow-md cursor-pointer text-xs md:text-base`}
-              onClick={() => setSelectedMood(mood.label)}
+              onClick={() =>
+                setSelectedMood((prev) => {
+                  return { ...prev, mood: mood.label };
+                })
+              }
             >
               <mood.icon size={24} />
               <span>{mood.label}</span>
@@ -91,7 +125,15 @@ function MoodSelector() {
             Share the reason for your mood{" "}
             <span className="text-gray-400">(Optional)</span>
           </p>
-          <textarea className="w-1/2 m-auto bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:border-transparent resize-none transition-all duration-200" />
+          <input
+            value={selectedMood.desc}
+            onChange={(e) =>
+              setSelectedMood((prev) => {
+                return { ...prev, desc: e.target.value };
+              })
+            }
+            className="w-1/2 px-2 py-1 m-auto bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:border-transparent resize-none transition-all duration-200"
+          />
           <button
             className="mt-2 px-4 sm:px-6 py-2 rounded-full bg-gradient-to-r from-blue-800 to-fuchsia-950 text-cyan-200 hover:from-blue-800 hover:to-fuchsia-800 font-medium flex items-center space-x-2 cursor-pointer hover:scale-105 duration-200"
             onClick={handleSubmitMood}

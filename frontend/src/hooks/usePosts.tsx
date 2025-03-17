@@ -1,25 +1,32 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getPosts } from "../services/posts-services";
 import { IPosts } from "../interfaces/posts";
+import { AuthContext } from "../context/UserContext";
 
 function usePosts(sortValue: string, userId: string) {
+  const { user } = useContext(AuthContext);
   const [postsData, setPostsData] = useState<IPosts[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchPosts() {
-      const { data, error } = await getPosts(sortValue, userId);
+      const { data, error } = await getPosts(
+        sortValue,
+        user?.mood.currentMoods[0],
+        userId
+      );
       if (data) {
         setPostsData(data);
+        setIsLoading(false);
       }
       if (error) {
         setError(error);
+        setIsLoading(false);
       }
     }
     fetchPosts();
-    setIsLoading(false);
-  }, [sortValue, userId]);
+  }, [sortValue, user, userId]);
 
   return {
     posts: postsData,

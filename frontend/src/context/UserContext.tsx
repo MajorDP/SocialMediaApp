@@ -15,7 +15,11 @@ interface IUserData {
     disliked: string[];
   };
   status: string;
-  preferences: string[];
+  mood: {
+    currentMoods: string[];
+    desc: string;
+    lastUpdated: Date;
+  };
 }
 
 interface IAuthData {
@@ -59,10 +63,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         updateUser(freshUserData);
       }
     } catch (err) {
+      logout();
       console.error("Failed to refresh user data:", err);
     }
   };
-
+  console.log(user);
   useEffect(() => {
     refreshUserData();
   }, []);

@@ -11,8 +11,11 @@ export default function NewDashboard() {
   const { user } = useContext(AuthContext);
   const [selectedTab, setSelectedTab] = useState("Dashboard");
 
-  //@ts-expect-error page wont load if no user
-  const { posts, error, isLoading, setPosts } = usePosts("dashboard", user?.id);
+  const { posts, error, isLoading, setPosts } = usePosts(
+    "dashboard",
+    //@ts-expect-error page wont load if no user
+    user?.id
+  );
   if (isLoading) {
     return (
       <div className="h-[50vh] flex items-center justify-center">
@@ -64,9 +67,14 @@ export default function NewDashboard() {
                 </div>
               </button>
             </div>
-            {selectedTab === "Dashboard" && (
-              <PostsList posts={posts} setPosts={setPosts} />
-            )}
+            {selectedTab === "Dashboard" &&
+              (user?.mood.currentMoods[0] ? (
+                <PostsList posts={posts} setPosts={setPosts} />
+              ) : (
+                <p className="text-center p-4">
+                  Select your mood to customize your feed.
+                </p>
+              ))}
             {selectedTab === "Memories" && <p>COMING SOON</p>}
           </div>
         )}

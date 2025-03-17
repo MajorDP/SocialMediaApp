@@ -112,9 +112,9 @@ export const postComment = async (uid, pid, comment) => {
   return { data: data, error: null };
 };
 
-export const getPosts = async (filterValue, uid) => {
+export const getPosts = async (filterValue, currentMood, uid) => {
   const res = await fetch(
-    `http://localhost:5000/posts/?filterValue=${filterValue}&uid=${uid}`
+    `http://localhost:5000/posts/?filterValue=${filterValue}&currentMood=${currentMood}&uid=${uid}`
   );
 
   if (!res.ok) {

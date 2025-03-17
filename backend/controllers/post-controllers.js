@@ -50,7 +50,7 @@ const editPost = async (req, res, next) => {
 const getPosts = async (req, res, next) => {
   let posts;
   let user;
-  const { filterValue, uid } = req.query;
+  const { filterValue, currentMood, uid } = req.query;
 
   try {
     user = await User.findById(uid);
@@ -62,16 +62,27 @@ const getPosts = async (req, res, next) => {
   }
 
   if (filterValue === "dashboard") {
-    posts = posts.filter(
-      (post) =>
-        post.categories.find((category) =>
-          user.preferences.includes(category)
-        ) && post.user._id.toString() !== uid
-    );
+    posts = posts.filter((post) => {
+      const isFriend = user.friends.includes(post.user._id.toString());
+      const matchesMood = post.moods.includes(currentMood);
+      const isNotUserPost = post.user._id.toString() !== uid;
+
+      return (matchesMood || isFriend) && isNotUserPost;
+    });
   }
 
   if (filterValue === "explore") {
-    posts = posts.filter((post) => post.user._id.toString() !== uid);
+    posts = posts
+      .filter(
+        (post) =>
+          post.moods.includes(currentMood) && post.user._id.toString() !== uid
+      )
+      .sort((a, b) => {
+        const popularityA = a.comments.length + a.likes;
+        const popularityB = b.comments.length + b.likes;
+
+        return popularityB - popularityA;
+      });
   }
 
   res.json(posts.map((post) => post.toObject({ getters: true })));
@@ -173,6 +184,7 @@ const likePost = async (req, res, next) => {
     username: user.username,
     img: user.img,
     votes: user.votes,
+    mood: user.mood,
   };
   res.json({
     post: post.toObject({ getters: true }),
@@ -229,6 +241,7 @@ const dislikePost = async (req, res, next) => {
     img: user.img,
     email: user.email,
     votes: user.votes,
+    mood: user.mood,
   };
 
   res.json({
