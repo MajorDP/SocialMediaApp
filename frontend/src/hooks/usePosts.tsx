@@ -9,6 +9,7 @@ function usePosts(sortValue: string, userId: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  console.log(postsData);
   useEffect(() => {
     async function fetchPosts() {
       const { data, error } = await getPosts(

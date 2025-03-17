@@ -7,27 +7,73 @@ import useFriends from "../hooks/useFriends";
 import AddFriendForm from "./AddFriendForm";
 import { Clock, Trash } from "lucide-react";
 import { Link } from "react-router-dom";
+import { handleFriendRequests, removeFriend } from "../services/users-services";
 
 function FriendListLarge() {
-  const { user } = useContext(AuthContext);
-  //@ts-expect-error page wont load if no user
-  const { friends, error, isLoading, setFriends } = useFriends(user?.id);
+  const { user, updateUser } = useContext(AuthContext);
+
+  const { friends, error, isLoading, setFriends } =
+    //@ts-expect-error page wont load if no user
+    useFriends(user?.id);
   const [selectedFriend, setSelectedFriend] = useState<{
     id: string;
     username: string;
   } | null>(null);
 
   const handleFriendRequest = async (type: string, friendId: string) => {
-    console.log(type, friendId);
-    setFriends({
-      friends: [],
-      requests: [],
-    });
+    const { success, data } = await handleFriendRequests(
+      type,
+      user?.id,
+      friendId
+    );
+
+    if (!success) {
+      return;
+    }
+
+    if (type === "accept") {
+      setFriends({
+        friends: [...friends.friends, data.friends],
+        requests: data.requests,
+      });
+      //@ts-expect-error aaa
+      updateUser({
+        ...user,
+        friends: [...friends.friends, data.friends],
+        requests: data.requests,
+      });
+    }
+
+    if (type === "reject") {
+      setFriends({
+        friends: [...friends.friends],
+        requests: data.requests,
+      });
+
+      //@ts-expect-error aaa
+      updateUser({
+        ...user,
+        friends: [...friends.friends],
+        requests: data.requests,
+      });
+    }
   };
 
   const handleRemoveFriend = async (friendId: string) => {
-    console.log(friendId);
-    //TODO: Remove friend functionality
+    const { success, data } = await removeFriend(user?.id, friendId);
+
+    if (success) {
+      setFriends({
+        requests: [...friends.requests],
+        friends: data.currentUser.friends,
+      });
+      //@ts-expect-error aaa
+      updateUser({
+        ...user,
+        friends: data.currentUser.friends,
+        requests: [...friends.requests],
+      });
+    }
   };
 
   return (
@@ -52,7 +98,7 @@ function FriendListLarge() {
               <ul className="mt-4">
                 {friends.requests.map((req) => (
                   <li
-                    className="flex flex-row items-center justify-between p-3 mb-3 bg-gray-800 rounded-lg"
+                    className="flex flex-row items-center justify-between p-3 mb-3 bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 rounded-lg"
                     key={req.id}
                   >
                     <div className="flex items-center gap-3">
@@ -65,13 +111,13 @@ function FriendListLarge() {
                     </div>
                     <div className="flex flex-row gap-3">
                       <button
-                        className="text-green-700 bg-green-300 text-sm px-3 py-1 rounded-full hover:bg-green-400 transition"
+                        className="text-green-700 bg-green-300 text-sm px-3 py-1 rounded-full hover:bg-green-400 transition cursor-pointer"
                         onClick={() => handleFriendRequest("accept", req.id)}
                       >
                         ✔
                       </button>
                       <button
-                        className="text-red-700 bg-red-300 text-sm px-3 py-1 rounded-full hover:bg-red-400 transition"
+                        className="text-red-700 bg-red-300 text-sm px-3 py-1 rounded-full hover:bg-red-400 transition cursor-pointer"
                         onClick={() => handleFriendRequest("reject", req.id)}
                       >
                         ✖

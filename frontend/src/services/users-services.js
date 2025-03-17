@@ -132,6 +132,7 @@ export const handleFriendRequests = async (type, userId, friendId) => {
   }
 
   const data = await res.json();
+  console.log(data);
   return { success: true, data: data };
 };
 

@@ -120,10 +120,16 @@ const register = async (req, res, next) => {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
+
   const newUser = new User({
     email: email,
     username: username,
     password: hashedPassword,
+    mood: {
+      currentMoods: [],
+      desc: "",
+      lastUpdated: "a",
+    },
   });
 
   try {
@@ -270,6 +276,7 @@ const acceptRejectFriendRequest = async (req, res, next) => {
     try {
       await currentUser.save();
       await friend.save();
+      await currentUser.populate("requests", "username img");
     } catch (error) {
       return next(new HttpError("Could not add friend.", 500));
     }
@@ -293,7 +300,9 @@ const acceptRejectFriendRequest = async (req, res, next) => {
         username: friend.username,
         img: friend.img,
       },
-      requests: currentUser.requests.map((request) => request.toString()),
+      requests: currentUser.requests.map((request) =>
+        request.toObject({ getters: true })
+      ),
     });
   }
 
@@ -304,12 +313,15 @@ const acceptRejectFriendRequest = async (req, res, next) => {
     try {
       await currentUser.save();
       await friend.save();
+      await currentUser.populate("requests", "username img");
     } catch (error) {
       return next(new HttpError("Could not reject request.", 500));
     }
     res.json({
       friends: null,
-      requests: currentUser.requests.map((request) => request.toString()),
+      requests: currentUser.requests.map((request) =>
+        request.toObject({ getters: true })
+      ),
     });
   }
 };
@@ -393,7 +405,7 @@ const updateAccount = async (req, res, next) => {
   user.email = userData.email || user.email;
   user.username = userData.username || userData.username;
   user.password = userData.password || user.password;
-  user.preferences = userData.categories || user.preferences;
+  user.mood = userData.mood || user.mood;
 
   try {
     await user.save();
@@ -409,7 +421,7 @@ const updateAccount = async (req, res, next) => {
     votes: user.votes,
     friends: user.friends,
     requests: user.requests,
-    preferences: user.preferences,
+    mood: user.mood,
     status: user.status,
   };
 

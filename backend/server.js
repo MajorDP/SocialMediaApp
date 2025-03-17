@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const postRoutes = require("./routes/post-routes");
 const userRoutes = require("./routes/user-routes");
+const chatRoutes = require("./routes/chat-routes");
 const mongoose = require("mongoose");
 const HttpError = require("./models/HttpError");
 require("dotenv").config();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use("/posts", postRoutes);
 app.use("/auth", userRoutes);
+app.use("/chat", chatRoutes);
 
 app.use((error, req, res, next) => {
   if (res.headerSent) {

@@ -15,6 +15,8 @@ interface IUserData {
     disliked: string[];
   };
   status: string;
+  friends: Array<unknown>;
+  requests: Array<unknown>;
   mood: {
     currentMoods: string[];
     desc: string;
@@ -67,7 +69,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Failed to refresh user data:", err);
     }
   };
-  console.log(user);
+
   useEffect(() => {
     refreshUserData();
   }, []);

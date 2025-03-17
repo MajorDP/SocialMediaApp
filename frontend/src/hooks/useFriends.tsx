@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getFriends } from "../services/users-services";
+import { AuthContext } from "../context/UserContext";
 
 interface IFriends {
   friends:
@@ -20,6 +21,7 @@ interface IFriends {
 }
 
 function useFriends(id: string) {
+  const { user } = useContext(AuthContext);
   const [friends, setFriends] = useState<
     IFriends | { friends: []; requests: [] }
   >({
@@ -51,7 +53,7 @@ function useFriends(id: string) {
     };
 
     getUserFriends();
-  }, [id]);
+  }, [id, user]);
   return { friends, error, isLoading, setFriends };
 }
 

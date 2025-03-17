@@ -21,7 +21,7 @@ const User = new Schema({
   mood: {
     currentMoods: [{ type: String, default: [] }],
     desc: { type: String, default: "" },
-    lastUpdated: { type: Date, required: true },
+    lastUpdated: { type: String, required: true },
   },
 });
 

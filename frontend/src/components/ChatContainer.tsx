@@ -3,44 +3,45 @@ import ChatInput from "./ChatInput";
 import Chat from "./Chat";
 import { useEffect, useState } from "react";
 import { IChat } from "../interfaces/chat";
+import { handleGetChats } from "../services/chat-services";
 
-const mockChats: IChat = {
-  participants: ["user123", "user456"],
-  messages: [
-    {
-      sentBy: {
-        userId: "user123",
-        username: "john_doe",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
-      },
-      message: "Hey, how's it going?",
-      img: null,
-      dateSent: "2025-03-05T10:00:00Z",
-    },
-    {
-      sentBy: {
-        userId: "user456",
-        username: "jane_smith",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
-      },
-      message: "I'm good, thanks! What about you?",
-      img: null,
-      dateSent: "2025-03-05T10:05:00Z",
-    },
-    {
-      sentBy: {
-        userId: "user123",
-        username: "john_doe",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
-      },
-      message: "I'm doing well, just working on some projects.",
-      img: null,
-      dateSent: "2025-03-05T10:10:00Z",
-    },
-  ],
-  lastMessageDate: "2025-03-05T10:10:00Z",
-  seen: true,
-};
+// const mockChats: IChat = {
+//   participants: ["user123", "user456"],
+//   messages: [
+//     {
+//       sentBy: {
+//         userId: "user123",
+//         username: "john_doe",
+//         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
+//       },
+//       message: "Hey, how's it going?",
+//       img: null,
+//       dateSent: "2025-03-05T10:00:00Z",
+//     },
+//     {
+//       sentBy: {
+//         userId: "user456",
+//         username: "jane_smith",
+//         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
+//       },
+//       message: "I'm good, thanks! What about you?",
+//       img: null,
+//       dateSent: "2025-03-05T10:05:00Z",
+//     },
+//     {
+//       sentBy: {
+//         userId: "user123",
+//         username: "john_doe",
+//         img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s",
+//       },
+//       message: "I'm doing well, just working on some projects.",
+//       img: null,
+//       dateSent: "2025-03-05T10:10:00Z",
+//     },
+//   ],
+//   lastMessageDate: "2025-03-05T10:10:00Z",
+//   seen: true,
+// };
 
 interface IChatContainer {
   currentUserId: string;
@@ -54,9 +55,19 @@ function ChatContainer({
   onClose,
 }: IChatContainer) {
   const [chatMessages, setChatMessages] = useState<IChat | null>(null);
+
   useEffect(() => {
-    //TODO: Get chat between current user and chosen friend
-    setChatMessages(mockChats);
+    async function getChat() {
+      const { success, data } = await handleGetChats(
+        currentUserId,
+        selectedFriend.id
+      );
+      if (success) {
+        console.log(data);
+        setChatMessages(data);
+      }
+    }
+    getChat();
   }, [currentUserId, selectedFriend]);
 
   return ReactDOM.createPortal(

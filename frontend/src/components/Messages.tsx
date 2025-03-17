@@ -9,7 +9,8 @@ import Error from "./Error";
 function ChatNew() {
   const [height, setHeight] = useState("0px");
   const { user } = useContext(AuthContext);
-  //@ts-expect-error page wont load if no user
+
+  //@ts-expect-error user is of correct type
   const { friends, error, isLoading } = useFriends(user?.id);
   const [selectedFriend, setSelectedFriend] = useState<{
     id: string;
