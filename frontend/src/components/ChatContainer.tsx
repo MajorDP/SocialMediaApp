@@ -4,6 +4,7 @@ import Chat from "./Chat";
 import { useEffect, useState } from "react";
 import { IChat } from "../interfaces/chat";
 import { handleGetChats } from "../services/chat-services";
+import Error from "./Error";
 
 // const mockChats: IChat = {
 //   participants: ["user123", "user456"],
@@ -55,6 +56,7 @@ function ChatContainer({
   onClose,
 }: IChatContainer) {
   const [chatMessages, setChatMessages] = useState<IChat | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function getChat() {
@@ -62,10 +64,13 @@ function ChatContainer({
         currentUserId,
         selectedFriend.id
       );
-      if (success) {
-        console.log(data);
-        setChatMessages(data);
+
+      if (!success) {
+        setError("Could not load chat, please try again.");
+        return;
       }
+
+      setChatMessages(data);
     }
     getChat();
   }, [currentUserId, selectedFriend]);
@@ -77,7 +82,7 @@ function ChatContainer({
         onClick={onClose}
       ></div>
 
-      <div className="h-screen fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full md:w-[80%] md:h-[90%] bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 rounded-xl  border border-slate-600 z-70">
+      <div className="h-screen fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full sm:w-[80%] lg:w-[70%] md:h-[90%] bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 rounded-xl  border border-slate-600 z-70">
         <button
           className="absolute right-3 top-2 text-lg bg-gray-800 hover:bg-gray-700 p-1 rounded-full"
           onClick={onClose}
@@ -99,16 +104,19 @@ function ChatContainer({
         </button>
         <h2 className="text-center mt-2 text-lg">{selectedFriend.username}</h2>{" "}
         {/* TODO: CHANGE LATER */}
-        <div className="h-full rounded-b-xl">
-          <Chat chat={chatMessages} currentUserId={currentUserId} />
-          <div className="w-full h-[10%] px-2 py-1 rounded-b-xl border-t border-slate-600 bg-gradient-to-b from via-violet-950 to-gray-900">
-            <ChatInput
-              uid={currentUserId}
-              fid={selectedFriend.id}
-              setChatMessages={setChatMessages}
-            />
+        {chatMessages && (
+          <div className="h-full rounded-b-xl">
+            <Chat chat={chatMessages} currentUserId={currentUserId} />
+            <div className="w-full h-[10%] px-2 py-1 rounded-b-xl border-t border-slate-600 bg-gradient-to-b from via-violet-950 to-gray-900">
+              <ChatInput
+                uid={currentUserId}
+                fid={selectedFriend.id}
+                setChatMessages={setChatMessages}
+              />
+            </div>
           </div>
-        </div>
+        )}
+        {error && <Error error={error} />}
       </div>
     </>,
     document.body

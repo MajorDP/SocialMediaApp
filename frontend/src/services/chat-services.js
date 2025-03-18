@@ -8,7 +8,7 @@ export const handleGetChats = async (userId, friendId) => {
   }
 
   const data = await res.json();
-  console.log(data);
+
   return { success: true, data: data };
 };
 
@@ -28,5 +28,9 @@ export const handleSendMessage = async (uid, fid, message, image) => {
 
   const data = await res.json();
 
-  return { chat: data };
+  if (!res.ok) {
+    return { success: false, chat: null };
+  }
+
+  return { success: true, chat: data };
 };

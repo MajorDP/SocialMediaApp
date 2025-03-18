@@ -36,7 +36,7 @@ function Chat({ chat, currentUserId }: IChatProps) {
                 <div>
                   <img
                     src={message.sentBy.img}
-                    className="shadow-md shadow-cyan-600/50 max-w-[50px] rounded-full"
+                    className="shadow-md shadow-cyan-600/50 max-w-[30px] sm:max-w-[50px] rounded-full"
                     alt={message.sentBy.username}
                   />
                 </div>
@@ -47,7 +47,9 @@ function Chat({ chat, currentUserId }: IChatProps) {
                   {message.dateSent.split("T")[0]}
                 </p>
                 {message.message && (
-                  <p className="text-[18px]">{message.message}</p>
+                  <p className="text-[16px] sm:text-[18px]">
+                    {message.message}
+                  </p>
                 )}
                 {message.img && (
                   <img
@@ -62,7 +64,7 @@ function Chat({ chat, currentUserId }: IChatProps) {
                 <div>
                   <img
                     src={message.sentBy.img}
-                    className="shadow-md shadow-cyan-600/50 max-w-[50px] rounded-full"
+                    className="shadow-md shadow-cyan-600/50 max-w-[30px] sm:max-w-[50px] rounded-full"
                     alt={message.sentBy.username}
                   />
                 </div>
