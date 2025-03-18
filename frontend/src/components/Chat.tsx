@@ -23,7 +23,7 @@ function Chat({ chat, currentUserId }: IChatProps) {
     >
       {chat &&
         chat.messages.map((message, index) => {
-          const isCurrentUser = message.sentBy.userId === currentUserId;
+          const isCurrentUser = message.sentBy.id === currentUserId;
 
           return (
             <li

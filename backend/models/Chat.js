@@ -4,7 +4,7 @@ const MessageSchema = new mongoose.Schema({
   sentBy: { type: mongoose.Types.ObjectId, ref: "User", required: true },
   message: { type: String, default: null },
   img: { type: String, default: null },
-  dateSent: { type: String, required: true },
+  dateSent: { type: Date, required: true },
 });
 
 const ChatSchema = new mongoose.Schema({

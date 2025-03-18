@@ -11,3 +11,22 @@ export const handleGetChats = async (userId, friendId) => {
   console.log(data);
   return { success: true, data: data };
 };
+
+export const handleSendMessage = async (uid, fid, message, image) => {
+  const res = await fetch("http://localhost:5000/chat/send", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      sentBy: uid,
+      fid: fid,
+      message: message,
+      image: image,
+    }),
+  });
+
+  const data = await res.json();
+
+  return { chat: data };
+};

@@ -1,6 +1,6 @@
 export interface IMessage {
   sentBy: {
-    userId: string;
+    id: string;
     username: string;
     img: string;
   };

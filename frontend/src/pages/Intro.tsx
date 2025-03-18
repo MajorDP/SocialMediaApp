@@ -33,8 +33,9 @@ function Intro() {
         "Start conversations with others who understand your feelings",
     },
   ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-800 via-gray-900 to-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-[#78a6d4] to-[#382dd8]">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-cyan-200 mb-6">
@@ -49,7 +50,7 @@ function Intro() {
           <h1 className="text-2xl md:text-4xl font-bold text-cyan-200 mb-6">
             Share Your Journey, Connect Through Emotions
           </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-200 max-w-2xl mx-auto">
             Join a community where you can express your feelings, connect with
             others on similar emotional journeys, and find support in a safe,
             understanding space.

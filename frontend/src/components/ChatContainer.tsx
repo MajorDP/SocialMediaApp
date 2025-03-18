@@ -102,7 +102,11 @@ function ChatContainer({
         <div className="h-full rounded-b-xl">
           <Chat chat={chatMessages} currentUserId={currentUserId} />
           <div className="w-full h-[10%] px-2 py-1 rounded-b-xl border-t border-slate-600 bg-gradient-to-b from via-violet-950 to-gray-900">
-            <ChatInput />
+            <ChatInput
+              uid={currentUserId}
+              fid={selectedFriend.id}
+              setChatMessages={setChatMessages}
+            />
           </div>
         </div>
       </div>

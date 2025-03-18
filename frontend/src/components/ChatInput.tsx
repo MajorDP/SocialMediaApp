@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { XCircleIcon } from "lucide-react";
+import { handleSendMessage } from "../services/chat-services";
+import { IChat } from "../interfaces/chat";
 
-function ChatInput() {
+interface IChatInput {
+  uid: string;
+  fid: string;
+  setChatMessages: (data: IChat) => void;
+}
+
+function ChatInput({ uid, fid, setChatMessages }: IChatInput) {
   const [message, setMessage] = useState("");
   const [image, setImage] = useState<string | null>(null);
 
-  const handleSend = (e: React.FormEvent<HTMLFormElement>) => {
+  // TODO: Handle sending messages between users in real time
+  const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // TODO: Handle sending messages between users in real time
-
+    const data = await handleSendMessage(uid, fid, message, image);
+    setChatMessages(data.chat);
     setMessage("");
     setImage("");
   };
