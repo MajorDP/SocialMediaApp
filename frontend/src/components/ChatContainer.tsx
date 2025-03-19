@@ -1,10 +1,7 @@
 import ReactDOM from "react-dom";
-import ChatInput from "./ChatInput";
 import Chat from "./Chat";
-import { useEffect, useState } from "react";
-import { IChat } from "../interfaces/chat";
-import { handleGetChats } from "../services/chat-services";
-import Error from "./Error";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
 
 // const mockChats: IChat = {
 //   participants: ["user123", "user456"],
@@ -55,25 +52,15 @@ function ChatContainer({
   selectedFriend,
   onClose,
 }: IChatContainer) {
-  const [chatMessages, setChatMessages] = useState<IChat | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const socket = io("http://localhost:4000");
+
+  const handleSendMessageSignal = () => {
+    socket.emit("sent_message", { uid: currentUserId, fid: selectedFriend.id });
+  };
 
   useEffect(() => {
-    async function getChat() {
-      const { success, data } = await handleGetChats(
-        currentUserId,
-        selectedFriend.id
-      );
-
-      if (!success) {
-        setError("Could not load chat, please try again.");
-        return;
-      }
-
-      setChatMessages(data);
-    }
-    getChat();
-  }, [currentUserId, selectedFriend]);
+    socket.emit("join_socket", currentUserId);
+  }, []);
 
   return ReactDOM.createPortal(
     <>
@@ -104,19 +91,12 @@ function ChatContainer({
         </button>
         <h2 className="text-center mt-2 text-lg">{selectedFriend.username}</h2>{" "}
         {/* TODO: CHANGE LATER */}
-        {chatMessages && (
-          <div className="h-full rounded-b-xl">
-            <Chat chat={chatMessages} currentUserId={currentUserId} />
-            <div className="w-full h-[10%] px-2 py-1 rounded-b-xl border-t border-slate-600 bg-gradient-to-b from via-violet-950 to-gray-900">
-              <ChatInput
-                uid={currentUserId}
-                fid={selectedFriend.id}
-                setChatMessages={setChatMessages}
-              />
-            </div>
-          </div>
-        )}
-        {error && <Error error={error} />}
+        <Chat
+          handleSendMessageSignal={handleSendMessageSignal}
+          selectedFriendId={selectedFriend.id}
+          currentUserId={currentUserId}
+          socket={socket}
+        />
       </div>
     </>,
     document.body

@@ -7,9 +7,15 @@ interface IChatInput {
   uid: string;
   fid: string;
   setChatMessages: (data: IChat) => void;
+  handleSendMessageSignal: () => void;
 }
 
-function ChatInput({ uid, fid, setChatMessages }: IChatInput) {
+function ChatInput({
+  uid,
+  fid,
+  setChatMessages,
+  handleSendMessageSignal,
+}: IChatInput) {
   const [message, setMessage] = useState("");
   const [image, setImage] = useState<string | null>(null);
 
@@ -18,6 +24,7 @@ function ChatInput({ uid, fid, setChatMessages }: IChatInput) {
     e.preventDefault();
     const data = await handleSendMessage(uid, fid, message, image);
     setChatMessages(data.chat);
+    handleSendMessageSignal();
     setMessage("");
     setImage("");
   };

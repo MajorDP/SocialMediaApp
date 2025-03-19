@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "chat": "node chatServer.js",
     "dev": "nodemon server.js"
   },
   "author": "",
@@ -16,6 +17,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.11.0"
+    "mongoose": "^8.11.0",
+    "socket.io": "^4.8.1"
   }
 }

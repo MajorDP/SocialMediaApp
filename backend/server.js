@@ -1,12 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const jwt = require("jsonwebtoken");
 
 const postRoutes = require("./routes/post-routes");
 const userRoutes = require("./routes/user-routes");
 const chatRoutes = require("./routes/chat-routes");
 const mongoose = require("mongoose");
-const HttpError = require("./models/HttpError");
 require("dotenv").config();
 
 const app = express();
@@ -30,7 +28,7 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(process.env.PORT);
+    app.listen(process.env.SERVER_PORT);
   })
   .catch((err) => {
     console.log("Error connecting to DB");
