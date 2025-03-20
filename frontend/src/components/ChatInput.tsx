@@ -46,7 +46,7 @@ function ChatInput({
 
   return (
     <form
-      className="w-full sm:w-[80%] flex flex-row items-center m-auto border border-cyan-200 rounded-xl px-2 py-1 gap-3 h-fit relative bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800"
+      className="w-full sm:w-[80%] flex flex-row items-center m-auto ring-1 rounded-xl px-2 py-1 gap-3 h-fit relative bg-gray-800"
       onSubmit={handleSend}
     >
       {image && (
@@ -77,7 +77,7 @@ function ChatInput({
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="w-4 h-4 sm:w-6 sm:h-6 hover:text-gray-400 z-20 cursor-pointer hover:scale-105 duration-200 text-blue-300"
+          className="w-4 h-4 sm:w-6 sm:h-6 z-20 cursor-pointer hover:scale-105 duration-200 text-white"
         >
           <path
             fillRule="evenodd"
@@ -90,13 +90,16 @@ function ChatInput({
 
       <div className="w-full h-10">
         <textarea
-          className="border border-cyan-200 rounded-md px-2 py-1 h-full w-full resize-none scrollbar-hide focus:outline-0 leading-relaxed text-xs"
+          className="ring-1 focus:ring-cyan-200 duration-200 transition-all rounded-md px-2 py-1 h-full w-full resize-none scrollbar-hide focus:outline-0 leading-relaxed text-xs"
           value={message}
           onChange={handleMessageChange}
         />
       </div>
 
-      <button className="border border-cyan-200 px-1 sm:px-2 py-1 rounded-xl hover:scale-105 hover:bg-cyan-500 text-black font-medium text-xs bg-cyan-400 cursor-pointer duration-200">
+      <button
+        className="px-1 sm:px-2 py-1 rounded-xl text-white font-medium text-xs bg-violet-700 cursor-pointer duration-200"
+        disabled={!message.trim() && !image}
+      >
         Send
       </button>
     </form>

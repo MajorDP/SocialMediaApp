@@ -5,6 +5,7 @@ import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 import { Link } from "react-router-dom";
 import { updateVote } from "../services/posts-services";
+import { Heart, ThumbsDown } from "lucide-react";
 
 interface IPostItem {
   post: IPosts;
@@ -36,7 +37,7 @@ function PostLarge({ post, setPost }: IPostItem) {
     : null;
 
   return (
-    <div className="flex flex-col lg:flex-row w-full md:max-w-[80%] bg-gradient-to-br from-[#032f5a] via-blue-950 to-violet-950 p-2 sm:p-3 rounded-2xl shadow-lg">
+    <div className="flex flex-col lg:flex-row w-full md:max-w-[80%] bg-[#c1d1ff] shadow-inner p-2 sm:p-3 rounded-2xl ">
       <div className="w-full">
         <div className="flex flex-row w-full p-3">
           <Link
@@ -45,28 +46,28 @@ function PostLarge({ post, setPost }: IPostItem) {
           >
             <img
               src={post?.user.img}
-              className="rounded-full w-fit shadow-cyan-500 cursor-pointer"
+              className="rounded-full w-fit shadow-lg shadow-violet-700/50 cursor-pointer"
             />
           </Link>
           <div className="flex flex-col justify-start ml-2 w-[80%] xl:max-w-[85%]">
             <Link
               to={`/user/${post.user.id}`}
-              className="text-lg font-semibold text-cyan-400 cursor-pointer"
+              className="text-lg font-semibold text-slate-900 cursor-pointer"
             >
               {post?.user.username}
             </Link>
-            <p className="text-sm text-blue-300">
+            <p className="text-xs text-slate-500 font-semibold">
               {post?.datePosted.split("T")[0]}
               <span> {post.isEdited && "(Edited)"}</span>
             </p>
             <div className="hidden sm:flex flex-col w-full">
-              <p className="break-words w-full my-2 text-gray-300 text-sm lg:text-lg">
+              <p className="break-words w-full my-2 text-slate-900 text-sm lg:text-lg">
                 {post?.message}
               </p>
               <div className="max-w-[20rem] lg:max-w-[30rem] xl:max-w-[40rem] flex items-start justify-start">
                 <img
                   src={post?.postImg}
-                  className="w-fit max-h-[20rem] object-left rounded-md border border-blue-800 shadow-lg shadow-cyan-500/40"
+                  className="w-fit max-h-[20rem] object-left rounded-md shadow-lg shadow-violet-700/50"
                 />
               </div>
             </div>
@@ -87,22 +88,27 @@ function PostLarge({ post, setPost }: IPostItem) {
         <div className="flex flex-row gap-3 text-xs mt-4 justify-center">
           <button
             className={`${
-              isVoted === "liked" ? "bg-cyan-500" : "bg-transparent"
-            } hover:bg-cyan-400 hover:text-black px-3 py-1 rounded-lg transition-all duration-200 shadow-md shadow-cyan-500 border border-cyan-500 cursor-pointer`}
+              isVoted === "liked"
+                ? "text-violet-700"
+                : "bg-transparent text-slate-900"
+            } hover:text-violet-700 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
             onClick={() => handleVote("like")}
           >
-            👍
+            <Heart size={25} />
+            <span>{post.likes}</span>
           </button>
-          <p className="text-gray-400 font-medium flex items-center">
+          <p className="text-slate-900 font-medium flex items-center">
             {post?.likes} {post?.likes === 1 ? "Like" : "Likes"}
           </p>
           <button
             className={`${
-              isVoted === "disliked" ? "bg-red-500" : "bg-transparent"
-            } hover:bg-red-400 hover:text-black px-3 py-1 rounded-lg transition-all duration-200 shadow-md shadow-red-500 border border-pink-500 cursor-pointer`}
+              isVoted === "disliked"
+                ? "text-violet-700"
+                : "bg-transparent text-slate-900"
+            } hover:text-violet-700 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
             onClick={() => handleVote("dislike")}
           >
-            👎
+            <ThumbsDown size={20} />
           </button>
         </div>
       </div>

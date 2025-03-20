@@ -54,10 +54,10 @@ const ProfilePreview = () => {
           />
         </div>
         <div className="flex flex-col justify-center sm:justify-around sm:my-auto text-center">
-          <p className="truncate text-cyan-200 text-lg sm:text-2xl">
+          <p className="truncate text-white text-lg sm:text-2xl">
             {user?.username}
           </p>
-          <p className="text-xs sm:text-sm truncate text-blue-300">
+          <p className="text-xs sm:text-sm truncate text-slate-300">
             {user?.status}
           </p>
         </div>

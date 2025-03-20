@@ -19,112 +19,102 @@ function Navigation() {
 
   return (
     <>
-      <header className="z-10 hidden md:block h-screen min-w-[13rem] lg:min-w-[15rem] bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 text-[20px] shadow-lg rounded-tr-sm rounded-br-sm">
+      {/* Sidebar for larger screens */}
+      <header className="z-10 hidden md:block h-screen min-w-[13rem] lg:w-[10rem] bg-[#c1d1ff] text-[20px]">
         <nav>
-          <div className="flex flex-row justify-between p-3 border-b border-[#00E5FF] mb-3">
+          {/* Profile Section */}
+          <div className="flex flex-row justify-between p-3 border-b border-slate-900 bg-slate-800 mb-3">
             <div className="w-[4rem]">
               <img
                 src={user?.img || "https://example.com/user.jpg"}
-                alt="userImg"
-                className="w-full rounded-full shadow-md hover:shadow-[#D500F9] duration-200 cursor-pointer"
+                alt="User"
+                className="w-full rounded-full shadow-md hover:shadow-[#382dd8] duration-200 cursor-pointer"
               />
             </div>
-            <div className="flex justify-around pl-2 flex-col w-[70%]">
-              <p className="truncate text-cyan-200 font-medium">
-                {user?.username}
-              </p>
+            <div className="flex flex-col w-[70%] pl-2">
+              <p className="truncate text-white">{user?.username}</p>
               <input
                 value={status}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setStatus(e.target.value)
-                }
+                onChange={(e) => setStatus(e.target.value)}
                 onBlur={handleChangeStatus}
-                className="truncate text-cyan-200 font-medium text-[15px] py-[1px] bg-transparent border-none outline-none"
+                className="truncate text-white text-[15px] py-[1px] bg-transparent border-none outline-none"
               />
             </div>
           </div>
-          <ul className="flex flex-col pl-3 items-start h-40 justify-between mt-4 gap-5">
+          {/* Navigation Links */}
+          <ul className="flex flex-col pl-3 mt-4 gap-5 ">
             <li>
               <Link
                 to="/dashboard"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
+                className="flex items-center text-slate-900 hover:scale-105 duration-300"
               >
-                <Home className="w-6 h-6 text-cyan-200 mr-2" />
-                Dashboard
+                <Home className="w-6 h-6 text-slate-900 mr-2" /> Dashboard
               </Link>
             </li>
             <li>
               <Link
                 to="/create"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
+                className="flex items-center text-slate-900 hover:scale-105 duration-300"
               >
-                <BadgePlus className="w-6 h-6 text-cyan-200 mr-2" />
-                Create a Post
+                <BadgePlus className="w-6 h-6 text-slate-900 mr-2" /> Create a
+                Post
               </Link>
             </li>
             <li>
               <Link
                 to="/explore"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
+                className="flex items-center text-slate-900 hover:scale-105 duration-300"
               >
-                <Compass className="w-6 h-6 text-cyan-200 mr-2" />
-                Explore
+                <Compass className="w-6 h-6 text-slate-900 mr-2" /> Explore
               </Link>
             </li>
             <li>
               <Link
                 to="/user"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
+                className="flex items-center text-slate-900 hover:scale-105 duration-300"
               >
-                <User className="w-6 h-6 text-cyan-200 mr-2" />
-                Account
+                <User className="w-6 h-6 text-slate-900 mr-2" /> Account
               </Link>
             </li>
             <li>
               <button
-                className="cursor-pointer flex flex-row items-center hover:scale-110 duration-300 text-[#e48ff3] hover:text-[#9C1D7E]"
+                className="flex items-center text-slate-900 hover:scale-105 duration-300 cursor-pointer"
                 onClick={logout}
               >
-                <LogOut className="w-6 h-6 text-[#e48ff3] mr-2" />
-                Sign out
+                <LogOut className="w-6 h-6 text-slate-900 mr-2" /> Sign Out
               </button>
             </li>
           </ul>
         </nav>
       </header>
 
-      <header className="block md:hidden w-full bg-gray-800 bottom-0 fixed shadow-lg z-10">
+      {/* Mobile Navigation Bar */}
+      <header className="block md:hidden fixed bottom-0 w-full bg-[#c1d1ff] shadow-lg z-10 border border-slate-900">
         <nav>
-          <ul className="py-3 w-[80%] m-auto flex flex-row justify-between items-center">
+          <ul className="py-3 w-[80%] m-auto flex justify-between items-center">
             <li>
               <Link to="/dashboard" className="hover:scale-110 duration-300">
-                <Home className="w-6 h-6 text-cyan-200 hover:text-[#D500F9]" />
+                <Home className="w-6 h-6 text-slate-900" />
               </Link>
             </li>
             <li>
-              <Link
-                to="/create"
-                className="flex flex-row items-center hover:scale-110 duration-300 text-cyan-200 hover:text-[#D500F9]"
-              >
-                <BadgePlus className="w-6 h-6 text-cyan-200 mr-2" />
+              <Link to="/create" className="hover:scale-110 duration-300">
+                <BadgePlus className="w-6 h-6 text-slate-900" />
               </Link>
             </li>
             <li>
               <Link to="/explore" className="hover:scale-110 duration-300">
-                <Compass className="w-6 h-6 text-cyan-200 hover:text-[#D500F9]" />
+                <Compass className="w-6 h-6 text-slate-900" />
               </Link>
             </li>
             <li>
               <Link to="/user" className="hover:scale-110 duration-300">
-                <User className="w-6 h-6 text-cyan-200 hover:text-[#D500F9]" />
+                <User className="w-6 h-6 text-slate-900" />
               </Link>
             </li>
             <li>
-              <button
-                className="cursor-pointer hover:scale-110 duration-300"
-                onClick={logout}
-              >
-                <LogOut className="w-6 h-6 text-[#D500F9] hover:text-[#9C1D7E]" />
+              <button className="hover:scale-110 duration-300" onClick={logout}>
+                <LogOut className="w-6 h-6 text-slate-900" />
               </button>
             </li>
           </ul>

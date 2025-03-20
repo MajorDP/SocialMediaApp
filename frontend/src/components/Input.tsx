@@ -33,7 +33,7 @@ function Input({
   return (
     <div className="flex flex-col">
       <label>
-        <p className="text-cyan-200">{label}</p>
+        <p className="text-white">{label}</p>
         <span className="text-red-500 text-xs">
           {" "}
           {isTouched && error ? error : null}{" "}
@@ -44,7 +44,7 @@ function Input({
         className={`border ${
           isTouched && error
             ? "border-red-500 focus:outline-red-500"
-            : "border-cyan-200 focus:ring-cyan-500 focus:ring-2"
+            : "border-cyan-200 focus:ring-cyan-200 focus:ring-2"
         } bg-gray-800 rounded-md px-2 py-1`}
         value={value}
         onChange={checkIsValid}

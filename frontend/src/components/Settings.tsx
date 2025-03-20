@@ -3,7 +3,7 @@ import { AuthContext } from "../context/UserContext";
 import Modal from "./Modal";
 import { handleUpdateUser } from "../services/users-services";
 
-function CredentialsForm() {
+function Settings() {
   const { user, updateUser } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -57,7 +57,7 @@ function CredentialsForm() {
   return (
     <>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <div className="w-full h-full bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 border border-slate-600 flex flex-col gap-5 p-4 rounded-xl">
+        <div className="w-full h-full bg-gray-800 border border-slate-600 flex flex-col gap-5 p-4 rounded-xl">
           <h2 className="text-lg text-center font-semibold">Save changes</h2>
           <div className="text-center flex flex-col gap-5 text-balance text-sm">
             <p>Are you sure you want to save those changes to your account?</p>
@@ -107,7 +107,7 @@ function CredentialsForm() {
                 image ||
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s"
               }
-              className="w-24 h-24 rounded-full shadow-lg shadow-cyan-500/40 cursor-pointer"
+              className="w-24 h-24 rounded-full shadow-lg shadow-violet-700/50 cursor-pointer"
               alt="Profile Preview"
             />
           </label>
@@ -146,7 +146,7 @@ function CredentialsForm() {
 
         {error && <p className="text-center text-xs text-red-500">{error}</p>}
         <button
-          className="disabled:bg-gray-600 disabled:shadow-none disabled:border-none bg-cyan-800 hover:bg-cyan-700 px-4 py-2 rounded-lg transition-all duration-200 shadow-md enabled:shadow-cyan-800 disabled:shadow-gray-600 cursor-pointer text-white"
+          className="disabled:bg-gray-600  bg-violet-700 hover:bg-violet-600 px-4 py-2 rounded-lg transition-all duration-200 shadow-md w-fit mx-auto cursor-pointer text-white"
           disabled={!isChanged}
           onClick={(e) => {
             e.preventDefault();
@@ -160,4 +160,4 @@ function CredentialsForm() {
   );
 }
 
-export default CredentialsForm;
+export default Settings;

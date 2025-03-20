@@ -98,7 +98,7 @@ function FriendListLarge() {
               <ul className="mt-4">
                 {friends.requests.map((req) => (
                   <li
-                    className="flex flex-row items-center justify-between p-3 mb-3 bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 rounded-lg"
+                    className="flex flex-row items-center justify-between p-3 mb-3 bg-[#c1d1ff] rounded-lg"
                     key={req.id}
                   >
                     <div className="flex items-center gap-3">
@@ -107,17 +107,19 @@ function FriendListLarge() {
                         className="w-12 h-12 rounded-full"
                         alt={req.username}
                       />
-                      <p className="truncate text-md">{req.username}</p>
+                      <p className="truncate text-md text-slate-900">
+                        {req.username}
+                      </p>
                     </div>
                     <div className="flex flex-row gap-3">
                       <button
-                        className="text-green-700 bg-green-300 text-sm px-3 py-1 rounded-full hover:bg-green-400 transition cursor-pointer"
+                        className="text-slate-900 bg-green-500 text-sm px-3 py-1 rounded-full hover:bg-green-600 transition cursor-pointer"
                         onClick={() => handleFriendRequest("accept", req.id)}
                       >
                         ✔
                       </button>
                       <button
-                        className="text-red-700 bg-red-300 text-sm px-3 py-1 rounded-full hover:bg-red-400 transition cursor-pointer"
+                        className="text-slate-900 bg-red-700 text-sm px-3 py-1 rounded-full hover:bg-red-800 transition cursor-pointer"
                         onClick={() => handleFriendRequest("reject", req.id)}
                       >
                         ✖
@@ -141,27 +143,27 @@ function FriendListLarge() {
             {friends.friends.map((friend) => (
               <div
                 key={friend.id}
-                className="w-full sm:w-auto bg-gradient-to-br from-[#032f5a] via-blue-950 to-fuchsia-950 p-2 sm:p-4 rounded-lg shadow-lg  hover:border-indigo-500 transition-all duration-200 transform hover:scale-[1.02]"
+                className="w-full sm:w-auto bg-[#c1d1ff] p-2 sm:p-4 rounded-lg shadow-lg transition-all duration-200 transform hover:scale-[1.02]"
               >
                 <div className="flex flex-col sm:flex-row items-center sm:items-start space-x-3">
                   <img
                     src={friend.img}
                     alt="Profile"
-                    className="h-12 w-12 rounded-full ring-2 ring-emerald-500"
+                    className="h-12 w-12 rounded-full ring-2 shadow-lg shadow-violet-700/50"
                   />
                   <div className="flex flex-col flex-1">
                     <Link
                       to={`/user/${friend.id}`}
-                      className="font-medium text-center sm:text-start text-gray-100"
+                      className="font-medium text-center sm:text-start text-slate-900"
                     >
                       {friend.username}
                     </Link>
-                    <span className="text-sm text-center sm:text-start text-emerald-400">
+                    <span className="text-sm text-center sm:text-start text-slate-900">
                       Feeling {friend.status}
                     </span>
                   </div>
                   <div className="flex flex-row sm:flex-col items-center text-white justify-between gap-2">
-                    <div className="w-fit flex flex-row items-center hover:scale-105 duration-200 bg-purple-900 rounded-xl px-2 py-1 text-[14px]">
+                    <div className="w-fit flex flex-row items-center hover:scale-105 duration-200 bg-violet-700 rounded-xl px-2 py-1 text-[14px]">
                       <Clock size={14} className="mr-1" />
                       <button
                         className="cursor-pointer"
@@ -184,7 +186,7 @@ function FriendListLarge() {
                     </button>
                   </div>
                 </div>
-                <p className="mt-2 text-sm text-gray-400 text-center sm:text-start">
+                <p className="mt-2 text-sm text-slate-800 text-center sm:text-start">
                   {Math.random() % 2 === 0
                     ? "Looking for someone to share positive vibes with!"
                     : "Would love to connect with like-minded people."}

@@ -27,11 +27,11 @@ function LoginForm({ setIsLogin }: ILoginForm) {
         to="/"
         className="text-4xl md:text-5xl font-bold text-cyan-200 mb-6"
       >
-        <span className="bg-gradient-to-r from-blue-800 to-fuchsia-500 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-br from-blue-700 to-violet-700 bg-clip-text text-transparent">
           ~
         </span>
         <span className=" text-white">MoodShare</span>
-        <span className="bg-gradient-to-r from-blue-800 to-fuchsia-500 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-br from-blue-700 to-violet-700 bg-clip-text text-transparent">
           ~
         </span>
       </Link>
@@ -61,18 +61,18 @@ function LoginForm({ setIsLogin }: ILoginForm) {
         />
       </div>
 
-      {error && <p className="mt-2 text-red-500">{error}</p>}
+      {error && <p className="mt-2 text-red-500 font-semibold">{error}</p>}
 
       <button
         type="submit"
         disabled={!isFormValid}
-        className="mt-5 disabled:bg-gray-600 disabled:shadow-none disabled:border-none bg-cyan-800 hover:bg-cyan-700 px-4 py-2 rounded-lg transition-all duration-200 shadow-md enabled:shadow-cyan-800 disabled:shadow-gray-600 cursor-pointer text-white"
+        className="mt-5 disabled:bg-gray-600 disabled:shadow-none disabled:border-none bg-violet-700 hover:bg-violet-600 transition-colors px-4 py-2 rounded-full duration-200 shadow-md enabled:shadow-cyan-800 disabled:shadow-gray-600 cursor-pointer text-white"
       >
         Sign In
       </button>
 
       <button
-        className="block mt-4 text-gray-400 text-xs cursor-pointer"
+        className="block mt-4 text-slate-200 text-xs cursor-pointer"
         onClick={(e) => {
           e.preventDefault();
           setIsLogin((prev) => !prev);

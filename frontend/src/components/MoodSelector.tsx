@@ -81,15 +81,15 @@ function MoodSelector() {
 
   return (
     <div
-      className={`bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 p-6 md:rounded-lg shadow-lg flex flex-col transition-all duration-300 ease-in-out overflow-hidden ${
+      className={`bg-gray-800 p-6 md:rounded-lg shadow-lg flex flex-col transition-all duration-300 ease-in-out overflow-hidden ${
         isOpen ? "max-h-[40rem]" : "max-h-[5rem]"
       }`}
     >
       <h2
-        className="text-sm text-center sm:text-xl mb-4 text-cyan-200 cursor-pointer"
+        className="text-sm text-center sm:text-xl mb-4 text-slate-200 cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
-        How are you feeling today?
+        What is your mood today?
       </h2>
 
       <div
@@ -121,7 +121,7 @@ function MoodSelector() {
             selectedMood ? "max-h-[20rem] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <p className="text-gray-300">
+          <p className="text-white">
             Share the reason for your mood{" "}
             <span className="text-gray-400">(Optional)</span>
           </p>
@@ -135,8 +135,9 @@ function MoodSelector() {
             className="w-1/2 px-2 py-1 m-auto bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:border-transparent resize-none transition-all duration-200"
           />
           <button
-            className="mt-2 px-4 sm:px-6 py-2 rounded-full bg-gradient-to-r from-blue-800 to-fuchsia-950 text-cyan-200 hover:from-blue-800 hover:to-fuchsia-800 font-medium flex items-center space-x-2 cursor-pointer hover:scale-105 duration-200"
+            className="mt-2 px-4 sm:px-6 py-2 rounded-full disabled:bg-gray-600 bg-violet-700 hover:bg-violet-600 font-medium flex items-center space-x-2 cursor-pointer hover:scale-105 duration-200"
             onClick={handleSubmitMood}
+            disabled={selectedMood.mood === ""}
           >
             Done
           </button>

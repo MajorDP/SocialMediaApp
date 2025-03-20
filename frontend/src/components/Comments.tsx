@@ -10,7 +10,7 @@ function Comments({ comments, showAll }: IComments) {
   const displayedComments = !showAll ? comments.slice(0, 5) : comments;
   return (
     <ul
-      className={`flex flex-col gap-5  rounded-xl p-2 mt-5 lg:ml-0 bg-gradient-to-br from-gray-800 to-gray-800 h-[18rem]  overflow-y-scroll scrollbar-hide`}
+      className={`flex flex-col gap-5  rounded-xl p-2 mt-5 lg:ml-0 bg-gray-800 h-[18rem] overflow-y-scroll scrollbar-hide`}
     >
       <h2 className="text-center text-xs">Comments</h2>
       {displayedComments.length === 0 && (

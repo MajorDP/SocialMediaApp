@@ -105,8 +105,8 @@ const CreateEdit = () => {
 
   return (
     <div className="w-full h-full flex items-center px-2 sm:px-4">
-      <div className="w-full max-w-2xl m-auto bg-gradient-to-br from-[#032f5a] via-blue-950 to-fuchsia-950 rounded-lg shadow-xl border border-gray-700">
-        <p className="text-center p-2 text-lg sm:text-xl text-cyan-200">
+      <div className="w-full max-w-2xl m-auto bg-gray-800 rounded-lg shadow-xl">
+        <p className="text-center p-2 text-lg sm:text-xl text-white">
           Create a Post
         </p>
         <form onSubmit={handleSubmit} className="p-4 sm:p-6">
@@ -115,7 +115,7 @@ const CreateEdit = () => {
               value={message}
               onChange={(e) => handleMessageChange(e)}
               placeholder="What's on your mind?"
-              className="w-full min-h-[100px] sm:min-h-[120px] bg-gray-800 border border-gray-700 rounded-lg p-3 sm:p-4 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:border-transparent resize-none"
+              className="w-full min-h-[100px] sm:min-h-[120px] bg-[#c1d1ff] rounded-lg p-3 sm:p-4 text-slate-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-cyan-200 focus:border-transparent resize-none"
             />
             {error && (
               <p className="text-center text-sm text-red-500 font-light">
@@ -134,7 +134,7 @@ const CreateEdit = () => {
               <button
                 type="button"
                 onClick={() => setImage(null)}
-                className="absolute top-2 right-2 p-1 bg-gray-900 bg-opacity-75 rounded-full text-gray-400 hover:text-white transition-colors duration-200 cursor-pointer"
+                className="absolute top-2 right-2 p-1 bg-gray-900 bg-opacity-75 rounded-full text-slate-900 hover:text-white transition-colors duration-200 cursor-pointer"
               >
                 <X size={20} />
               </button>
@@ -173,7 +173,7 @@ const CreateEdit = () => {
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="text-gray-400 hover:text-indigo-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800 cursor-pointer"
+                className="text-white hover:text-indigo-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800 cursor-pointer"
               >
                 <ImageIcon size={22} />
               </button>
@@ -181,7 +181,7 @@ const CreateEdit = () => {
                 <button
                   type="button"
                   onClick={() => setShowMoodSelector(!showMoodSelector)}
-                  className="text-gray-400 hover:text-yellow-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800 cursor-pointer"
+                  className="text-white hover:text-yellow-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800 cursor-pointer"
                 >
                   <Smile size={22} />
                 </button>
@@ -212,11 +212,11 @@ const CreateEdit = () => {
             <button
               type="submit"
               disabled={isSubmitting || (!message.trim() && !image)}
-              className={`px-4 sm:px-6 py-2 rounded-full bg-gradient-to-r from-blue-800 to-fuchsia-950 text-cyan-200 font-medium flex items-center space-x-2 
+              className={`px-4 sm:px-6 py-2 rounded-full bg-violet-700 hover:bg-violet-600 font-medium flex items-center space-x-2 
               ${
                 !message.trim() && !image
                   ? "opacity-50 cursor-not-allowed"
-                  : "hover:from-blue-800 hover:to-fuchsia-800"
+                  : "opacity-100 cursor-pointer"
               } 
               transition-all duration-200 transform hover:scale-105 cursor-pointer`}
             >

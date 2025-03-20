@@ -59,7 +59,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
     : null;
 
   return (
-    <div className="bg-gradient-to-br hover:to-green-700 from-[#032f5a] via-blue-950 to-violet-950 p-4 rounded-lg shadow-lg w-full">
+    <div className="bg-[#c1d1ff] p-4 rounded-lg shadow-lg w-full">
       <div className="flex items-center space-x-3 mb-4 justify-between">
         <div className="flex flex-row gap-3">
           <img
@@ -70,15 +70,15 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           <div>
             <Link
               to={`/user/${post.user.id}`}
-              className="font-semibold text-gray-100 flex flex-row flex-wrap items-center gap-2"
+              className="font-semibold text-slate-900 flex flex-row flex-wrap items-center gap-2"
             >
               {post.user.username}
-              <span className="text-gray-400 text-xs">
+              <span className="text-slate-500 text-xs">
                 {post.datePosted.split("T")[0]}
                 <span> {post.isEdited && "(Edited)"}</span>
               </span>
             </Link>
-            <span className="text-xs md:text-sm text-gray-400">
+            <span className="text-xs md:text-sm text-slate-800">
               Status will go here
             </span>
           </div>
@@ -87,12 +87,12 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           <div className="flex flex-col gap-2 sm:flex-row text-xs sm:text-sm h-fit">
             <Link
               to={`/create/${post.id}`}
-              className="text-center px-2 py-1 bg-orange-400 hover:bg-orange-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl border border-orange-400"
+              className="text-center px-2 py-1 bg-orange-500 hover:bg-orange-600 hover:scale-105 duration-300 cursor-pointer rounded-xl"
             >
               Edit
             </Link>
             <button
-              className="px-2 py-1 bg-red-500 hover:bg-red-600 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl border border-red-900"
+              className="px-2 py-1 bg-red-700 hover:bg-red-800 hover:scale-105 duration-300 cursor-pointer rounded-xl"
               onClick={() => handleDelete(post.id)}
             >
               Delete
@@ -100,26 +100,28 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           </div>
         )}
       </div>
-      <p className="text-gray-300">{post.message}</p>
-      <div className="mt-4 flex items-center sm:justify-start justify-center space-x-4">
+      <p className="text-slate-900">{post.message}</p>
+      <div className="mt-2 flex items-center sm:justify-start justify-center space-x-4">
         <button
           className={`${
             isVoted === "liked"
-              ? "text-green-500"
-              : "bg-transparent text-cyan-400"
-          } hover:text-green-500 px-3 py-2 rounded-lg transition-all duration-300 shadow-md cursor-pointer flex items-center space-x-2`}
+              ? "text-violet-700"
+              : "bg-transparent text-slate-900"
+          } hover:text-violet-700 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
           onClick={() => handleVote("like")}
         >
           <Heart size={20} />
           <span>{post.likes}</span>
         </button>
-        <p className="text-gray-400 font-medium flex items-center text-[14px]">
+        <p className="text-slate-900 font-medium flex items-center text-[14px]">
           {post.likes} {post.likes === 1 ? "Like" : "Likes"}
         </p>
         <button
           className={`${
-            isVoted === "disliked" ? "text-red-800" : "text-red-400"
-          } hover:text-red-800 px-3 py-2 rounded-lg transition-all duration-300 shadow-md cursor-pointer flex items-center space-x-2`}
+            isVoted === "disliked"
+              ? "text-violet-700"
+              : "bg-transparent text-slate-900"
+          } hover:text-violet-700 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
           onClick={() => handleVote("dislike")}
         >
           <ThumbsDown size={20} />
@@ -128,7 +130,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
       <div className="flex items-center justify-center mt-2 sm:mt-0">
         <button
           onClick={() => setShowComments(!showComments)}
-          className="text-xs text-gray-400 cursor-pointer "
+          className="text-xs text-slate-900 cursor-pointer "
         >
           View comments
         </button>
@@ -145,7 +147,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
         <div className="w-full mt-5 flex justify-center underline">
           <Link
             to={`/post/${post.id}`}
-            className="text-xs text-cyan-300 hover:text-cyan-400 transition-all duration-150"
+            className="text-xs text-slate-900 transition-all duration-150"
           >
             See All Comments ({post.comments.length})
           </Link>

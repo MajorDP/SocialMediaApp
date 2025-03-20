@@ -2,7 +2,8 @@
 @import "tailwindcss";
 
 body {
-  background: linear-gradient(to bottom, #78a6d4, #382dd8);
+  /* background-color: #4ca6ff; */
+  background: linear-gradient(to bottom, #4ca6ff, #382dd8);
   color: white;
   font-family: "Montserrat";
 }

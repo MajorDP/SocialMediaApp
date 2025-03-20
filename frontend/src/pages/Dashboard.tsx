@@ -38,14 +38,15 @@ export default function NewDashboard() {
 
       <div className="space-y-4">
         {posts && (
-          <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 rounded-tr-xl rounded-tl-xl">
-            <div className="p-6 flex flex-row flex-wrap justify-center sm:justify-start md:items-baseline md:flex-row gap-4">
+          <div className="bg-gray-800 rounded-tr-xl rounded-tl-xl shadow-md ">
+            {/* Tabs */}
+            <div className="p-6 flex flex-wrap justify-center sm:justify-start md:items-baseline md:flex-row gap-4">
               <button
                 onClick={() => setSelectedTab("Dashboard")}
-                className={`px-4 py-2 rounded-md bg-gradient-to-r hover:from-blue-800 hover:to-fuchsia-800 transition-colors duration-200 w-36 md:w-auto ${
+                className={`px-4 py-2 rounded-md transition-colors duration-200 w-36 md:w-auto hover:bg-violet-600 hover:text-white text-slate-900 font-medium ${
                   selectedTab === "Dashboard"
-                    ? "from-blue-800 to-fuchsia-950 text-cyan-200"
-                    : "from-gray-400 to-gray-600"
+                    ? "bg-violet-700 text-white"
+                    : "bg-[#c1d1ff]"
                 } cursor-pointer`}
               >
                 <div className="flex items-center justify-center space-x-2">
@@ -55,10 +56,10 @@ export default function NewDashboard() {
               </button>
               <button
                 onClick={() => setSelectedTab("Memories")}
-                className={`px-4 py-2 rounded-md bg-gradient-to-r hover:from-blue-800 hover:to-fuchsia-800 transition-colors duration-200 w-36 md:w-auto ${
+                className={`px-4 py-2 rounded-md transition-colors duration-200 hover:bg-violet-600 w-36 md:w-auto hover:text-white text-slate-900 font-medium ${
                   selectedTab === "Memories"
-                    ? "from-blue-800 to-fuchsia-950 text-cyan-200"
-                    : "from-gray-400 to-gray-600"
+                    ? "bg-violet-700 text-white"
+                    : "bg-[#c1d1ff]"
                 } cursor-pointer`}
               >
                 <div className="flex items-center justify-center space-x-2">
@@ -67,15 +68,19 @@ export default function NewDashboard() {
                 </div>
               </button>
             </div>
+
+            {/* Content */}
             {selectedTab === "Dashboard" &&
               (user?.mood.currentMoods[0] ? (
                 <PostsList posts={posts} setPosts={setPosts} />
               ) : (
-                <p className="text-center p-4">
+                <p className="text-center p-4 text-slate-900">
                   Select your mood to customize your feed.
                 </p>
               ))}
-            {selectedTab === "Memories" && <p>COMING SOON</p>}
+            {selectedTab === "Memories" && (
+              <p className="text-center p-4 text-white">COMING SOON</p>
+            )}
           </div>
         )}
       </div>

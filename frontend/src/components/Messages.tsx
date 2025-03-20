@@ -31,13 +31,13 @@ function ChatNew() {
         />
       )}
       <div
-        className={`z-50 border border-slate-600 absolute right-0 sm:right-5 bottom-15 sm:bottom-0 bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 ${
+        className={`z-50 border border-slate-600 absolute right-0 sm:right-5 bottom-15 sm:bottom-0 bg-gray-800 ${
           height === "0px" ? "w-10" : "w-full"
         } sm:w-[20rem] rounded-xl overflow-hidden transition-all sm:duration-500`}
       >
         <h2
           onClick={() => setHeight(height === "0px" ? "30rem" : "0px")}
-          className="text-cyan-200 flex justify-center items-center gap-1 m-2 cursor-pointer"
+          className="text-white flex justify-center items-center gap-1 m-2 cursor-pointer"
         >
           <MessageCircle />
           <span className="hidden sm:block"> Chat</span>
@@ -61,24 +61,24 @@ function ChatNew() {
                     })
                   }
                   key={friend.id}
-                  className="p-4 rounded-lg shadow-lg max-w-fit  hover:border-indigo-500 transition-all duration-200 cursor-pointer transform hover:scale-[1.02] flex flex-row justify-between min-w-full"
+                  className="p-3 rounded-lg bg-[#c1d1ff] shadow-lg max-w-fit duration-200 cursor-pointer transform hover:scale-[1.02] flex flex-row justify-between min-w-full"
                 >
                   <div className="flex items-center space-x-3">
                     <img
                       src={friend.img}
                       alt="Profile"
-                      className="h-10 w-10 rounded-full ring-2 ring-emerald-500"
+                      className="h-10 w-10 rounded-full ring-2 shadow-lg shadow-violet-700/50"
                     />
                     <div className="flex-1">
-                      <h3 className="font-medium text-gray-100">
+                      <h3 className="font-medium text-slate-900">
                         {friend.username}
                       </h3>
-                      <span className="text-sm text-emerald-400">
+                      <span className="text-sm text-slate-900">
                         {friend.status}
                       </span>
                     </div>
                   </div>
-                  <div className="flex items-center text-purple-400">
+                  <div className="flex items-center text-violet-600">
                     <Clock size={16} className="mr-1" />
                     <span className="text-sm">Open Chat</span>
                   </div>

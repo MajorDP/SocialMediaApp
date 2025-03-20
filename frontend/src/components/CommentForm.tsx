@@ -27,7 +27,7 @@ function CommentForm({ pid, handleSetPosts }: ICommentForm) {
   };
   return (
     <form
-      className="my-5 flex flex-col justify-center w-full sm:w-[90%] m-auto bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 p-3 rounded-xl shadow-lg"
+      className="my-5 flex flex-col justify-center w-full sm:w-[90%] m-auto bg-gray-800 p-3 rounded-xl shadow-lg"
       onSubmit={(e) => handleSubmit(e)}
     >
       <p className="text-[14px] sm:text-xs mb-2 text-white font-medium">
@@ -39,12 +39,12 @@ function CommentForm({ pid, handleSetPosts }: ICommentForm) {
       <textarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        className="bg-gray-800 text-white text-sm px-3 py-2 resize-none rounded-md focus:outline-none focus:ring-1 focus:ring-cyan-500 transition-all duration-200 scrollbar-hide"
+        className="bg-gray-800 text-white text-sm px-3 py-2 resize-none rounded-md focus:outline-none ring-1 focus:ring-violet-700 transition-all duration-200 scrollbar-hide"
         maxLength={200}
       />
       {error && <p className="text-center text-xs text-red-500">{error}</p>}
       <button
-        className="hover:bg-cyan-500 text-black font-medium text-xs bg-cyan-400 mt-3 px-4 py-2 rounded-xl w-24 sm:w-44 m-auto hover:scale-105 cursor-pointer duration-300 shadow-md shadow-cyan-500/50 border border-cyan-600 disabled:bg-gray-500 disabled:cursor-default"
+        className="hover:bg-violet-600 text-white font-medium text-xs bg-violet-700 mt-3 px-4 py-2 rounded-xl w-24 sm:w-44 m-auto hover:scale-105 cursor-pointer duration-300 disabled:bg-gray-500 disabled:hover:scale-100 disabled:cursor-default"
         disabled={!comment}
       >
         Comment

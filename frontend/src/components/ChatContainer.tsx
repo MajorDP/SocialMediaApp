@@ -69,7 +69,7 @@ function ChatContainer({
         onClick={onClose}
       ></div>
 
-      <div className="h-screen fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full sm:w-[80%] lg:w-[70%] md:h-[90%] bg-gradient-to-b from-[#032f5a] via-blue-950 to-violet-950 rounded-xl  border border-slate-600 z-70">
+      <div className="h-screen fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full sm:w-[80%] lg:w-[70%] md:h-[90%] bg-gray-800 rounded-xl  border border-slate-600 z-70">
         <button
           className="absolute right-3 top-2 text-lg bg-gray-800 hover:bg-gray-700 p-1 rounded-full"
           onClick={onClose}

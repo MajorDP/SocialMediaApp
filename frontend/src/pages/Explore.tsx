@@ -38,14 +38,14 @@ function Explore() {
 
         <MoodSelector />
 
-        <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 rounded-tr-xl rounded-tl-xl ">
+        <div className="bg-gray-800 rounded-tr-xl rounded-tl-xl ">
           <div className="p-6 flex flex-row flex-wrap justify-center sm:justify-start md:flex-row gap-4">
             <button
               onClick={() => setSelectedTab("Explore")}
-              className={`px-4 py-2 rounded-md bg-gradient-to-r hover:from-blue-800 hover:to-fuchsia-800 transition-colors duration-200 w-36 md:w-auto ${
+              className={`px-4 py-2 rounded-md hover:bg-violet-600 hover:text-white text-slate-900 transition-colors duration-200 w-36 md:w-auto font-medium ${
                 selectedTab === "Explore"
-                  ? "from-blue-800 to-fuchsia-950 text-cyan-200"
-                  : "from-gray-400 to-gray-600"
+                  ? "bg-violet-700 text-white"
+                  : "bg-[#c1d1ff]"
               } cursor-pointer`}
             >
               <div className="flex items-center justify-center space-x-2">
@@ -55,10 +55,10 @@ function Explore() {
             </button>
             <button
               onClick={() => setSelectedTab("Mood Matches")}
-              className={`px-4 py-2 rounded-md bg-gradient-to-r hover:from-blue-800 hover:to-fuchsia-800 transition-colors duration-200 w-36 md:w-auto ${
+              className={`px-4 py-2 rounded-md hover:bg-violet-600 hover:text-white text-slate-900 transition-colors duration-200 w-36 md:w-auto font-medium ${
                 selectedTab === "Mood Matches"
-                  ? "from-blue-800 to-fuchsia-950 text-cyan-200"
-                  : "from-gray-400 to-gray-600"
+                  ? "bg-violet-700 text-white"
+                  : "bg-[#c1d1ff]"
               } cursor-pointer`}
             >
               <div className="flex flex-row items-center justify-center space-x-2">
@@ -79,7 +79,7 @@ function Explore() {
               {[1, 2, 3, 4, 5, 6].map((match) => (
                 <div
                   key={match}
-                  className="bg-gradient-to-br from-[#032f5a] via-blue-950 to-fuchsia-950 p-3 sm:p-4 rounded-lg shadow-lg hover:border-indigo-500 transition-all duration-200 cursor-pointer transform hover:scale-[1.02]"
+                  className="bg-[#c4d4ff] p-3 sm:p-4 rounded-lg shadow-lg transition-all duration-200 cursor-pointer transform hover:scale-[1.02]"
                 >
                   <div className="flex items-center justify-between space-x-1 md:space-x-3">
                     <div className="flex flex-rowg space-x-2">
@@ -90,13 +90,13 @@ function Explore() {
                             : "1500648767791-00dcc994a43e"
                         }?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80`}
                         alt="Profile"
-                        className="h-10 w-10 sm:h-12 sm:w-12 rounded-full ring-2 ring-emerald-500"
+                        className="h-10 w-10 sm:h-12 sm:w-12 rounded-full ring-2 ring-violet-700 shadow-lg shadow-violet-700/50"
                       />
                       <div className="flex flex-col">
-                        <h3 className="font-medium text-gray-100 text-sm sm:text-base">
+                        <h3 className="font-medium text-slate-900 text-sm sm:text-base">
                           {match % 2 === 0 ? "Emma Wilson" : "James Brown"}
                         </h3>
-                        <span className="text-xs sm:text-sm text-emerald-400">
+                        <span className="text-xs sm:text-sm text-slate-900/80">
                           Feeling{" "}
                           {match % 3 === 0
                             ? "Motivated"
@@ -106,7 +106,7 @@ function Explore() {
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-center text-purple-400">
+                    <div className="flex items-center justify-center text-violet-700">
                       <Clock size={14} className="mr-1 hidden md:block" />
                       <span
                         className="text-xs sm:text-sm cursor-pointer flex flex-row"
@@ -121,7 +121,7 @@ function Explore() {
                       </span>
                     </div>
                   </div>
-                  <p className="mt-2 text-xs sm:text-sm text-gray-400">
+                  <p className="mt-2 text-xs sm:text-sm text-slate-900">
                     {match % 2 === 0
                       ? "Looking for someone to share positive vibes with!"
                       : "Would love to connect with like-minded people."}

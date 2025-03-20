@@ -79,18 +79,18 @@ function Chat({
                       <div>
                         <img
                           src={message.sentBy.img}
-                          className="shadow-md shadow-cyan-600/50 max-w-[30px] sm:max-w-[50px] rounded-full"
+                          className="shadow-md shadow-violet-700/50 max-w-[30px] sm:max-w-[50px] rounded-full"
                           alt={message.sentBy.username}
                         />
                       </div>
                     )}
 
                     <div className="flex flex-col">
-                      <p className="text-[12px] text-gray-400">
+                      <p className="text-[12px] text-slate-200">
                         {message.dateSent.split("T")[0]}
                       </p>
                       {message.message && (
-                        <p className="text-[16px] sm:text-[18px]">
+                        <p className="text-[16px] text-white sm:text-[18px]">
                           {message.message}
                         </p>
                       )}
@@ -107,7 +107,7 @@ function Chat({
                       <div>
                         <img
                           src={message.sentBy.img}
-                          className="shadow-md shadow-cyan-600/50 max-w-[30px] sm:max-w-[50px] rounded-full"
+                          className="shadow-md shadow-violet-700/50 max-w-[30px] sm:max-w-[50px] rounded-full"
                           alt={message.sentBy.username}
                         />
                       </div>
@@ -116,7 +116,7 @@ function Chat({
                 );
               })}
           </ul>
-          <div className="w-full h-[10%] px-2 py-1 rounded-b-xl border-t border-slate-600 bg-gradient-to-b from via-violet-950 to-gray-900">
+          <div className="w-full bg-gray-800 h-[10%] px-2 py-1 rounded-b-xl border-t border-slate-600 bg-gradient-to-b ">
             <ChatInput
               uid={currentUserId}
               fid={selectedFriendId}
