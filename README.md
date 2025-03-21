@@ -12,6 +12,7 @@ A **MERN stack** application for social media with a **mood-based algorithm** an
 - **Friendship System**: Users can add and remove each other as friends.
 - **Profile Management**: Users can update their account details.
 - **Landing Page**: A welcoming page for new visitors.
+- **Language Responsiveness**: The application's language is interchangable between English and Bulgarian.
 
 ## Setup
 
