@@ -2,6 +2,7 @@ import { useState } from "react";
 import { XCircleIcon } from "lucide-react";
 import { handleSendMessage } from "../services/chat-services";
 import { IChat } from "../interfaces/chat";
+import { useTranslation } from "react-i18next";
 
 interface IChatInput {
   uid: string;
@@ -16,6 +17,7 @@ function ChatInput({
   setChatMessages,
   handleSendMessageSignal,
 }: IChatInput) {
+  const { t } = useTranslation();
   const [message, setMessage] = useState("");
   const [image, setImage] = useState<string | null>(null);
 
@@ -100,7 +102,7 @@ function ChatInput({
         className="px-1 sm:px-2 py-1 rounded-xl text-white font-medium text-xs bg-violet-700 cursor-pointer duration-200"
         disabled={!message.trim() && !image}
       >
-        Send
+        {t("Chat.sendBtn")}
       </button>
     </form>
   );

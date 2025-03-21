@@ -3,8 +3,10 @@ import { Home, BadgePlus, Compass, User, LogOut } from "lucide-react";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/UserContext";
 import { changeStatus } from "../services/users-services";
+import { useTranslation } from "react-i18next";
 
 function Navigation() {
+  const { t } = useTranslation();
   const { user, updateUser, logout } = useContext(AuthContext);
   const [status, setStatus] = useState(user?.status);
 
@@ -48,7 +50,8 @@ function Navigation() {
                 to="/dashboard"
                 className="flex items-center text-slate-900 hover:scale-105 duration-300"
               >
-                <Home className="w-6 h-6 text-slate-900 mr-2" /> Dashboard
+                <Home className="w-6 h-6 text-slate-900 mr-2" />{" "}
+                {t("Navigation.dashboard")}
               </Link>
             </li>
             <li>
@@ -56,8 +59,8 @@ function Navigation() {
                 to="/create"
                 className="flex items-center text-slate-900 hover:scale-105 duration-300"
               >
-                <BadgePlus className="w-6 h-6 text-slate-900 mr-2" /> Create a
-                Post
+                <BadgePlus className="w-6 h-6 text-slate-900 mr-2" />
+                {t("Navigation.create")}
               </Link>
             </li>
             <li>
@@ -65,7 +68,8 @@ function Navigation() {
                 to="/explore"
                 className="flex items-center text-slate-900 hover:scale-105 duration-300"
               >
-                <Compass className="w-6 h-6 text-slate-900 mr-2" /> Explore
+                <Compass className="w-6 h-6 text-slate-900 mr-2" />
+                {t("Navigation.explore")}
               </Link>
             </li>
             <li>
@@ -73,7 +77,8 @@ function Navigation() {
                 to="/user"
                 className="flex items-center text-slate-900 hover:scale-105 duration-300"
               >
-                <User className="w-6 h-6 text-slate-900 mr-2" /> Account
+                <User className="w-6 h-6 text-slate-900 mr-2" />
+                {t("Navigation.account")}
               </Link>
             </li>
             <li>
@@ -81,7 +86,8 @@ function Navigation() {
                 className="flex items-center text-slate-900 hover:scale-105 duration-300 cursor-pointer"
                 onClick={logout}
               >
-                <LogOut className="w-6 h-6 text-slate-900 mr-2" /> Sign Out
+                <LogOut className="w-6 h-6 text-slate-900 mr-2" />
+                {t("Navigation.signOut")}
               </button>
             </li>
           </ul>

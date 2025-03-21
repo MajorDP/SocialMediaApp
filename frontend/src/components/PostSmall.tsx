@@ -6,6 +6,7 @@ import { deletePost, updateVote } from "../services/posts-services";
 import { Link } from "react-router-dom";
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
+import { useTranslation } from "react-i18next";
 
 interface IPostItem {
   post: IPosts;
@@ -14,6 +15,7 @@ interface IPostItem {
 }
 
 function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
+  const { t } = useTranslation();
   const { user, updateUser } = useContext(AuthContext);
   const [error, setError] = useState<string | null>(null);
   const [showComments, setShowComments] = useState(false);
@@ -89,13 +91,13 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
               to={`/create/${post.id}`}
               className="text-center px-2 py-1 bg-orange-500 hover:bg-orange-600 hover:scale-105 duration-300 cursor-pointer rounded-xl"
             >
-              Edit
+              {t("Post.edit")}
             </Link>
             <button
               className="px-2 py-1 bg-red-700 hover:bg-red-800 hover:scale-105 duration-300 cursor-pointer rounded-xl"
               onClick={() => handleDelete(post.id)}
             >
-              Delete
+              {t("Post.delete")}
             </button>
           </div>
         )}
@@ -114,7 +116,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           <span>{post.likes}</span>
         </button>
         <p className="text-slate-900 font-medium flex items-center text-[14px]">
-          {post.likes} {post.likes === 1 ? "Like" : "Likes"}
+          {post.likes} {post.likes === 1 ? t("Post.like") : t("Post.likes")}
         </p>
         <button
           className={`${
@@ -132,7 +134,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           onClick={() => setShowComments(!showComments)}
           className="text-xs text-slate-900 cursor-pointer "
         >
-          View comments
+          {t("Post.viewComments")}
         </button>
       </div>
       {error && (
@@ -149,7 +151,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
             to={`/post/${post.id}`}
             className="text-xs text-slate-900 transition-all duration-150"
           >
-            See All Comments ({post.comments.length})
+            {t("Post.seeAll")} ({post.comments.length})
           </Link>
         </div>
         <CommentForm pid={post.id} handleSetPosts={handleSetPosts} />

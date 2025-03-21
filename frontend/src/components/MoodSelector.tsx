@@ -2,6 +2,7 @@ import { Smile, Frown, AlertCircle, Meh, Eye, EyeOff } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/UserContext";
 import { setMood } from "../services/users-services";
+import { useTranslation } from "react-i18next";
 
 const moods = [
   {
@@ -79,6 +80,7 @@ const moods = [
 ];
 
 function MoodSelector() {
+  const { t } = useTranslation();
   const { user, updateUser } = useContext(AuthContext);
 
   // Check if the last mood update was within the last 24 hours
@@ -134,7 +136,7 @@ function MoodSelector() {
           setIsOpen(!isOpen);
         }}
       >
-        What is your mood today?
+        {t("MoodSelector.message")}
       </h2>
 
       <div
@@ -160,7 +162,14 @@ function MoodSelector() {
                     }
                   >
                     <mood.icon size={24} />
-                    <p>{submood.label}</p>
+                    <p>
+                      {t(
+                        `MoodSelector.moods.${mood.label.toLowerCase()}.submoods.${submood.label
+                          .toLowerCase()
+                          .split(" ")
+                          .join("")}`
+                      )}
+                    </p>
                   </button>
                 ))}
               </div>
@@ -175,7 +184,9 @@ function MoodSelector() {
                 }
               >
                 <mood.icon size={24} />
-                <span>{mood.label}</span>
+                <span>
+                  {t(`MoodSelector.moods.${mood.label.toLowerCase()}.main`)}
+                </span>
               </button>
             )
           )}
@@ -187,8 +198,8 @@ function MoodSelector() {
           }`}
         >
           <p className="text-white">
-            Share the reason for your mood{" "}
-            <span className="text-gray-400">(Optional)</span>
+            {t("MoodSelector.reason")}{" "}
+            <span className="text-gray-400">{t("MoodSelector.optional")}</span>
           </p>
           <input
             value={selectedMood.desc}
@@ -204,7 +215,7 @@ function MoodSelector() {
             onClick={handleSubmitMood}
             disabled={selectedMood.mood === ""}
           >
-            Done
+            {t("MoodSelector.submitBtn")}
           </button>
         </div>
       </div>

@@ -7,9 +7,11 @@ import { AuthContext } from "../context/UserContext";
 import { Sparkles, Compass, Clock } from "lucide-react";
 import ChatContainer from "../components/ChatContainer";
 import MoodSelector from "../components/MoodSelector";
+import { useTranslation } from "react-i18next";
 
 //TODO: Get random users with matching mood
 function Explore() {
+  const { t } = useTranslation();
   const { user } = useContext(AuthContext);
   const [selectedUser, setSelectedUser] = useState<{
     id: string;
@@ -50,7 +52,7 @@ function Explore() {
             >
               <div className="flex items-center justify-center space-x-2">
                 <Compass size={16} />
-                <span>Explore</span>
+                <span>{t("Explore.options.explore")}</span>
               </div>
             </button>
             <button
@@ -64,8 +66,7 @@ function Explore() {
               <div className="flex flex-row items-center justify-center space-x-2">
                 <Sparkles size={16} />
                 <span className="flex flex-row">
-                  <span className="hidden sm:inline">Mood</span>{" "}
-                  <span>Matches</span>
+                  {t("Explore.options.moodMatches")}
                 </span>
               </div>
             </button>
@@ -117,7 +118,7 @@ function Explore() {
                           })
                         }
                       >
-                        Chat
+                        {t("Explore.chat")}
                       </span>
                     </div>
                   </div>

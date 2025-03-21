@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { createPost, editPost, getPostById } from "../services/posts-services";
 import { AuthContext } from "../context/UserContext";
 import { ImageIcon, Loader2, Send, Smile, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const moods = [
   { name: "Happy", emoji: "😊", gradient: "from-yellow-400 to-orange-500" },
@@ -17,6 +18,7 @@ const moods = [
   { name: "Anxious", emoji: "😟", gradient: "from-pink-400 to-pink-600" },
 ];
 const CreateEdit = () => {
+  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -107,14 +109,14 @@ const CreateEdit = () => {
     <div className="w-full h-full flex items-center px-2 sm:px-4">
       <div className="w-full max-w-2xl m-auto bg-gray-800 rounded-lg shadow-xl">
         <p className="text-center p-2 text-lg sm:text-xl text-white">
-          Create a Post
+          {isEditing ? t("CreateEdit.edit") : t("CreateEdit.create")}
         </p>
         <form onSubmit={handleSubmit} className="p-4 sm:p-6">
           <div className="mb-4 sm:mb-6">
             <textarea
               value={message}
               onChange={(e) => handleMessageChange(e)}
-              placeholder="What's on your mind?"
+              placeholder={t("CreateEdit.placeholder")}
               className="w-full min-h-[100px] sm:min-h-[120px] bg-[#c1d1ff] rounded-lg p-3 sm:p-4 text-slate-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-cyan-200 focus:border-transparent resize-none"
             />
             {error && (
@@ -149,7 +151,9 @@ const CreateEdit = () => {
                 } text-white flex items-center space-x-2`}
               >
                 <span>{moods.find((m) => m.name === mood)?.emoji}</span>
-                <span className="text-sm sm:text-base">Feeling {mood}</span>
+                <span className="text-sm sm:text-base">
+                  {t("CreateEdit.feeling")} {mood}
+                </span>
                 <button
                   type="button"
                   onClick={() => setMood(null)}
@@ -223,12 +227,12 @@ const CreateEdit = () => {
               {isSubmitting ? (
                 <>
                   <Loader2 size={18} className="animate-spin" />
-                  <span>Posting...</span>
+                  <span>{t("CreateEdit.submitting")}</span>
                 </>
               ) : (
                 <>
                   <Send size={18} />
-                  <span>Post</span>
+                  <span>{t("CreateEdit.submitBtn")}</span>
                 </>
               )}
             </button>

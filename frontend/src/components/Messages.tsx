@@ -5,8 +5,10 @@ import Spinner from "./Spinner";
 import useFriends from "../hooks/useFriends";
 import ChatContainer from "./ChatContainer";
 import Error from "./Error";
+import { useTranslation } from "react-i18next";
 
 function ChatNew() {
+  const { t } = useTranslation();
   const [height, setHeight] = useState("0px");
   const { user } = useContext(AuthContext);
 
@@ -40,7 +42,7 @@ function ChatNew() {
           className="text-white flex justify-center items-center gap-1 m-2 cursor-pointer"
         >
           <MessageCircle />
-          <span className="hidden sm:block"> Chat</span>
+          <span className="hidden sm:block"> {t("Chat.message")}</span>
         </h2>
         {isLoading ? (
           <Spinner />
@@ -80,7 +82,7 @@ function ChatNew() {
                   </div>
                   <div className="flex items-center text-violet-600">
                     <Clock size={16} className="mr-1" />
-                    <span className="text-sm">Open Chat</span>
+                    <span className="text-sm">{t("Chat.openChat")}</span>
                   </div>
                 </div>
               ))}

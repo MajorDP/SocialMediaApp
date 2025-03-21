@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/UserContext";
 import Input from "./Input";
@@ -8,6 +9,7 @@ interface ILoginForm {
 }
 
 function LoginForm({ setIsLogin }: ILoginForm) {
+  const { t } = useTranslation();
   const { error, login } = useContext(AuthContext);
 
   const [authData, setAuthData] = useState({ email: "", password: "" });
@@ -36,13 +38,13 @@ function LoginForm({ setIsLogin }: ILoginForm) {
         </span>
       </Link>
       <h2 className="text-center text-xl font-semibold text-cyan-200">
-        Sign In
+        {t("Auth.loginMsg")}
       </h2>
 
       <div className="flex flex-col w-fit mt-10">
         <Input
+          label={t("Auth.form.email")}
           type="email"
-          label="Email"
           value={authData.email}
           onChange={(e) => setAuthData({ ...authData, email: e.target.value })}
           onValidationChange={setIsFormValid}
@@ -51,7 +53,7 @@ function LoginForm({ setIsLogin }: ILoginForm) {
 
       <div className="flex flex-col w-fit mt-3">
         <Input
-          label="Password"
+          label={t("Auth.form.password")}
           type="password"
           value={authData.password}
           onChange={(e) =>
@@ -68,7 +70,7 @@ function LoginForm({ setIsLogin }: ILoginForm) {
         disabled={!isFormValid}
         className="mt-5 disabled:bg-gray-600 disabled:shadow-none disabled:border-none bg-violet-700 hover:bg-violet-600 transition-colors px-4 py-2 rounded-full duration-200 shadow-md enabled:shadow-cyan-800 disabled:shadow-gray-600 cursor-pointer text-white"
       >
-        Sign In
+        {t("Auth.loginBtn")}
       </button>
 
       <button
@@ -78,7 +80,7 @@ function LoginForm({ setIsLogin }: ILoginForm) {
           setIsLogin((prev) => !prev);
         }}
       >
-        Don't have an account?
+        {t("Auth.noAccount")}
       </button>
     </form>
   );

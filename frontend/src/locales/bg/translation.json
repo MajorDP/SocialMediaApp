@@ -1,0 +1,178 @@
+{
+  "Intro": {
+    "heading": "Сподели своя път, свързвай се с други чрез емоции",
+    "headingMsg": "Присъедини се към общност, в която можеш да изразяваш чувствата си, да се свързваш с хора със сходни емоции и да намираш подкрепа в безопасна и разбираща среда.",
+    "joinBtn": "Присъедини се към MoodShare",
+    "Connect with Others": {
+      "heading": "Свържи се с други",
+      "message": "Намери и се свържи с хора, които споделят твоето емоционално пътуване"
+    },
+    "Express Yourself": {
+      "heading": "Изрази себе си",
+      "message": "Споделяй настроенията и мислите си в безопасна и разбираща среда"
+    },
+    "Safe Environment": {
+      "heading": "Безопасна среда",
+      "message": "Защитено пространство, в което можеш да бъдеш себе си"
+    },
+    "Meaningful Conversations": {
+      "heading": "Смислени разговори",
+      "message": "Започни разговори с хора, които разбират твоите чувства"
+    },
+    "ready": "Готов ли си да започнеш своето пътуване?",
+    "readyMsg": "Присъедини се към други, които са намерили своята емоционална подкрепа.",
+    "getStarted": "Започни сега"
+  },
+  "Auth": {
+    "loginMsg": "Влез в акаунта си",
+    "registerMsg": "Създай нов акаунт",
+    "form": {
+      "email": "Имейл",
+      "username": "Потребителско име",
+      "password": "Парола",
+      "repeatPass": "Повторете паролата си"
+    },
+    "loginBtn": "Влез",
+    "registerBtn": "Регистрирай се",
+    "noAccount": "Нямаш акаунт?",
+    "hasAccount": "Вече имаш акаунт?"
+  },
+  "Navigation": {
+    "dashboard": "Начало",
+    "create": "Създай пост",
+    "explore": "Търси",
+    "account": "Профил",
+    "signOut": "Изход"
+  },
+  "Dashboard": {
+    "options": {
+      "dashboard": "Начало",
+      "memories": "Спомени"
+    }
+  },
+  "MoodSelector": {
+    "message": "Как e днес?",
+    "reason": "Сподели защо",
+    "optional": "(По избор)",
+    "submitBtn": "Готово",
+    "moods": {
+      "happy": {
+        "main": "Щастлив",
+        "submoods": {
+          "joyful": "Весел",
+          "content": "Доволен",
+          "excited": "Развълнуван",
+          "prideful": "Горд"
+        }
+      },
+      "sad": {
+        "main": "Тъжен",
+        "submoods": {
+          "grief": "Тъжен",
+          "disappointed": "Разочарован",
+          "lonely": "Самотен",
+          "guilty": "Виновен"
+        }
+      },
+      "scared": {
+        "main": "Уплашен",
+        "submoods": {
+          "anxious": "Притеснен",
+          "panicked": "Паникьосан",
+          "uneasy": "Неспокоен",
+          "shaky": "Разтреперан"
+        }
+      },
+      "angry": {
+        "main": "Ядосан",
+        "submoods": {
+          "frustrated": "Разочарован",
+          "rage": "Бесен",
+          "irritated": "Раздразнен",
+          "tickedoff": "Избухнал"
+        }
+      },
+      "surprised": {
+        "main": "Изненадан",
+        "submoods": {
+          "amazed": "Смаян",
+          "shocked": "Шокиран",
+          "confused": "Объркан",
+          "baffled": "Озадачен"
+        }
+      },
+      "disgusted": {
+        "main": "Отвратен",
+        "submoods": {
+          "repulsed": "Отблъснат",
+          "grossedout": "Отвратен",
+          "turnedoff": "Отблъснат",
+          "offended": "Обиден"
+        }
+      }
+    }
+  },
+  "Post": {
+    "edit": "Промени",
+    "delete": "Изтрий",
+    "likes": "харесвания",
+    "like": "харесване",
+    "viewComments": "Виж коментарите",
+    "noComments": "Няма коментари",
+    "beFirst": "Бъди първия коментирал",
+    "seeAll": "Виж Всички Коментари",
+    "comments": "Коментари",
+    "comment": "Коментирай",
+    "leaveAComment": "Остави коментар",
+    "maxChars": "(Макс. 200 символа)",
+    "submitBtn": "Коментирай"
+  },
+  "CreateEdit": {
+    "edit": "Промени пост",
+    "create": "Създай пост",
+    "placeholder": "За какво си мислиш?",
+    "submitBtn": "Създай",
+    "submitting": "Качване..."
+  },
+  "Explore": {
+    "options": {
+      "explore": "Търси",
+      "moodMatches": "Споделящи"
+    },
+    "chat": "Пиши"
+  },
+  "Account": {
+    "pages": {
+      "profile": "Профил",
+      "friends": "Приятели",
+      "settings": "Настройки"
+    },
+    "friends": {
+      "addFriends": "Добави приятел",
+      "requests": "Покани",
+      "feeling": "Се чувства",
+      "chat": "Пиши",
+      "remove": "Премахни",
+      "noFriends": "Все още не си добавил приятели?",
+      "placeholder": "Изпрати покана",
+      "yourFriends": "Приятели"
+    },
+    "settings": {
+      "pfp": "Профилна Снимка",
+      "username": "Потребителско име",
+      "email": "Имейл",
+      "newPassword": "Нова Парола",
+      "newPassPlaceholder": "Остави празно, за да запазиш същата парола",
+      "saveBtn": "Запази промени",
+      "saveMsg": "Сигурен ли си, че искаш да запазиш тези промени?",
+      "confirmPassword": "Потвърди паролата си",
+      "yes": "Да",
+      "no": "Не"
+    }
+  },
+  "Chat": {
+    "message": "Чатове",
+    "openChat": "Отвори Чат",
+    "sendBtn": "Изпрати"
+  }
+}

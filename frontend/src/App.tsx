@@ -10,11 +10,13 @@ import Create from "./pages/CreateEdit";
 import User from "./pages/User";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Intro from "./pages/Intro";
+import LanguageSelector from "./components/LanguageSelector";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <LanguageSelector />
         <Routes>
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>

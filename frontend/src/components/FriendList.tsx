@@ -8,8 +8,10 @@ import AddFriendForm from "./AddFriendForm";
 import { Clock, Trash } from "lucide-react";
 import { Link } from "react-router-dom";
 import { handleFriendRequests, removeFriend } from "../services/users-services";
+import { useTranslation } from "react-i18next";
 
 function FriendListLarge() {
+  const { t } = useTranslation();
   const { user, updateUser } = useContext(AuthContext);
 
   const { friends, error, isLoading, setFriends } =
@@ -93,7 +95,7 @@ function FriendListLarge() {
           {friends.requests.length > 0 && (
             <>
               <h2 className="text-center font-semilight text-lg">
-                Friend Requests
+                {t("Account.friends.requests")}
               </h2>
               <ul className="mt-4">
                 {friends.requests.map((req) => (
@@ -132,7 +134,9 @@ function FriendListLarge() {
           )}
         </div>
 
-        <h2 className="text-center font-semilight text-lg">Your Friends</h2>
+        <h2 className="text-center font-semilight text-lg">
+          {t("Account.friends.yourFriends")}
+        </h2>
 
         {error && <Error error={error} />}
 
@@ -159,7 +163,7 @@ function FriendListLarge() {
                       {friend.username}
                     </Link>
                     <span className="text-sm text-center sm:text-start text-slate-900">
-                      Feeling {friend.status}
+                      {t("Account.friends.feeling")} {friend.status}
                     </span>
                   </div>
                   <div className="flex flex-row sm:flex-col items-center text-white justify-between gap-2">
@@ -174,7 +178,7 @@ function FriendListLarge() {
                           })
                         }
                       >
-                        Chat
+                        {t("Account.friends.chat")}
                       </button>
                     </div>
                     <button
@@ -182,7 +186,7 @@ function FriendListLarge() {
                       onClick={() => handleRemoveFriend(friend.id)}
                     >
                       <Trash size={14} className="mr-1" />
-                      Remove
+                      {t("Account.friends.remove")}
                     </button>
                   </div>
                 </div>
@@ -196,7 +200,7 @@ function FriendListLarge() {
           </ul>
         ) : (
           <p className="text-center text-gray-400 py-4 text-md">
-            No friends yet, maybe add some?
+            {t("Account.friends.noFirends")}
           </p>
         )}
       </div>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { IComment } from "../interfaces/posts";
+import { useTranslation } from "react-i18next";
 
 interface IComments {
   comments: IComment[];
@@ -7,16 +8,17 @@ interface IComments {
 }
 
 function Comments({ comments, showAll }: IComments) {
+  const { t } = useTranslation();
   const displayedComments = !showAll ? comments.slice(0, 5) : comments;
   return (
     <ul
       className={`flex flex-col gap-5  rounded-xl p-2 mt-5 lg:ml-0 bg-gray-800 h-[18rem] overflow-y-scroll scrollbar-hide`}
     >
-      <h2 className="text-center text-xs">Comments</h2>
+      <h2 className="text-center text-xs">{t("Post.comments")}</h2>
       {displayedComments.length === 0 && (
         <p className="m-auto flex flex-col text-center text-[14px]">
-          No comments yet{" "}
-          <span className="text-gray-400">Be the first to comment</span>
+          {t("Post.noComments")}{" "}
+          <span className="text-gray-400">{t("Post.beFirst")}</span>
         </p>
       )}
       {displayedComments.map((comment, index) => (

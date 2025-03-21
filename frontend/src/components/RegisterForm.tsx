@@ -8,12 +8,14 @@ import {
   isValidLengthUsername,
 } from "../validation/validation";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface IRegisterForm {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function RegisterForm({ setIsLogin }: IRegisterForm) {
+  const { t } = useTranslation();
   const { error, register } = useContext(AuthContext);
   const [authData, setAuthData] = useState({
     email: "",
@@ -46,13 +48,13 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
         </span>
       </Link>
       <h2 className="text-center text-xl font-semibold text-cyan-200">
-        Create an Account
+        {t("Auth.registerMsg")}
       </h2>
 
       <div className="flex flex-col w-44 sm:w-fit mt-10">
         <Input
+          label={t("Auth.form.email")}
           type="email"
-          label="Email"
           value={authData.email}
           onChange={(e) => setAuthData({ ...authData, email: e.target.value })}
           validators={[isValidEmail]}
@@ -62,7 +64,7 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
 
       <div className="flex flex-col w-44 sm:w-fit mt-3">
         <Input
-          label="Username"
+          label={t("Auth.form.username")}
           type="text"
           value={authData.username}
           onChange={(e) =>
@@ -75,7 +77,7 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
 
       <div className="flex flex-col w-44 sm:w-fit mt-3">
         <Input
-          label="Password"
+          label={t("Auth.form.password")}
           type="password"
           value={authData.password}
           onChange={(e) =>
@@ -88,7 +90,7 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
 
       <div className="flex flex-col w-44 sm:w-fit mt-3">
         <Input
-          label="Repeat Password"
+          label={t("Auth.form.repeatPass")}
           type="password"
           value={authData.repeatPassword}
           onChange={(e) =>
@@ -106,7 +108,7 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
         className="mt-5 disabled:bg-gray-600 disabled:shadow-none disabled:border-none bg-violet-700 hover:bg-violet-600 transition-colors px-4 py-2 rounded-full duration-200 shadow-md enabled:shadow-cyan-800 disabled:shadow-gray-600 cursor-pointer text-white"
         disabled={!isFormValid}
       >
-        Sign Up
+        {t("Auth.registerBtn")}
       </button>
 
       <button
@@ -117,7 +119,7 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
           setIsLogin((prev) => !prev);
         }}
       >
-        Already have an account?
+        {t("Auth.hasAccount")}
       </button>
     </form>
   );

@@ -2,8 +2,10 @@ import { useState } from "react";
 import Settings from "../components/Settings";
 import ProfilePreview from "../components/ProfilePreview";
 import FriendListLarge from "../components/FriendList";
+import { useTranslation } from "react-i18next";
 
 const Account = () => {
+  const { t } = useTranslation();
   const [selectedPage, setSelectedPage] = useState(0);
 
   return (
@@ -16,7 +18,7 @@ const Account = () => {
             } text-sm lg:text-xl mb-4 text-center cursor-pointer`}
             onClick={() => setSelectedPage(0)}
           >
-            Profile Preview
+            {t("Account.pages.profile")}
           </h2>
           <h2
             className={`${
@@ -24,7 +26,7 @@ const Account = () => {
             } text-sm lg:text-xl mb-4 text-center cursor-pointer`}
             onClick={() => setSelectedPage(1)}
           >
-            Friends
+            {t("Account.pages.friends")}
           </h2>
           <h2
             className={`${
@@ -32,7 +34,7 @@ const Account = () => {
             } text-sm lg:text-xl mb-4 text-center cursor-pointer`}
             onClick={() => setSelectedPage(2)}
           >
-            Settings
+            {t("Account.pages.settings")}
           </h2>
         </div>
         {selectedPage === 0 && <ProfilePreview />}

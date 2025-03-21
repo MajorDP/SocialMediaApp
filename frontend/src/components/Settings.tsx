@@ -2,8 +2,10 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/UserContext";
 import Modal from "./Modal";
 import { handleUpdateUser } from "../services/users-services";
+import { useTranslation } from "react-i18next";
 
 function Settings() {
+  const { t } = useTranslation();
   const { user, updateUser } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -58,19 +60,20 @@ function Settings() {
     <>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <div className="w-full h-full bg-gray-800 border border-slate-600 flex flex-col gap-5 p-4 rounded-xl">
-          <h2 className="text-lg text-center font-semibold">Save changes</h2>
+          <h2 className="text-lg text-center font-semibold">
+            {t("Account.settings.saveBtn")}
+          </h2>
           <div className="text-center flex flex-col gap-5 text-balance text-sm">
-            <p>Are you sure you want to save those changes to your account?</p>
+            <p>{t("Account.settings.saveMsg")}</p>
             <div className="flex flex-col gap-2">
               <label className="text-cyan-200 text-sm">
-                Confirm your password
+                {t("Account.settings.confirmPassword")}
               </label>
               <input
                 type="password"
                 className="w-full p-2 rounded-md bg-gray-800 text-white border border-cyan-200"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder=""
               />
             </div>
             <div className="flex flex-row justify-center gap-5">
@@ -78,14 +81,14 @@ function Settings() {
                 className="px-2 py-1 hover:bg-red-700 bg-red-800 rounded-md cursor-pointer hover:scale-105 duration-200"
                 onClick={() => setIsOpen(false)}
               >
-                No
+                {t("Account.settings.no")}
               </button>
 
               <button
                 className="px-2 py-1 hover:bg-green-600 bg-green-700 rounded-md cursor-pointer hover:scale-105 duration-200"
                 onClick={handleSubmit}
               >
-                Yes
+                {t("Account.settings.yes")}
               </button>
             </div>
           </div>
@@ -93,7 +96,9 @@ function Settings() {
       </Modal>
       <form className="flex flex-col gap-4 h-screen mt-2 overflow-y-auto sm:overflow-y-auto scrollbar-hide pb-20">
         <div className="flex flex-col items-center">
-          <label className="text-cyan-200 text-sm">Profile Picture</label>
+          <label className="text-cyan-200 text-sm">
+            {t("Account.settings.pfp")}
+          </label>
           <input
             type="file"
             accept="image/*"
@@ -114,7 +119,9 @@ function Settings() {
         </div>
 
         <div>
-          <label className="text-cyan-200 text-sm">Username</label>
+          <label className="text-cyan-200 text-sm">
+            {t("Account.settings.username")}
+          </label>
           <input
             type="text"
             className="w-full p-2 rounded-md bg-gray-800 text-white border border-cyan-400"
@@ -124,7 +131,9 @@ function Settings() {
         </div>
 
         <div>
-          <label className="text-cyan-200 text-sm">Email</label>
+          <label className="text-cyan-200 text-sm">
+            {t("Account.settings.email")}
+          </label>
           <input
             type="email"
             className="w-full p-2 rounded-md bg-gray-800 text-white border border-cyan-400"
@@ -134,13 +143,15 @@ function Settings() {
         </div>
 
         <div>
-          <label className="text-cyan-200 text-sm">New Password</label>
+          <label className="text-cyan-200 text-sm">
+            {t("Account.settings.newPassword")}
+          </label>
           <input
             type="password"
             className="w-full p-2 rounded-md bg-gray-800 text-white border border-cyan-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Leave blank to keep current password"
+            placeholder={t("Account.settings.newPassPlaceholder")}
           />
         </div>
 
@@ -153,7 +164,7 @@ function Settings() {
             setIsOpen(true);
           }}
         >
-          Save Changes
+          {t("Account.settings.saveBtn")}
         </button>
       </form>
     </>

@@ -5,9 +5,11 @@ import {
   Shield,
   MessageCircle,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 function Intro() {
+  const { t } = useTranslation();
   const features = [
     {
       icon: Users,
@@ -48,18 +50,16 @@ function Intro() {
             </span>
           </h1>
           <h1 className="text-2xl md:text-4xl font-bold text-slate-900 mb-6">
-            Share Your Journey, Connect Through Emotions
+            {t("Intro.heading")}
           </h1>
           <p className="text-xl text-slate-900 max-w-2xl mx-auto">
-            Join a community where you can express your feelings, connect with
-            others on similar emotional journeys, and find support in a safe,
-            understanding space.
+            {t("Intro.headingMsg")}
           </p>
           <Link
             to="/auth"
             className="mt-8 w-fit px-8 py-3 rounded-full bg-violet-700 hover:bg-violet-600 text-white font-medium transition-all duration-200 transform hover:scale-[1.02] flex items-center space-x-2 mx-auto"
           >
-            Join MoodShare
+            {t("Intro.joinBtn")}
             <ArrowRight size={20} />
           </Link>
         </div>
@@ -74,20 +74,20 @@ function Intro() {
                 <feature.icon size={24} className="text-white" />
               </div>
               <h3 className="text-xl font-semibold text-slate-900 mb-2">
-                {feature.title}
+                {t(`Intro.${feature.title}.heading`)}
               </h3>
-              <p className="text-slate-700">{feature.description}</p>
+              <p className="text-slate-700">
+                {t(`Intro.${feature.title}.message`)}
+              </p>
             </div>
           ))}
         </div>
 
         <div className="bg-[#c1d1ff] rounded-lg p-8 text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Ready to Start Your Journey?
+            {t("Intro.ready")}
           </h2>
-          <p className="text-gray-700 mb-6">
-            Join others who have found their emotional support network.
-          </p>
+          <p className="text-gray-700 mb-6">{t("Intro.readyMsg")}</p>
           <Link
             to="/auth"
             className="px-8 py-3 w-fit rounded-full bg-violet-700 hover:bg-violet-600 text-white font-medium transition-all duration-200 transform hover:scale-[1.02] flex items-center space-x-2 mx-auto"

@@ -6,8 +6,10 @@ import Error from "../components/Error";
 import usePosts from "../hooks/usePosts";
 import PostsList from "../components/PostsList";
 import MoodSelector from "../components/MoodSelector";
+import { useTranslation } from "react-i18next";
 
 export default function NewDashboard() {
+  const { t } = useTranslation();
   const { user } = useContext(AuthContext);
   const [selectedTab, setSelectedTab] = useState("Dashboard");
 
@@ -52,7 +54,7 @@ export default function NewDashboard() {
               >
                 <div className="flex items-center justify-center space-x-2">
                   <Compass size={16} />
-                  <span>Dashboard</span>
+                  <span>{t("Dashboard.options.dashboard")}</span>
                 </div>
               </button>
               <button
@@ -65,7 +67,7 @@ export default function NewDashboard() {
               >
                 <div className="flex items-center justify-center space-x-2">
                   <Sparkles size={16} />
-                  <span>Memories</span>
+                  <span>{t("Dashboard.options.memories")}</span>
                 </div>
               </button>
             </div>

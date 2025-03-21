@@ -1,0 +1,178 @@
+{
+  "Intro": {
+    "heading": "Share Your Journey, Connect Through Emotions",
+    "headingMsg": "Join a community where you can express your feelings, connect with others on similar emotional journeys, and find support in a safe, understanding space.",
+    "joinBtn": "Join MoodShare",
+    "Connect with Others": {
+      "heading": "Connect with Others",
+      "message": "Find and connect with people who share your emotional journey"
+    },
+    "Express Yourself": {
+      "heading": "Express Yourself",
+      "message": "Share your moods and thoughts in a safe, understanding space"
+    },
+    "Safe Environment": {
+      "heading": "Safe Environment",
+      "message": "A protected space where you can be your authentic self"
+    },
+    "Meaningful Conversations": {
+      "heading": "Meaningful Conversations",
+      "message": "Start conversations with others who understand your feelings"
+    },
+    "ready": "Ready to Start Your Journey?",
+    "readyMsg": "Join others who have found their emotional support network.",
+    "getStarted": "Get Started Now"
+  },
+  "Auth": {
+    "loginMsg": "Sign in",
+    "registerMsg": "Create an account",
+    "form": {
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "repeatPass": "Repeat Password"
+    },
+    "loginBtn": "Sign in",
+    "registerBtn": "Sign up",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "Navigation": {
+    "dashboard": "Dashboard",
+    "create": "Create a post",
+    "explore": "Explore",
+    "account": "Account",
+    "signOut": "Sign Out"
+  },
+  "Dashboard": {
+    "options": {
+      "dashboard": "Dashboard",
+      "memories": "Memories"
+    }
+  },
+  "MoodSelector": {
+    "message": "What's your mood today?",
+    "reason": "Share the reason for your mood",
+    "optional": "(Optional)",
+    "submitBtn": "Done",
+    "moods": {
+      "happy": {
+        "main": "Happy",
+        "submoods": {
+          "joyful": "Joyful",
+          "content": "Content",
+          "excited": "Excited",
+          "prideful": "Prideful"
+        }
+      },
+      "sad": {
+        "main": "Sad",
+        "submoods": {
+          "grief": "Joyful",
+          "disappointed": "Disappointed",
+          "lonely": "Lonely",
+          "guilty": "Guilty"
+        }
+      },
+      "scared": {
+        "main": "Scared",
+        "submoods": {
+          "anxious": "Anxious",
+          "panicked": "Panicked",
+          "uneasy": "Uneasy",
+          "shaky": "Shaky"
+        }
+      },
+      "angry": {
+        "main": "Angry",
+        "submoods": {
+          "frustrated": "Frustrated",
+          "rage": "Rage",
+          "irritated": "Irritated",
+          "tickedoff": "Ticked off"
+        }
+      },
+      "surprised": {
+        "main": "Surprised",
+        "submoods": {
+          "amazed": "Amazed",
+          "shocked": "Shocked",
+          "confused": "Confused",
+          "baffled": "Baffled"
+        }
+      },
+      "disgusted": {
+        "main": "Disgusted",
+        "submoods": {
+          "repulsed": "Repulsed",
+          "grossedout": "Grossed Out",
+          "turnedoff": "Turned Off",
+          "offended": "Offended"
+        }
+      }
+    }
+  },
+  "Post": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "likes": "likes",
+    "like": "like",
+    "viewComments": "View Comments",
+    "noComments": "No comments yet",
+    "beFirst": "Be the first to comment",
+    "seeAll": "See All Comments",
+    "comments": "Comments",
+    "comment": "Comment",
+    "leaveAComment": "Leave a comment",
+    "maxChars": "(Max. 200 characters)",
+    "submitBtn": "Comment"
+  },
+  "CreateEdit": {
+    "edit": "Edit post",
+    "create": "Create a post",
+    "placeholder": "What's on your mind?",
+    "submitBtn": "Post",
+    "submitting": "Posting..."
+  },
+  "Explore": {
+    "options": {
+      "explore": "Explore",
+      "moodMatches": "Mood Matches"
+    },
+    "chat": "Chat"
+  },
+  "Account": {
+    "pages": {
+      "profile": "Profile Preview",
+      "friends": "Friends",
+      "settings": "Settings"
+    },
+    "friends": {
+      "addFriends": "Add Friends",
+      "requests": "Friend Requests",
+      "feeling": "Feeling",
+      "chat": "Chat",
+      "remove": "Remove",
+      "noFriends": "No friends yet, maybe add some?",
+      "placeholder": "Send a friend request",
+      "yourFriends": "Your Friends"
+    },
+    "settings": {
+      "pfp": "Profile Picture",
+      "username": "Username",
+      "email": "Email",
+      "newPassword": "New Password",
+      "newPassPlaceholder": "Leave blank to keep current password",
+      "saveBtn": "Save changes",
+      "saveMsg": "Are you sure you want to save those changes to your account?",
+      "confirmPassword": "Confirm your password",
+      "yes": "Yes",
+      "no": "No"
+    }
+  },
+  "Chat": {
+    "message": "Chats",
+    "openChat": "Open Chat",
+    "sendBtn": "Send"
+  }
+}
