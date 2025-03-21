@@ -1,4 +1,4 @@
-import { Smile, Frown, Brain, Trophy, Coffee, Heart } from "lucide-react";
+import { Smile, Frown, AlertCircle, Meh, Eye, EyeOff } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/UserContext";
 import { setMood } from "../services/users-services";
@@ -7,38 +7,74 @@ const moods = [
   {
     icon: Smile,
     label: "Happy",
-    color: "bg-gradient-to-br from-yellow-400 to-orange-500 text-black",
-    glow: "#F59E0B",
+    color: "bg-green-400 text-black",
+    glow: "#EC4899",
+    submoods: [
+      { label: "Joyful" },
+      { label: "Content" },
+      { label: "Excited" },
+      { label: "Prideful" },
+    ],
   },
   {
     icon: Frown,
     label: "Sad",
-    color: "bg-gradient-to-br from-blue-400 to-blue-600 text-black",
+    color: "bg-blue-400 text-black",
     glow: "#3B82F6",
+    submoods: [
+      { label: "Grief" },
+      { label: "Disappointed" },
+      { label: "Lonely" },
+      { label: "Guilty" },
+    ],
   },
   {
-    icon: Brain,
-    label: "Stressed",
-    color: "bg-gradient-to-br from-red-400 to-red-600 text-black",
+    icon: AlertCircle,
+    label: "Scared",
+    color: "bg-orange-400 text-black",
+    glow: "#ffe600",
+    submoods: [
+      { label: "Anxious" },
+      { label: "Panicked" },
+      { label: "Uneasy" },
+      { label: "Shaky" },
+    ],
+  },
+  {
+    icon: Meh,
+    label: "Angry",
+    color: "bg-red-400 text-black",
     glow: "#EF4444",
+    submoods: [
+      { label: "Frustrated" },
+      { label: "Rage" },
+      { label: "Irritated" },
+      { label: "Ticked off" },
+    ],
   },
   {
-    icon: Trophy,
-    label: "Motivated",
-    color: "bg-gradient-to-br from-emerald-400 to-emerald-600 text-black",
-    glow: "#10B981",
+    icon: Eye,
+    label: "Surprised",
+    color: "bg-yellow-400 text-black",
+    glow: "#F59E0B",
+    submoods: [
+      { label: "Amazed" },
+      { label: "Shocked" },
+      { label: "Confused" },
+      { label: "Baffled" },
+    ],
   },
   {
-    icon: Coffee,
-    label: "Relaxed",
-    color: "bg-gradient-to-br from-purple-400 to-purple-600 text-black",
-    glow: "#8B5CF6",
-  },
-  {
-    icon: Heart,
-    label: "Anxious",
-    color: "bg-gradient-to-br from-pink-400 to-pink-600 text-black",
+    icon: EyeOff,
+    label: "Disgusted",
+    color: "bg-green-400 text-black",
     glow: "#EC4899",
+    submoods: [
+      { label: "Repulsed" },
+      { label: "Grossed out" },
+      { label: "Turned off" },
+      { label: "Offended" },
+    ],
   },
 ];
 
@@ -53,6 +89,7 @@ function MoodSelector() {
   const [selectedMood, setSelectedMood] = useState({
     mood: "",
     desc: "",
+    toOpen: "",
   });
 
   const [isOpen, setIsOpen] = useState(!isUpdatedToday);
@@ -62,6 +99,7 @@ function MoodSelector() {
       setSelectedMood({
         mood: user.mood.currentMoods[0],
         desc: user.mood.desc,
+        toOpen: "",
       });
     }
   }, [isUpdatedToday, user?.mood]);
@@ -87,7 +125,14 @@ function MoodSelector() {
     >
       <h2
         className="text-sm text-center sm:text-xl mb-4 text-slate-200 cursor-pointer"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setSelectedMood({
+            mood: user?.mood.currentMoods[0] || "",
+            desc: user?.mood.desc || "",
+            toOpen: "",
+          });
+          setIsOpen(!isOpen);
+        }}
       >
         What is your mood today?
       </h2>
@@ -97,23 +142,43 @@ function MoodSelector() {
           isOpen ? "max-h-[30rem] opacity-100" : "max-h-0 opacity-0"
         } overflow-hidden`}
       >
-        <div className="flex flex-col h-50 overflow-y-auto scrollbar-hide md:grid md:grid-cols-3 gap-4">
-          {moods.map((mood) => (
-            <button
-              key={mood.label}
-              className={`${mood.color} ${
-                mood.label === selectedMood.mood && "scale-95 duration-200"
-              } p-4 rounded-lg flex items-center justify-center space-x-2 hover:opacity-90 shadow-md cursor-pointer text-xs md:text-base`}
-              onClick={() =>
-                setSelectedMood((prev) => {
-                  return { ...prev, mood: mood.label };
-                })
-              }
-            >
-              <mood.icon size={24} />
-              <span>{mood.label}</span>
-            </button>
-          ))}
+        <div className="flex flex-col h-[18rem] overflow-y-auto scrollbar-hide md:grid md:grid-cols-3 gap-4">
+          {moods.map((mood) =>
+            selectedMood.toOpen === mood.label ? (
+              <div className="bg-gray-900 h-full w-full grid grid-cols-2 gap-1">
+                {mood.submoods.map((submood) => (
+                  <button
+                    className={`${
+                      selectedMood.mood === submood.label && "scale-95"
+                    } ${
+                      mood.color
+                    } text-slate-900 h-15 sm:h-full rounded-lg w-full space-x-0 lg:space-x-2 flex flex-col lg:flex-row justify-center items-center hover:opacity-90 shadow-md cursor-pointer text-xs lg:text-base`}
+                    onClick={() =>
+                      setSelectedMood((prev) => {
+                        return { ...prev, mood: submood.label };
+                      })
+                    }
+                  >
+                    <mood.icon size={24} />
+                    <p>{submood.label}</p>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <button
+                key={mood.label}
+                className={`${mood.color} text-slate-900 h-full p-4 rounded-lg flex items-center justify-center space-x-2 hover:opacity-90 shadow-md cursor-pointer text-xs md:text-base`}
+                onClick={() =>
+                  setSelectedMood((prev) => {
+                    return { ...prev, mood: "", toOpen: mood.label };
+                  })
+                }
+              >
+                <mood.icon size={24} />
+                <span>{mood.label}</span>
+              </button>
+            )
+          )}
         </div>
 
         <div

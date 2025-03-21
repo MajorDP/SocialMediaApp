@@ -16,6 +16,7 @@ export default function NewDashboard() {
     //@ts-expect-error page wont load if no user
     user?.id
   );
+
   if (isLoading) {
     return (
       <div className="h-[50vh] flex items-center justify-center">

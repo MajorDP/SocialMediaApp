@@ -63,24 +63,23 @@ const getPosts = async (req, res, next) => {
 
   if (filterValue === "dashboard") {
     posts = posts.filter((post) => {
-      const isFriend = user.friends.includes(post.user._id.toString());
       const matchesMood = post.moods.includes(currentMood);
       const isNotUserPost = post.user._id.toString() !== uid;
+      const isFriend = user.friends.includes(post.user._id.toString());
 
       return (matchesMood || isFriend) && isNotUserPost;
     });
   }
-
   if (filterValue === "explore") {
     posts = posts
-      .filter(
-        (post) =>
-          post.moods.includes(currentMood) && post.user._id.toString() !== uid
-      )
+      .filter((post) => {
+        const matchesMood = post.moods.includes(currentMood);
+        const isNotUserPost = post.user._id.toString() !== uid;
+        return matchesMood && isNotUserPost;
+      })
       .sort((a, b) => {
         const popularityA = a.comments.length + a.likes;
         const popularityB = b.comments.length + b.likes;
-
         return popularityB - popularityA;
       });
   }

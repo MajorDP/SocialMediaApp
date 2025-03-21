@@ -173,8 +173,6 @@ const setMood = async (req, res, next) => {
     lastUpdated: new Date(),
   };
 
-  console.log(user.mood);
-
   try {
     await user.save();
   } catch (error) {
@@ -191,8 +189,6 @@ const setMood = async (req, res, next) => {
     requests: user.requests,
     mood: user.mood,
   };
-  console.log("userResponse");
-  console.log(userResponse);
 
   res.json({ userResponse });
 };
