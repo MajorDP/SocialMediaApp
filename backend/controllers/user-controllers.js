@@ -3,6 +3,7 @@ const User = require("../models/User");
 const HttpError = require("../models/HttpError");
 const bcrypt = require("bcrypt");
 const Chat = require("../models/Chat");
+const { default: mongoose } = require("mongoose");
 
 const getCurrentUser = async (req, res, next) => {
   try {
@@ -450,6 +451,55 @@ const updateStatus = async (req, res, next) => {
   res.json({ success: true, newStatus: status });
 };
 
+const getUsersByMood = async (req, res, next) => {
+  try {
+    const { currentMood, uid } = req.body;
+
+    if (!mongoose.isValidObjectId(uid)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
+
+    const usersWithMood = await User.find({
+      "mood.currentMoods.0": currentMood, //ONLY checking first mood
+      _id: { $ne: uid },
+    }).select("_id username img mood");
+
+    const userIdsWithMood = usersWithMood.map(
+      (user) => new mongoose.Types.ObjectId(user._id.toString())
+    );
+
+    if (userIdsWithMood.length === 0) {
+      return res.status(200).json({ users: [] });
+    }
+
+    const existingChats = await Chat.find({
+      participants: {
+        $elemMatch: {
+          $in: [new mongoose.Types.ObjectId(uid), ...userIdsWithMood],
+        },
+      },
+    }).select("participants");
+
+    const usersWithChats = new Set();
+    existingChats.forEach((chat) => {
+      chat.participants.forEach((participantId) => {
+        if (participantId.toString() !== uid) {
+          usersWithChats.add(participantId.toString());
+        }
+      });
+    });
+    const filteredUsers = usersWithMood.filter((user) =>
+      usersWithChats.has(user._id.toString())
+    );
+
+    res.status(200).json({
+      users: filteredUsers.map((user) => user.toObject({ getters: true })),
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.getCurrentUser = getCurrentUser;
 exports.getUser = getUser;
 exports.login = login;
@@ -462,3 +512,4 @@ exports.removeFriend = removeFriend;
 exports.followUnfollowUser = followUnfollowUser;
 exports.updateAccount = updateAccount;
 exports.updateStatus = updateStatus;
+exports.getUsersByMood = getUsersByMood;

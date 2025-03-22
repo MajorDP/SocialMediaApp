@@ -92,7 +92,7 @@ function Intro() {
             to="/auth"
             className="px-8 py-3 w-fit rounded-full bg-violet-700 hover:bg-violet-600 text-white font-medium transition-all duration-200 transform hover:scale-[1.02] flex items-center space-x-2 mx-auto"
           >
-            Get Started Now
+            {t("Intro.getStarted")}
             <ArrowRight size={20} />
           </Link>
         </div>
@@ -102,5 +102,3 @@ function Intro() {
 }
 
 export default Intro;
-
-//bg-gradient-to-b from-[#78a6d4] to-[#382dd8]

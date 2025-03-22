@@ -34,3 +34,39 @@ export const handleSendMessage = async (uid, fid, message, image) => {
 
   return { success: true, chat: data };
 };
+
+export const handleCreateTempChat = async (uid, fid) => {
+  const res = await fetch("http://localhost:5000/chat/createTemp", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ userId: uid, friendId: fid }),
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    return { success: false };
+  }
+
+  return { success: true };
+};
+
+export const handleGetTempChats = async (uid) => {
+  const res = await fetch("http://localhost:5000/chat/getTemp", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ uid: uid }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    return { success: false, chats: null };
+  }
+
+  return { success: true, chats: data.chats };
+};

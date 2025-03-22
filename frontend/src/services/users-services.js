@@ -132,7 +132,6 @@ export const handleFriendRequests = async (type, userId, friendId) => {
   }
 
   const data = await res.json();
-  console.log(data);
   return { success: true, data: data };
 };
 
@@ -198,4 +197,23 @@ export const changeStatus = async (uid, status) => {
   const data = await res.json();
 
   return { success: true, newStatus: data.newStatus };
+};
+
+export const getUsersByMood = async (currentMood, uid) => {
+  const res = await fetch("http://localhost:5000/auth/match", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      currentMood: currentMood,
+      uid: uid,
+    }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    return { success: false, users: null };
+  }
+  return { success: true, users: data.users };
 };

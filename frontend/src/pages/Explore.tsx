@@ -4,32 +4,21 @@ import PostsList from "../components/PostsList";
 import Spinner from "../components/Spinner";
 import usePosts from "../hooks/usePosts";
 import { AuthContext } from "../context/UserContext";
-import { Sparkles, Compass, Clock } from "lucide-react";
-import ChatContainer from "../components/ChatContainer";
+import { Sparkles, Compass } from "lucide-react";
 import MoodSelector from "../components/MoodSelector";
 import { useTranslation } from "react-i18next";
+import MoodMatches from "../components/MoodMatches";
 
 //TODO: Get random users with matching mood
 function Explore() {
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
-  const [selectedUser, setSelectedUser] = useState<{
-    id: string;
-    username: string;
-  } | null>(null);
 
   const [selectedTab, setSelectedTab] = useState("Explore");
   //@ts-expect-error page wont load if no user
   const { posts, error, isLoading, setPosts } = usePosts("explore", user?.id);
   return (
     <>
-      {selectedUser && (
-        <ChatContainer
-          currentUserId={user?.id as string}
-          selectedFriend={selectedUser}
-          onClose={() => setSelectedUser(null)}
-        />
-      )}
       <div className="sm:p-6 space-y-6">
         {isLoading && (
           <div className="h-screen w-full flex items-center">
@@ -75,62 +64,7 @@ function Explore() {
             <PostsList posts={posts} setPosts={setPosts} />
           )}
 
-          {selectedTab === "Mood Matches" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 p-3 sm:p-4">
-              {[1, 2, 3, 4, 5, 6].map((match) => (
-                <div
-                  key={match}
-                  className="bg-[#c4d4ff] p-3 sm:p-4 rounded-lg shadow-lg transition-all duration-200 cursor-pointer transform hover:scale-[1.02]"
-                >
-                  <div className="flex items-center justify-between space-x-1 md:space-x-3">
-                    <div className="flex flex-rowg space-x-2">
-                      <img
-                        src={`https://images.unsplash.com/photo-${
-                          match % 2 === 0
-                            ? "1494790108377-be9c29b29330"
-                            : "1500648767791-00dcc994a43e"
-                        }?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80`}
-                        alt="Profile"
-                        className="h-10 w-10 sm:h-12 sm:w-12 rounded-full ring-2 ring-violet-700 shadow-lg shadow-violet-700/50"
-                      />
-                      <div className="flex flex-col">
-                        <h3 className="font-medium text-slate-900 text-sm sm:text-base">
-                          {match % 2 === 0 ? "Emma Wilson" : "James Brown"}
-                        </h3>
-                        <span className="text-xs sm:text-sm text-slate-900/80">
-                          Feeling{" "}
-                          {match % 3 === 0
-                            ? "Motivated"
-                            : match % 2 === 0
-                            ? "Happy"
-                            : "Relaxed"}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-center text-violet-700">
-                      <Clock size={14} className="mr-1 hidden md:block" />
-                      <span
-                        className="text-xs sm:text-sm cursor-pointer flex flex-row"
-                        onClick={() =>
-                          setSelectedUser({
-                            id: "1",
-                            username: "user",
-                          })
-                        }
-                      >
-                        {t("Explore.chat")}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="mt-2 text-xs sm:text-sm text-slate-900">
-                    {match % 2 === 0
-                      ? "Looking for someone to share positive vibes with!"
-                      : "Would love to connect with like-minded people."}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
+          {selectedTab === "Mood Matches" && <MoodMatches user={user} />}
         </div>
       </div>
     </>

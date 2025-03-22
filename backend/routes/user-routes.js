@@ -38,5 +38,6 @@ router.patch("/friends/add", userController.sendFriendRequest);
 router.patch("/friends/handle", userController.acceptRejectFriendRequest);
 router.patch("/friends/remove", userController.removeFriend);
 router.patch("/follow", userController.followUnfollowUser);
+router.post("/match", userController.getUsersByMood);
 
 module.exports = router;

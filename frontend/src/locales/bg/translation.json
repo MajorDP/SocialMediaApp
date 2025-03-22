@@ -55,6 +55,32 @@
     "reason": "Сподели защо",
     "optional": "(По избор)",
     "submitBtn": "Готово",
+    "submoods": {
+      "joyful": "весел",
+      "content": "доволен",
+      "excited": "развълнуван",
+      "prideful": "горд",
+      "grief": "тъжен",
+      "disappointed": "пазочарован",
+      "lonely": "самотен",
+      "guilty": "виновен",
+      "anxious": "притеснен",
+      "panicked": "паникьосан",
+      "uneasy": "неспокоен",
+      "shaky": "разтреперан",
+      "frustrated": "разочарован",
+      "rage": "бесен",
+      "irritated": "раздразнен",
+      "tickedoff": "избухнал",
+      "amazed": "смаян",
+      "shocked": "шокиран",
+      "confused": "объркан",
+      "baffled": "озадачен",
+      "repulsed": "отблъснат",
+      "grossedout": "отвратен",
+      "turnedoff": "отблъснат",
+      "offended": "обиден"
+    },
     "moods": {
       "happy": {
         "main": "Щастлив",
@@ -130,6 +156,7 @@
   "CreateEdit": {
     "edit": "Промени пост",
     "create": "Създай пост",
+    "feeling": "Чувствам се",
     "placeholder": "За какво си мислиш?",
     "submitBtn": "Създай",
     "submitting": "Качване..."

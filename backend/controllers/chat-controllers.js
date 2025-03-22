@@ -1,5 +1,7 @@
+const { default: mongoose } = require("mongoose");
 const Chat = require("../models/Chat");
 const HttpError = require("../models/HttpError");
+const User = require("../models/User");
 
 const sendMessage = async (req, res, next) => {
   const { sentBy, fid, message, image } = req.body;
@@ -70,6 +72,58 @@ const getChat = async (req, res, next) => {
   res.json(chat.toObject({ getters: true }));
 };
 
+const createTempChat = async (req, res, next) => {
+  const { userId, friendId } = req.body;
+
+  //If a chat between matches already exists, we dont create a new one
+  let existingChat;
+  try {
+    existingChat = await Chat.findOne({
+      participants: { $all: [userId, friendId] },
+    }).populate({ path: "messages.sentBy", select: "_id username img" });
+
+    if (!existingChat) {
+      const newChat = new Chat({
+        participants: [userId, friendId],
+        messages: [],
+        lastMessageDate: new Date().toISOString(),
+        seen: true,
+      });
+
+      await newChat.save();
+
+      res.json({ success: true });
+    }
+    res.json({ success: true });
+  } catch (error) {
+    return next(new HttpError("Could not find chat.", 500));
+  }
+};
+
+const getTempChats = async (req, res, next) => {
+  try {
+    const { uid } = req.body;
+
+    if (!mongoose.isValidObjectId(uid)) {
+      return res.status(400).json({ error: "Invalid user ID format" });
+    }
+
+    const chatsWithUser = await Chat.find({
+      participants: { $in: [new mongoose.Types.ObjectId(uid)] },
+      isTemporary: true,
+    })
+      .populate("participants", "username img")
+      .exec();
+
+    res.status(200).json({
+      chats: chatsWithUser.map((chat) => chat.toObject({ getters: true })),
+    });
+  } catch (error) {
+    console.error("Error in getTempChats:", error);
+    next(error);
+  }
+};
+
 const removeMessage = async (req, res, next) => {
   //TODO: Handle deleting message from a chat
 };
@@ -77,3 +131,5 @@ const removeMessage = async (req, res, next) => {
 exports.sendMessage = sendMessage;
 exports.getChat = getChat;
 exports.removeMessage = removeMessage;
+exports.createTempChat = createTempChat;
+exports.getTempChats = getTempChats;

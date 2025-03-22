@@ -9,7 +9,6 @@ const moods = [
     icon: Smile,
     label: "Happy",
     color: "bg-green-400 text-black",
-    glow: "#EC4899",
     submoods: [
       { label: "Joyful" },
       { label: "Content" },
@@ -21,7 +20,6 @@ const moods = [
     icon: Frown,
     label: "Sad",
     color: "bg-blue-400 text-black",
-    glow: "#3B82F6",
     submoods: [
       { label: "Grief" },
       { label: "Disappointed" },
@@ -33,7 +31,6 @@ const moods = [
     icon: AlertCircle,
     label: "Scared",
     color: "bg-orange-400 text-black",
-    glow: "#ffe600",
     submoods: [
       { label: "Anxious" },
       { label: "Panicked" },
@@ -45,7 +42,6 @@ const moods = [
     icon: Meh,
     label: "Angry",
     color: "bg-red-400 text-black",
-    glow: "#EF4444",
     submoods: [
       { label: "Frustrated" },
       { label: "Rage" },
@@ -57,7 +53,6 @@ const moods = [
     icon: Eye,
     label: "Surprised",
     color: "bg-yellow-400 text-black",
-    glow: "#F59E0B",
     submoods: [
       { label: "Amazed" },
       { label: "Shocked" },
@@ -69,7 +64,6 @@ const moods = [
     icon: EyeOff,
     label: "Disgusted",
     color: "bg-green-400 text-black",
-    glow: "#EC4899",
     submoods: [
       { label: "Repulsed" },
       { label: "Grossed out" },

@@ -2,21 +2,90 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { createPost, editPost, getPostById } from "../services/posts-services";
 import { AuthContext } from "../context/UserContext";
-import { ImageIcon, Loader2, Send, Smile, X } from "lucide-react";
+import {
+  AlertCircle,
+  ArrowDown,
+  Eye,
+  EyeOff,
+  Frown,
+  ImageIcon,
+  Loader2,
+  Meh,
+  Send,
+  Smile,
+  X,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const moods = [
-  { name: "Happy", emoji: "😊", gradient: "from-yellow-400 to-orange-500" },
-  { name: "Sad", emoji: "😔", gradient: "from-blue-400 to-blue-600" },
-  { name: "Stressed", emoji: "😰", gradient: "from-red-400 to-red-600" },
+const moods2 = [
   {
-    name: "Motivated",
-    emoji: "💪",
-    gradient: "from-emerald-400 to-emerald-600",
+    icon: Smile,
+    label: "Happy",
+    color: "bg-green-400 text-black",
+    submoods: [
+      { label: "Joyful" },
+      { label: "Content" },
+      { label: "Excited" },
+      { label: "Prideful" },
+    ],
   },
-  { name: "Relaxed", emoji: "😌", gradient: "from-purple-400 to-purple-600" },
-  { name: "Anxious", emoji: "😟", gradient: "from-pink-400 to-pink-600" },
+  {
+    icon: Frown,
+    label: "Sad",
+    color: "bg-blue-400 text-black",
+    submoods: [
+      { label: "Grief" },
+      { label: "Disappointed" },
+      { label: "Lonely" },
+      { label: "Guilty" },
+    ],
+  },
+  {
+    icon: AlertCircle,
+    label: "Scared",
+    color: "bg-orange-400 text-black",
+    submoods: [
+      { label: "Anxious" },
+      { label: "Panicked" },
+      { label: "Uneasy" },
+      { label: "Shaky" },
+    ],
+  },
+  {
+    icon: Meh,
+    label: "Angry",
+    color: "bg-red-400 text-black",
+    submoods: [
+      { label: "Frustrated" },
+      { label: "Rage" },
+      { label: "Irritated" },
+      { label: "Ticked off" },
+    ],
+  },
+  {
+    icon: Eye,
+    label: "Surprised",
+    color: "bg-yellow-400 text-black",
+    submoods: [
+      { label: "Amazed" },
+      { label: "Shocked" },
+      { label: "Confused" },
+      { label: "Baffled" },
+    ],
+  },
+  {
+    icon: EyeOff,
+    label: "Disgusted",
+    color: "bg-green-400 text-black",
+    submoods: [
+      { label: "Repulsed" },
+      { label: "Grossed out" },
+      { label: "Turned off" },
+      { label: "Offended" },
+    ],
+  },
 ];
+
 const CreateEdit = () => {
   const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -27,7 +96,10 @@ const CreateEdit = () => {
 
   const [message, setMessage] = useState("");
   const [image, setImage] = useState<string | null>(null);
-  const [mood, setMood] = useState<string | null>(null);
+  const [mood, setMood] = useState({
+    selectedMood: "",
+    toOpen: "",
+  });
 
   const [showMoodSelector, setShowMoodSelector] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -37,10 +109,11 @@ const CreateEdit = () => {
     async function getPost() {
       if (pid) {
         const { data, error } = await getPostById(pid);
+
         if (error) {
           setError(error.message);
         }
-
+        setMood({ selectedMood: data.moods[0], toOpen: "" });
         setMessage(data.message);
         if (data.img) {
           setImage(data.postImg);
@@ -75,7 +148,7 @@ const CreateEdit = () => {
       user: user?.id,
       message: message,
       postImg: image,
-      mood: mood,
+      moods: [mood.selectedMood],
     };
 
     if (isEditing) {
@@ -143,21 +216,24 @@ const CreateEdit = () => {
             </div>
           )}
 
-          {mood && (
+          {mood.selectedMood && (
             <div className="mb-4 sm:mb-6 flex items-center">
               <div
-                className={`px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r ${
-                  moods.find((m) => m.name === mood)?.gradient
-                } text-white flex items-center space-x-2`}
+                className={`px-3 sm:px-4 py-2 rounded-full bg-gradient-to-r bg-[#c1d1ff] text-slate-900 flex items-center space-x-2`}
               >
-                <span>{moods.find((m) => m.name === mood)?.emoji}</span>
                 <span className="text-sm sm:text-base">
-                  {t("CreateEdit.feeling")} {mood}
+                  {t("CreateEdit.feeling")}{" "}
+                  {t(
+                    `MoodSelector.submoods.${mood.selectedMood
+                      .toLowerCase()
+                      .split(" ")
+                      .join("")}`
+                  )}
                 </span>
                 <button
                   type="button"
-                  onClick={() => setMood(null)}
-                  className="ml-2 hover:text-gray-200 transition-colors duration-200"
+                  onClick={() => setMood({ selectedMood: "", toOpen: "" })}
+                  className="ml-2 hover:text-gray-200 cursor-pointer transition-colors duration-200"
                 >
                   <X size={16} />
                 </button>
@@ -184,28 +260,73 @@ const CreateEdit = () => {
               <div className="relative">
                 <button
                   type="button"
-                  onClick={() => setShowMoodSelector(!showMoodSelector)}
+                  onClick={() => {
+                    setShowMoodSelector(!showMoodSelector);
+                    setMood({ selectedMood: "", toOpen: "" });
+                  }}
                   className="text-white hover:text-yellow-400 transition-colors duration-200 p-2 rounded-full hover:bg-gray-800 cursor-pointer"
                 >
                   <Smile size={22} />
                 </button>
 
                 {showMoodSelector && (
-                  <div className="absolute h-fit bottom-full left-[-79px] sm:left-auto top-10 mb-2 bg-gray-900 rounded-lg shadow-xl border border-gray-700 p-2 flex  flex-col flex-wrap sm:grid-cols-4 gap-2 min-w-[300px] sm:min-w-[500px]">
-                    {moods.map((m) => (
+                  <div className="z-0 absolute h-fit bottom-full left-[-79px] sm:left-auto top-10 mb-2 bg-gray-900 rounded-lg shadow-xl border border-gray-700 p-2 flex  flex-col flex-wrap sm:grid-cols-4 gap-2 min-w-[300px] sm:min-w-[500px]">
+                    {moods2.map((m) => (
                       <button
-                        key={m.name}
+                        key={m.label}
                         type="button"
                         onClick={() => {
-                          setMood(m.name);
-                          setShowMoodSelector(false);
+                          setMood({
+                            selectedMood: mood.selectedMood,
+                            toOpen: mood.toOpen === m.label ? "" : m.label,
+                          });
                         }}
-                        className={`flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800 transition-colors duration-200 cursor-pointer ${
-                          mood === m.name ? "bg-gray-800" : ""
+                        className={`flex items-center p-2 rounded-lg hover:bg-gray-800 transition-colors duration-200 cursor-pointer ${
+                          mood.selectedMood === m.label ? "bg-gray-800" : ""
                         }`}
                       >
-                        <span className="text-xl">{m.emoji}</span>
-                        <span className="text-sm text-gray-300">{m.name}</span>
+                        <span className="flex flex-col w-full">
+                          <span className=" flex flex-row w-full space-x-2">
+                            <m.icon />
+                            <span className="text-sm w-full text-gray-300 flex justify-between">
+                              <span>
+                                {t(
+                                  `MoodSelector.moods.${m.label.toLowerCase()}.main`
+                                )}
+                              </span>{" "}
+                              <ArrowDown />
+                            </span>
+                          </span>
+                          {mood.toOpen === m.label && (
+                            <ul className="z-10 text-center space-y-0.5">
+                              {moods2
+                                .find(
+                                  (current) => current.label === mood.toOpen
+                                )
+                                ?.submoods.map((el, index) => (
+                                  <li
+                                    key={index}
+                                    className="z-10 hover:bg-gray-900"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setMood({
+                                        selectedMood: el.label,
+                                        toOpen: "",
+                                      });
+                                      setShowMoodSelector(false);
+                                    }}
+                                  >
+                                    {t(
+                                      `MoodSelector.moods.${m.label.toLowerCase()}.submoods.${el.label
+                                        .toLowerCase()
+                                        .split(" ")
+                                        .join("")}`
+                                    )}
+                                  </li>
+                                ))}
+                            </ul>
+                          )}
+                        </span>
                       </button>
                     ))}
                   </div>

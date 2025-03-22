@@ -13,7 +13,6 @@ const createPost = async (req, res, next) => {
   try {
     await newPost.save();
   } catch (error) {
-    console.log(error);
     return next(new HttpError("Creating post failed, please try again.", 400));
   }
 
@@ -40,7 +39,6 @@ const editPost = async (req, res, next) => {
   try {
     await existingPost.save();
   } catch (error) {
-    console.log(error);
     return next(new HttpError("Creating post failed, please try again.", 400));
   }
 
