@@ -105,22 +105,41 @@ const getTempChats = async (req, res, next) => {
     const { uid } = req.body;
 
     if (!mongoose.isValidObjectId(uid)) {
-      return res.status(400).json({ error: "Invalid user ID format" });
+      return res.status(400).json({ error: "Invalid user ID." });
     }
 
-    const chatsWithUser = await Chat.find({
+    let chatsWithUser = await Chat.find({
       participants: { $in: [new mongoose.Types.ObjectId(uid)] },
       isTemporary: true,
     })
       .populate("participants", "username img")
       .exec();
 
+    //Deleting the user's expired temporary chats from more than 24 hours ago
+    try {
+      const expiredDate = new Date();
+      expiredDate.setHours(expiredDate.getHours() - 24);
+      const expiredChats = chatsWithUser.filter(
+        (chat) => chat.dateCreated <= expiredDate
+      );
+
+      if (expiredChats.length > 0) {
+        await Chat.deleteMany({
+          _id: { $in: expiredChats.map((chat) => chat._id) },
+        });
+        chatsWithUser = chatsWithUser.filter(
+          (chat) => chat.dateCreated > expiredDate
+        );
+      }
+    } catch (error) {
+      return next(new HttpError("Could not delete expired temporary chats."));
+    }
+
     res.status(200).json({
       chats: chatsWithUser.map((chat) => chat.toObject({ getters: true })),
     });
   } catch (error) {
-    console.error("Error in getTempChats:", error);
-    next(error);
+    return next(new HttpError("Could not get temporary chats."));
   }
 };
 

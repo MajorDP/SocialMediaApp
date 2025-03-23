@@ -6,6 +6,7 @@ A **MERN stack** application for social media with a **mood-based algorithm** an
 
 - **Mood-Based Algorithm**: Users can cater their search algorithm based on their current mood.
 - **Real-Time Messaging**: Users can send and receive messages in real-time.
+- **Temporary chats**: Users can send and receive messages in real-time with people matching their current mood, even if they are not friends.
 - **User Authentication**: JWT-based authentication to secure user access.
 - **Protected Routes**: Routes that require authentication to access.
 - **Post Management**: Users can create, edit, and delete their posts.

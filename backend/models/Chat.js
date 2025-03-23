@@ -15,6 +15,7 @@ const ChatSchema = new mongoose.Schema({
   lastMessageDate: { type: String, required: true },
   seen: { type: Boolean, default: false },
   isTemporary: { type: Boolean, default: true },
+  dateCreated: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("Chat", ChatSchema);

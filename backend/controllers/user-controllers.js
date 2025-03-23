@@ -279,10 +279,16 @@ const acceptRejectFriendRequest = async (req, res, next) => {
     }
 
     try {
+      //If the users had a temporary chat before becoming friends, it is replaced by a permanent one
+      await Chat.deleteOne({
+        participants: { $all: [userId, friendId] },
+        isTemporary: true,
+      });
       const newChat = new Chat({
         participants: [userId, friendId],
         messages: [],
         lastMessageDate: new Date().toISOString(),
+        isTemporary: false,
         seen: true,
       });
 
