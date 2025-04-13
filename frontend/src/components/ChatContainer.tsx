@@ -65,7 +65,7 @@ function ChatContainer({
   return ReactDOM.createPortal(
     <>
       <div
-        className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-60"
+        className="absolute top-0 left-0 w-full h-full bg-slate-800 opacity-50 z-60"
         onClick={onClose}
       ></div>
 

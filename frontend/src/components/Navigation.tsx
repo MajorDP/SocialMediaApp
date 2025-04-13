@@ -21,29 +21,27 @@ function Navigation() {
 
   return (
     <>
-      {/* Sidebar for larger screens */}
       <header className="z-10 hidden md:block h-screen min-w-[13rem] lg:w-[10rem] bg-[#c1d1ff] text-[20px]">
         <nav>
-          {/* Profile Section */}
-          <div className="flex flex-row justify-between p-3 border-b border-slate-900 bg-slate-800 mb-3">
+          <div className="flex flex-row justify-between p-3 mb-3">
             <div className="w-[4rem]">
               <img
                 src={user?.img || "https://example.com/user.jpg"}
                 alt="User"
-                className="w-full rounded-full shadow-md hover:shadow-[#382dd8] duration-200 cursor-pointer"
+                className="w-full rounded-full shadow-md hover:shadow-slate-900 duration-200 cursor-pointer"
               />
             </div>
             <div className="flex flex-col w-[70%] pl-2">
-              <p className="truncate text-white">{user?.username}</p>
+              <p className="truncate text-slate-900">{user?.username}</p>
               <input
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
                 onBlur={handleChangeStatus}
-                className="truncate text-white text-[15px] py-[1px] bg-transparent border-none outline-none"
+                className="truncate text-slate-900 text-[15px] py-[1px] bg-transparent border-none outline-none"
               />
             </div>
           </div>
-          {/* Navigation Links */}
+
           <ul className="flex flex-col pl-3 mt-4 gap-5 ">
             <li>
               <Link
@@ -54,15 +52,7 @@ function Navigation() {
                 {t("Navigation.dashboard")}
               </Link>
             </li>
-            <li>
-              <Link
-                to="/create"
-                className="flex items-center text-slate-900 hover:scale-105 duration-300"
-              >
-                <BadgePlus className="w-6 h-6 text-slate-900 mr-2" />
-                {t("Navigation.create")}
-              </Link>
-            </li>
+
             <li>
               <Link
                 to="/explore"
@@ -103,11 +93,7 @@ function Navigation() {
                 <Home className="w-6 h-6 text-slate-900" />
               </Link>
             </li>
-            <li>
-              <Link to="/create" className="hover:scale-110 duration-300">
-                <BadgePlus className="w-6 h-6 text-slate-900" />
-              </Link>
-            </li>
+
             <li>
               <Link to="/explore" className="hover:scale-110 duration-300">
                 <Compass className="w-6 h-6 text-slate-900" />

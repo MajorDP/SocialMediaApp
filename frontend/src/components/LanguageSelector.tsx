@@ -22,7 +22,8 @@ function LanguageSelector() {
     >
       {languages.map((lang) => (
         <option key={lang.code} value={lang.code}>
-          {lang.flag} {lang.label}
+          {lang.flag}
+          {/* {lang.label} */}
         </option>
       ))}
     </select>

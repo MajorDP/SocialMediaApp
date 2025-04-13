@@ -51,7 +51,8 @@
     }
   },
   "MoodSelector": {
-    "message": "What's your mood today?",
+    "message": "What's your mood?",
+    "post": "What are you thinking about?",
     "reason": "Share the reason for your mood",
     "optional": "(Optional)",
     "submitBtn": "Done",
@@ -157,7 +158,7 @@
     "edit": "Edit post",
     "feeling": "Feeling",
     "create": "Create a post",
-    "placeholder": "What's on your mind?",
+    "placeholder": "Share what's on your mind...",
     "submitBtn": "Post",
     "submitting": "Posting..."
   },

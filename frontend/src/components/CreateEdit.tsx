@@ -4,7 +4,6 @@ import { createPost, editPost, getPostById } from "../services/posts-services";
 import { AuthContext } from "../context/UserContext";
 import {
   AlertCircle,
-  ArrowDown,
   Eye,
   EyeOff,
   Frown,
@@ -14,6 +13,7 @@ import {
   Send,
   Smile,
   X,
+  XIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -182,15 +182,15 @@ const CreateEdit = () => {
     <div className="w-full h-full flex items-center px-2 sm:px-4">
       <div className="w-full max-w-2xl m-auto bg-gray-800 rounded-lg shadow-xl">
         <p className="text-center p-2 text-lg sm:text-xl text-white">
-          {isEditing ? t("CreateEdit.edit") : t("CreateEdit.create")}
+          {isEditing && t("CreateEdit.edit")}
         </p>
-        <form onSubmit={handleSubmit} className="p-4 sm:p-6">
+        <form onSubmit={handleSubmit} className="p-0 md:p-4 sm:p-6">
           <div className="mb-4 sm:mb-6">
             <textarea
               value={message}
               onChange={(e) => handleMessageChange(e)}
               placeholder={t("CreateEdit.placeholder")}
-              className="w-full min-h-[100px] sm:min-h-[120px] bg-[#c1d1ff] rounded-lg p-3 sm:p-4 text-slate-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-cyan-200 focus:border-transparent resize-none"
+              className="w-full min-h-[100px] sm:min-h-[120px] bg-[#c1d1ff] rounded-lg text-sm md:text-base p-3 sm:p-4 text-slate-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-cyan-200 focus:border-transparent resize-none"
             />
             {error && (
               <p className="text-center text-sm text-red-500 font-light">
@@ -268,67 +268,69 @@ const CreateEdit = () => {
                 >
                   <Smile size={22} />
                 </button>
-
                 {showMoodSelector && (
-                  <div className="z-0 absolute h-fit bottom-full left-[-79px] sm:left-auto top-10 mb-2 bg-gray-900 rounded-lg shadow-xl border border-gray-700 p-2 flex  flex-col flex-wrap sm:grid-cols-4 gap-2 min-w-[300px] sm:min-w-[500px]">
-                    {moods2.map((m) => (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+                    {/* Close on outside click */}
+                    <div
+                      className="absolute inset-0"
+                      onClick={() => setShowMoodSelector(false)}
+                    />
+
+                    {/* Mood Selector Panel */}
+                    <div className="relative z-60 animate-fadeIn scale-95 transition-all duration-300 w-full bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 p-4 flex flex-row justify-center flex-wrap gap-3 lg:max-w-xl max-h-[80vh] overflow-y-auto">
                       <button
-                        key={m.label}
-                        type="button"
-                        onClick={() => {
-                          setMood({
-                            selectedMood: mood.selectedMood,
-                            toOpen: mood.toOpen === m.label ? "" : m.label,
-                          });
-                        }}
-                        className={`flex items-center p-2 rounded-lg hover:bg-gray-800 transition-colors duration-200 cursor-pointer ${
-                          mood.selectedMood === m.label ? "bg-gray-800" : ""
-                        }`}
+                        className="absolute top-3 right-5 cursor-pointer"
+                        onClick={() => setShowMoodSelector(false)}
                       >
-                        <span className="flex flex-col w-full">
-                          <span className=" flex flex-row w-full space-x-2">
-                            <m.icon />
-                            <span className="text-sm w-full text-gray-300 flex justify-between">
-                              <span>
+                        <XIcon />
+                      </button>
+                      <div className="flex flex-row flex-wrap md:justify-center">
+                        {moods2.map((m) => (
+                          <div
+                            key={m.label}
+                            className={`p-3 rounded-xl transition-colors duration-200 ${
+                              mood.selectedMood === m.label
+                                ? "bg-gray-700"
+                                : "hover:bg-gray-700"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between gap-2 cursor-pointer">
+                              <div className="flex items-center gap-2 text-sm text-gray-100">
+                                <m.icon className="w-5 h-5 text-gray-300" />
                                 {t(
                                   `MoodSelector.moods.${m.label.toLowerCase()}.main`
                                 )}
-                              </span>{" "}
-                              <ArrowDown />
-                            </span>
-                          </span>
-                          {mood.toOpen === m.label && (
-                            <ul className="z-10 text-center space-y-0.5">
-                              {moods2
-                                .find(
-                                  (current) => current.label === mood.toOpen
-                                )
-                                ?.submoods.map((el, index) => (
-                                  <li
-                                    key={index}
-                                    className="z-10 hover:bg-gray-900"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      setMood({
-                                        selectedMood: el.label,
-                                        toOpen: "",
-                                      });
-                                      setShowMoodSelector(false);
-                                    }}
-                                  >
-                                    {t(
-                                      `MoodSelector.moods.${m.label.toLowerCase()}.submoods.${el.label
-                                        .toLowerCase()
-                                        .split(" ")
-                                        .join("")}`
-                                    )}
-                                  </li>
-                                ))}
+                              </div>
+                            </div>
+                            {/* Always show submoods */}
+                            <ul className="mt-2 pl-7 space-y-1 text-sm text-gray-300">
+                              {m.submoods.map((el, index) => (
+                                <li
+                                  key={index}
+                                  className="px-2 py-1 rounded flex flex-row items-center gap-2 hover:bg-gray-900 transition-colors cursor-pointer text-xs"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setMood({
+                                      selectedMood: el.label,
+                                      toOpen: "",
+                                    });
+                                    setShowMoodSelector(false);
+                                  }}
+                                >
+                                  <m.icon className="w-5 h-5 text-gray-300" />
+                                  {t(
+                                    `MoodSelector.moods.${m.label.toLowerCase()}.submoods.${el.label
+                                      .toLowerCase()
+                                      .split(" ")
+                                      .join("")}`
+                                  )}
+                                </li>
+                              ))}
                             </ul>
-                          )}
-                        </span>
-                      </button>
-                    ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

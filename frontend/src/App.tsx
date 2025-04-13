@@ -6,7 +6,7 @@ import Account from "./pages/Account";
 import Auth from "./pages/Auth";
 import PostPage from "./pages/Post";
 import { AuthProvider } from "./context/UserContext";
-import Create from "./pages/CreateEdit";
+import Create from "./components/CreateEdit";
 import User from "./pages/User";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Intro from "./pages/Intro";
@@ -23,8 +23,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/user" element={<Account />} />
               <Route path="/user/:id" element={<User />} />
-              <Route path="/create" element={<Create />} />
-              <Route path="/create/:pid" element={<Create />} />
+              <Route path="/edit/:pid" element={<Create />} />
               <Route path="/post/:pid" element={<PostPage />} />
               <Route path="/explore" element={<Explore />} />
             </Route>

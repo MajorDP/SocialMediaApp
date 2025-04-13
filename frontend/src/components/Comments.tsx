@@ -12,13 +12,15 @@ function Comments({ comments, showAll }: IComments) {
   const displayedComments = !showAll ? comments.slice(0, 5) : comments;
   return (
     <ul
-      className={`flex flex-col gap-5  rounded-xl p-2 mt-5 lg:ml-0 bg-gray-800 h-[18rem] overflow-y-scroll scrollbar-hide`}
+      className={`flex flex-col gap-5  rounded-xl p-2 mt-5 lg:ml-0 bg-gray-200 h-[18rem] overflow-y-scroll scrollbar-hide`}
     >
-      <h2 className="text-center text-xs">{t("Post.comments")}</h2>
+      <h2 className="text-center text-xs text-slate-900">
+        {t("Post.comments")}
+      </h2>
       {displayedComments.length === 0 && (
-        <p className="m-auto flex flex-col text-center text-[14px]">
+        <p className="m-auto flex flex-col text-center text-[14px] text-slate-900">
           {t("Post.noComments")}{" "}
-          <span className="text-gray-400">{t("Post.beFirst")}</span>
+          <span className="text-gray-600">{t("Post.beFirst")}</span>
         </p>
       )}
       {displayedComments.map((comment, index) => (

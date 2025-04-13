@@ -37,7 +37,7 @@ function PostLarge({ post, setPost }: IPostItem) {
     : null;
 
   return (
-    <div className="flex flex-col lg:flex-row w-full md:max-w-[80%] bg-[#c1d1ff] shadow-inner p-2 sm:p-3 rounded-2xl ">
+    <div className="flex flex-col lg:flex-row w-full md:max-w-[80%] bg-slate-800 shadow-inner p-2 sm:p-3 rounded-2xl ">
       <div className="w-full">
         <div className="flex flex-row w-full p-3">
           <Link
@@ -52,16 +52,16 @@ function PostLarge({ post, setPost }: IPostItem) {
           <div className="flex flex-col justify-start ml-2 w-[80%] xl:max-w-[85%]">
             <Link
               to={`/user/${post.user.id}`}
-              className="text-lg font-semibold text-slate-900 cursor-pointer"
+              className="text-lg font-semibold text-white cursor-pointer"
             >
               {post?.user.username}
             </Link>
-            <p className="text-xs text-slate-500 font-semibold">
+            <p className="text-xs text-slate-300 font-semibold">
               {post?.datePosted.split("T")[0]}
               <span> {post.isEdited && "(Edited)"}</span>
             </p>
             <div className="hidden sm:flex flex-col w-full">
-              <p className="break-words w-full my-2 text-slate-900 text-sm lg:text-lg">
+              <p className="break-words w-full my-2 text-white text-sm lg:text-lg">
                 {post?.message}
               </p>
               <div className="max-w-[20rem] lg:max-w-[30rem] xl:max-w-[40rem] flex items-start justify-start">
@@ -74,7 +74,7 @@ function PostLarge({ post, setPost }: IPostItem) {
           </div>
         </div>
         <div className="sm:hidden flex flex-col items-center w-full mt-2">
-          <p className="break-words w-full ml-10 my-[0.4rem] text-gray-300 text-[20px]">
+          <p className="break-words w-full ml-10 my-[0.4rem] text-gray-400 text-[20px]">
             {post?.message}
           </p>
           <div className="max-w-[30rem] flex items-center justify-center">
@@ -89,23 +89,23 @@ function PostLarge({ post, setPost }: IPostItem) {
           <button
             className={`${
               isVoted === "liked"
-                ? "text-violet-700"
-                : "bg-transparent text-slate-900"
-            } hover:text-violet-700 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
+                ? "text-violet-600"
+                : "bg-transparent text-white"
+            } hover:text-violet-500 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
             onClick={() => handleVote("like")}
           >
             <Heart size={25} />
             <span>{post.likes}</span>
           </button>
-          <p className="text-slate-900 font-medium flex items-center">
+          <p className="text-white font-medium flex items-center">
             {post?.likes} {post?.likes === 1 ? "Like" : "Likes"}
           </p>
           <button
             className={`${
               isVoted === "disliked"
-                ? "text-violet-700"
-                : "bg-transparent text-slate-900"
-            } hover:text-violet-700 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
+                ? "text-violet-600"
+                : "bg-transparent text-white"
+            } hover:text-violet-500 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
             onClick={() => handleVote("dislike")}
           >
             <ThumbsDown size={20} />

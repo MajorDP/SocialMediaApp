@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/UserContext";
 import { setMood } from "../services/users-services";
 import { useTranslation } from "react-i18next";
+import CreateEdit from "./CreateEdit";
 
 const moods = [
   {
@@ -30,7 +31,7 @@ const moods = [
   {
     icon: AlertCircle,
     label: "Scared",
-    color: "bg-orange-400 text-black",
+    color: "bg-orange-500 text-black",
     submoods: [
       { label: "Anxious" },
       { label: "Panicked" },
@@ -88,7 +89,8 @@ function MoodSelector() {
     toOpen: "",
   });
 
-  const [isOpen, setIsOpen] = useState(!isUpdatedToday);
+  const [isOpenMood, setIsOpenMood] = useState(!isUpdatedToday);
+  const [isOpenPost, setIsOpenPost] = useState(!isUpdatedToday);
 
   useEffect(() => {
     if (isUpdatedToday && user?.mood) {
@@ -109,39 +111,54 @@ function MoodSelector() {
     );
     if (success) {
       updateUser(userResponse);
-      setIsOpen(false);
+      setIsOpenMood(false);
+      setIsOpenPost(true);
     }
   };
 
   return (
     <div
-      className={`bg-gray-800 p-6 md:rounded-lg shadow-lg flex flex-col transition-all duration-300 ease-in-out overflow-hidden ${
-        isOpen ? "max-h-[40rem]" : "max-h-[5rem]"
+      className={`bg-slate-800 p-6 md:rounded-lg shadow-lg flex flex-col transition-all duration-300 ease-in-out overflow-hidden ${
+        isOpenMood || isOpenPost
+          ? "max-h-[40rem]"
+          : "max-h-[10rem] md:max-h-[5rem]"
       }`}
     >
-      <h2
-        className="text-sm text-center sm:text-xl mb-4 text-slate-200 cursor-pointer"
-        onClick={() => {
-          setSelectedMood({
-            mood: user?.mood.currentMoods[0] || "",
-            desc: user?.mood.desc || "",
-            toOpen: "",
-          });
-          setIsOpen(!isOpen);
-        }}
-      >
-        {t("MoodSelector.message")}
-      </h2>
+      <div className="flex flex-row justify-center gap-10">
+        <h2
+          className="text-sm text-center sm:text-xl mb-4 text-white cursor-pointer"
+          onClick={() => {
+            setSelectedMood({
+              mood: user?.mood.currentMoods[0] || "",
+              desc: user?.mood.desc || "",
+              toOpen: "",
+            });
+            setIsOpenMood(!isOpenMood);
+            setIsOpenPost(false);
+          }}
+        >
+          {t("MoodSelector.message")}
+        </h2>
+        <h2
+          className="text-sm text-center sm:text-xl mb-4 text-white cursor-pointer"
+          onClick={() => {
+            setIsOpenPost(!isOpenPost);
+            setIsOpenMood(false);
+          }}
+        >
+          {t("MoodSelector.post")}
+        </h2>
+      </div>
 
       <div
         className={`transition-all duration-300 ease-in-out ${
-          isOpen ? "max-h-[30rem] opacity-100" : "max-h-0 opacity-0"
+          isOpenMood ? "max-h-[30rem] opacity-100" : "max-h-0 opacity-0"
         } overflow-hidden`}
       >
         <div className="flex flex-col h-[18rem] overflow-y-auto scrollbar-hide md:grid md:grid-cols-3 gap-4">
           {moods.map((mood) =>
             selectedMood.toOpen === mood.label ? (
-              <div className="bg-gray-900 h-full w-full grid grid-cols-2 gap-1">
+              <div className="bg-slate-900 h-full w-full grid grid-cols-2 gap-1">
                 {mood.submoods.map((submood) => (
                   <button
                     className={`${
@@ -191,9 +208,9 @@ function MoodSelector() {
             selectedMood ? "max-h-[20rem] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <p className="text-white">
+          <p className="text-white text-center text-sm md:text-base">
             {t("MoodSelector.reason")}{" "}
-            <span className="text-gray-400">{t("MoodSelector.optional")}</span>
+            <span className="text-gray-200">{t("MoodSelector.optional")}</span>
           </p>
           <input
             value={selectedMood.desc}
@@ -202,7 +219,7 @@ function MoodSelector() {
                 return { ...prev, desc: e.target.value };
               })
             }
-            className="w-1/2 px-2 py-1 m-auto bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:border-transparent resize-none transition-all duration-200"
+            className="w-1/2 px-2 py-1 m-auto text-sm mt-2 md:mt-0 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:border-transparent resize-none transition-all duration-200"
           />
           <button
             className="mt-2 px-4 sm:px-6 py-2 rounded-full disabled:bg-gray-600 bg-violet-700 hover:bg-violet-600 font-medium flex items-center space-x-2 cursor-pointer hover:scale-105 duration-200"
@@ -212,6 +229,14 @@ function MoodSelector() {
             {t("MoodSelector.submitBtn")}
           </button>
         </div>
+      </div>
+
+      <div
+        className={`transition-all duration-300 ease-in-out ${
+          isOpenPost ? "max-h-[30rem] opacity-100" : "max-h-0 opacity-0"
+        } `}
+      >
+        <CreateEdit />
       </div>
     </div>
   );

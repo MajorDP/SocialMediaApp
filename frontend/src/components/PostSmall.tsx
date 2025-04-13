@@ -88,7 +88,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
         {isEditable && (
           <div className="flex flex-col gap-2 sm:flex-row text-xs sm:text-sm h-fit">
             <Link
-              to={`/create/${post.id}`}
+              to={`/edit/${post.id}`}
               className="text-center px-2 py-1 bg-orange-500 hover:bg-orange-600 hover:scale-105 duration-300 cursor-pointer rounded-xl"
             >
               {t("Post.edit")}
