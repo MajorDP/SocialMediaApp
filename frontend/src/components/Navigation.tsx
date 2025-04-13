@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Home, BadgePlus, Compass, User, LogOut } from "lucide-react";
+import { Home, Compass, User, LogOut } from "lucide-react";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/UserContext";
 import { changeStatus } from "../services/users-services";
@@ -28,7 +28,7 @@ function Navigation() {
               <img
                 src={user?.img || "https://example.com/user.jpg"}
                 alt="User"
-                className="w-full rounded-full shadow-md hover:shadow-slate-900 duration-200 cursor-pointer"
+                className="w-full rounded-full shadow-md hover:shadow-violet-700/50 duration-200 cursor-pointer"
               />
             </div>
             <div className="flex flex-col w-[70%] pl-2">

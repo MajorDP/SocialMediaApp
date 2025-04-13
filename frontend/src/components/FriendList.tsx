@@ -200,7 +200,7 @@ function FriendListLarge() {
           </ul>
         ) : (
           <p className="text-center text-gray-400 py-4 text-md">
-            {t("Account.friends.noFirends")}
+            {t("Account.friends.noFriends")}
           </p>
         )}
       </div>
