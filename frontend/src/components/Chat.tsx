@@ -86,11 +86,11 @@ function Chat({
                     )}
 
                     <div className="flex flex-col">
-                      <p className="text-[12px] text-slate-200">
+                      <p className="text-[12px] text-slate-500">
                         {message.dateSent.split("T")[0]}
                       </p>
                       {message.message && (
-                        <p className="text-[16px] text-white sm:text-[18px]">
+                        <p className="text-[16px] text-slate-700 sm:text-[18px]">
                           {message.message}
                         </p>
                       )}
@@ -116,7 +116,7 @@ function Chat({
                 );
               })}
           </ul>
-          <div className="w-full bg-gray-800 h-[10%] px-2 py-1 rounded-b-xl border-t border-slate-600 bg-gradient-to-b ">
+          <div className="w-full bg-[#c1d1ff] border-t border-slate-700 h-[10%] px-2 py-1 rounded-b-xl bg-gradient-to-b ">
             <ChatInput
               uid={currentUserId}
               fid={selectedFriendId}

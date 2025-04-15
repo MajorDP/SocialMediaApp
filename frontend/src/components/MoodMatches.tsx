@@ -57,25 +57,25 @@ function MoodMatches({ user }) {
         {matchingUsers.map((match) => (
           <div
             key={match.id}
-            className="bg-[#c4d4ff] p-3 sm:p-4 rounded-lg shadow-lg transition-all duration-200 cursor-pointer transform hover:scale-[1.02]"
+            className="bg-slate-700 p-3 sm:p-4 rounded-lg shadow-lg transition-all duration-200 cursor-pointer transform hover:scale-[1.02]"
           >
             <div className="flex items-center justify-between space-x-1 md:space-x-3">
               <div className="flex flex-rowg space-x-2">
                 <img
                   src={match.img}
                   alt="Profile"
-                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-full ring-2 ring-violet-700 shadow-lg shadow-violet-700/50"
+                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-full ring-2 ring-violet-700 shadow-md shadow-violet-700/50"
                 />
                 <div className="flex flex-col">
-                  <h3 className="font-medium text-slate-900 text-sm sm:text-base">
+                  <h3 className="font-medium text-slate-50 text-sm sm:text-base">
                     {match.username}
                   </h3>
-                  <span className="text-xs sm:text-sm text-slate-900/80">
+                  <span className="text-xs sm:text-sm text-slate-50/90">
                     Feeling {match.mood.currentMoods[0]}
                   </span>
                 </div>
               </div>
-              <div className="flex items-center justify-center text-violet-700">
+              <div className="flex items-center justify-center text-slate-50">
                 <Clock size={14} className="mr-1 hidden md:block" />
                 <span
                   className="text-xs sm:text-sm cursor-pointer flex flex-row"
@@ -85,7 +85,7 @@ function MoodMatches({ user }) {
                 </span>
               </div>
             </div>
-            <p className="mt-2 text-xs sm:text-sm text-slate-900">
+            <p className="mt-2 text-xs sm:text-sm text-slate-100/90">
               {match.mood.desc}
             </p>
           </div>

@@ -65,13 +65,13 @@ function ChatContainer({
   return ReactDOM.createPortal(
     <>
       <div
-        className="absolute top-0 left-0 w-full h-full bg-slate-800 opacity-50 z-60"
+        className="absolute top-0 left-0 w-full h-full bg-black opacity-50 z-60"
         onClick={onClose}
       ></div>
 
-      <div className="h-screen fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full sm:w-[80%] lg:w-[70%] md:h-[90%] bg-gray-800 rounded-xl  border border-slate-600 z-70">
+      <div className="h-screen fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full sm:w-[80%] lg:w-[70%] md:h-[90%] bg-[#c1d1ff] rounded-xl z-70">
         <button
-          className="absolute right-3 top-2 text-lg bg-gray-800 hover:bg-gray-700 p-1 rounded-full"
+          className="absolute right-3 top-2 text-lg bg-slate-700 hover:bg-slate-900 p-1 rounded-full"
           onClick={onClose}
         >
           <svg
@@ -89,8 +89,9 @@ function ChatContainer({
             />
           </svg>
         </button>
-        <h2 className="text-center mt-2 text-lg">{selectedFriend.username}</h2>{" "}
-        {/* TODO: CHANGE LATER */}
+        <h2 className="text-center mt-2 text-lg text-slate-700">
+          {selectedFriend.username}
+        </h2>{" "}
         <Chat
           handleSendMessageSignal={handleSendMessageSignal}
           selectedFriendId={selectedFriend.id}

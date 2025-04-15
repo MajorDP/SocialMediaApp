@@ -47,7 +47,7 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
           ~
         </span>
       </Link>
-      <h2 className="text-center text-xl font-semibold text-cyan-200">
+      <h2 className="text-center text-xl font-semibold text-slate-700">
         {t("Auth.registerMsg")}
       </h2>
 
@@ -113,7 +113,7 @@ function RegisterForm({ setIsLogin }: IRegisterForm) {
 
       <button
         type="submit"
-        className="block mt-4 text-slate-200 text-xs cursor-pointer"
+        className="block mt-4 text-slate-700 text-xs cursor-pointer"
         onClick={(e) => {
           e.preventDefault();
           setIsLogin((prev) => !prev);

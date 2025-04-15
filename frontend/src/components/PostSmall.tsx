@@ -61,7 +61,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
     : null;
 
   return (
-    <div className="bg-[#c1d1ff] p-4 rounded-lg shadow-lg w-full">
+    <div className="bg-slate-700 p-4 rounded-lg shadow-lg w-full">
       <div className="flex items-center space-x-3 mb-4 justify-between">
         <div className="flex flex-row gap-3">
           <img
@@ -72,15 +72,15 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           <div>
             <Link
               to={`/user/${post.user.id}`}
-              className="font-semibold text-slate-900 flex flex-row flex-wrap items-center gap-2"
+              className="font-semibold text-slate-50 flex flex-row flex-wrap items-center gap-2"
             >
               {post.user.username}
-              <span className="text-slate-500 text-xs">
+              <span className="text-slate-200 text-xs">
                 {post.datePosted.split("T")[0]}
                 <span> {post.isEdited && "(Edited)"}</span>
               </span>
             </Link>
-            <span className="text-xs md:text-sm text-slate-800">
+            <span className="text-xs md:text-sm text-slate-50">
               Status will go here
             </span>
           </div>
@@ -102,27 +102,27 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
           </div>
         )}
       </div>
-      <p className="text-slate-900">{post.message}</p>
+      <p className="text-slate-50">{post.message}</p>
       <div className="mt-2 flex items-center sm:justify-start justify-center space-x-4">
         <button
           className={`${
             isVoted === "liked"
               ? "text-violet-700"
-              : "bg-transparent text-slate-900"
+              : "bg-transparent text-slate-50"
           } hover:text-violet-700 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
           onClick={() => handleVote("like")}
         >
           <Heart size={20} />
           <span>{post.likes}</span>
         </button>
-        <p className="text-slate-900 font-medium flex items-center text-[14px]">
+        <p className="text-slate-50 font-medium flex items-center text-[14px]">
           {post.likes} {post.likes === 1 ? t("Post.like") : t("Post.likes")}
         </p>
         <button
           className={`${
             isVoted === "disliked"
               ? "text-violet-700"
-              : "bg-transparent text-slate-900"
+              : "bg-transparent text-slate-50"
           } hover:text-violet-700 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer flex items-center space-x-2 hover:scale-115`}
           onClick={() => handleVote("dislike")}
         >
@@ -132,7 +132,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
       <div className="flex items-center justify-center mt-2 sm:mt-0">
         <button
           onClick={() => setShowComments(!showComments)}
-          className="text-xs text-slate-900 cursor-pointer "
+          className="text-xs text-slate-50 cursor-pointer "
         >
           {t("Post.viewComments")}
         </button>

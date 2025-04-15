@@ -88,7 +88,7 @@ function FriendListLarge() {
         />
       )}
 
-      <div className="w-full max-w-[90%] mx-auto h-screen rounded-xl mt-2 sm:p-5 shadow-md">
+      <div className="w-full max-w-[90%] mx-auto h-screen rounded-xl mt-2 sm:p-5">
         <AddFriendForm id={user?.id as string} />
 
         <div className="my-6">
@@ -100,7 +100,7 @@ function FriendListLarge() {
               <ul className="mt-4">
                 {friends.requests.map((req) => (
                   <li
-                    className="flex flex-row items-center justify-between p-3 mb-3 bg-[#c1d1ff] rounded-lg"
+                    className="flex flex-row items-center justify-between p-3 mb-3 bg-slate-700 rounded-lg"
                     key={req.id}
                   >
                     <div className="flex items-center gap-3">
@@ -109,7 +109,7 @@ function FriendListLarge() {
                         className="w-12 h-12 rounded-full"
                         alt={req.username}
                       />
-                      <p className="truncate text-md text-slate-900">
+                      <p className="truncate text-md text-slate-50">
                         {req.username}
                       </p>
                     </div>
@@ -134,7 +134,7 @@ function FriendListLarge() {
           )}
         </div>
 
-        <h2 className="text-center font-semilight text-lg">
+        <h2 className="text-center font-semilight text-lg text-slate-700">
           {t("Account.friends.yourFriends")}
         </h2>
 
@@ -199,7 +199,7 @@ function FriendListLarge() {
             ))}
           </ul>
         ) : (
-          <p className="text-center text-gray-400 py-4 text-md">
+          <p className="text-center text-slate-700/70 py-4 text-md">
             {t("Account.friends.noFriends")}
           </p>
         )}

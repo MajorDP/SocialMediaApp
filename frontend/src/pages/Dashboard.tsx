@@ -41,9 +41,8 @@ export default function NewDashboard() {
 
       <div className="space-y-4">
         {posts && (
-          <div className="bg-gray-800 rounded-tr-xl rounded-tl-xl shadow-md ">
-            {/* Tabs */}
-            <div className="p-6 flex flex-wrap justify-center sm:justify-start md:items-baseline md:flex-row gap-4">
+          <div className="rounded-tr-xl rounded-tl-xl">
+            <div className=" bg-slate-700 rounded-md p-6 flex flex-wrap justify-center sm:justify-start md:items-baseline md:flex-row gap-4">
               <button
                 onClick={() => setSelectedTab("Dashboard")}
                 className={`px-4 py-2 rounded-md transition-colors duration-200 w-36 md:w-auto hover:bg-violet-600 hover:text-white text-slate-900 font-medium ${
@@ -71,18 +70,16 @@ export default function NewDashboard() {
                 </div>
               </button>
             </div>
-
-            {/* Content */}
             {selectedTab === "Dashboard" &&
               (user?.mood.currentMoods[0] ? (
                 <PostsList posts={posts} setPosts={setPosts} />
               ) : (
-                <p className="text-center p-4 text-slate-900">
+                <p className="text-center p-4 text-slate-700">
                   Select your mood to customize your feed.
                 </p>
               ))}
             {selectedTab === "Memories" && (
-              <p className="text-center p-4 text-white">COMING SOON</p>
+              <p className="text-center p-4 text-slate-700">COMING SOON</p>
             )}
           </div>
         )}

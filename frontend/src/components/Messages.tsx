@@ -52,13 +52,13 @@ function ChatNew() {
         />
       )}
       <div
-        className={`z-50 border border-slate-600 absolute right-0 sm:right-5 bottom-15 sm:bottom-0 bg-gray-800 ${
+        className={`z-50 p-1 bg-[#dbe4ff] border border-slate-700 absolute right-0 sm:right-5 bottom-15 sm:bottom-0  ${
           height === "0px" ? "w-10" : "w-full"
         } sm:w-[20rem] rounded-xl overflow-hidden transition-all sm:duration-500`}
       >
         <h2
           onClick={() => setHeight(height === "0px" ? "30rem" : "0px")}
-          className="text-white flex justify-center items-center gap-1 m-2 cursor-pointer"
+          className="text-slate-700 flex justify-center items-center gap-1 m-2 cursor-pointer"
         >
           <MessageCircle />
           <span className="hidden sm:block"> {t("Chat.message")}</span>
@@ -82,19 +82,19 @@ function ChatNew() {
                     })
                   }
                   key={friend.id}
-                  className="p-3 rounded-lg bg-[#c1d1ff] shadow-lg max-w-fit duration-200 cursor-pointer transform hover:scale-[1.02] flex flex-row justify-between min-w-full"
+                  className="p-3 rounded-lg bg-slate-700 shadow-lg max-w-fit duration-200 cursor-pointer transform hover:scale-[1.01] flex flex-row justify-between min-w-full"
                 >
                   <div className="flex items-center space-x-3">
                     <img
                       src={friend.img}
                       alt="Profile"
-                      className="h-10 w-10 rounded-full ring-2 shadow-lg shadow-violet-700/50"
+                      className="h-10 w-10 rounded-full ring-2 shadow-lg shadow-violet-700"
                     />
                     <div className="flex-1">
-                      <h3 className="font-medium text-slate-900">
+                      <h3 className="font-medium text-slate-50">
                         {friend.username}
                       </h3>
-                      <span className="text-sm text-slate-900">
+                      <span className="text-sm text-slate-100">
                         {friend.status}
                       </span>
                     </div>
@@ -119,21 +119,21 @@ function ChatNew() {
                         username: otherUser.username,
                       })
                     }
-                    className="p-3 rounded-lg bg-[#c1d1ff] shadow-lg max-w-fit duration-200 cursor-pointer transform hover:scale-[1.02] flex flex-row justify-between min-w-full"
+                    className="p-3 rounded-lg bg-slate-700 shadow-lg max-w-fit duration-200 cursor-pointer transform hover:scale-[1.01] flex flex-row justify-between min-w-full"
                   >
                     <div className="flex items-center space-x-3">
                       <img
                         src={otherUser.img}
                         alt="Profile"
-                        className="h-10 w-10 rounded-full ring-2 shadow-lg shadow-violet-700/50"
+                        className="h-10 w-10 rounded-full ring-2 shadow-lg shadow-violet-700"
                       />
                       <div className="flex-1">
-                        <h3 className="font-medium text-slate-900">
+                        <h3 className="font-medium text-slate-50">
                           {otherUser.username}
                         </h3>
                       </div>
                     </div>
-                    <div className="flex items-center text-violet-600">
+                    <div className="flex items-center text-slate-50">
                       <Clock size={16} className="mr-1" />
                       <span className="text-sm">{t("Chat.openChat")}</span>
                     </div>

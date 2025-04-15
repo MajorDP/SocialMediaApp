@@ -29,8 +29,8 @@ function Explore() {
 
         <MoodSelector />
 
-        <div className="bg-gray-800 rounded-tr-xl rounded-tl-xl ">
-          <div className="p-6 flex flex-row flex-wrap justify-center sm:justify-start md:flex-row gap-4">
+        <div>
+          <div className="bg-slate-700 rounded-md p-6 flex flex-row flex-wrap justify-center sm:justify-start md:flex-row gap-4">
             <button
               onClick={() => setSelectedTab("Explore")}
               className={`px-4 py-2 rounded-md hover:bg-violet-600 hover:text-white text-slate-900 transition-colors duration-200 w-36 md:w-auto font-medium ${
@@ -63,7 +63,6 @@ function Explore() {
           {selectedTab === "Explore" && !isLoading && posts && (
             <PostsList posts={posts} setPosts={setPosts} />
           )}
-
           {selectedTab === "Mood Matches" && <MoodMatches user={user} />}
         </div>
       </div>

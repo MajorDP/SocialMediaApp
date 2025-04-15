@@ -59,19 +59,19 @@ function Settings() {
   return (
     <>
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <div className="w-full h-full bg-gray-800 border border-slate-600 flex flex-col gap-5 p-4 rounded-xl">
+        <div className="w-full h-full bg-gray-800 flex flex-col gap-5 p-4 rounded-xl">
           <h2 className="text-lg text-center font-semibold">
             {t("Account.settings.saveBtn")}
           </h2>
           <div className="text-center flex flex-col gap-5 text-balance text-sm">
             <p>{t("Account.settings.saveMsg")}</p>
             <div className="flex flex-col gap-2">
-              <label className="text-cyan-200 text-sm">
+              <label className="text-violet-500 text-sm">
                 {t("Account.settings.confirmPassword")}
               </label>
               <input
                 type="password"
-                className="w-full p-2 rounded-md bg-gray-800 text-white border border-cyan-200"
+                className="w-full p-2 rounded-md bg-gray-800 text-white border border-violet-700"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
@@ -96,7 +96,7 @@ function Settings() {
       </Modal>
       <form className="flex flex-col gap-4 h-screen mt-2 overflow-y-auto sm:overflow-y-auto scrollbar-hide pb-20">
         <div className="flex flex-col items-center">
-          <label className="text-cyan-200 text-sm">
+          <label className="text-slate-900 text-sm">
             {t("Account.settings.pfp")}
           </label>
           <input
@@ -119,36 +119,36 @@ function Settings() {
         </div>
 
         <div>
-          <label className="text-cyan-200 text-sm">
+          <label className="text-slate-700 text-sm">
             {t("Account.settings.username")}
           </label>
           <input
             type="text"
-            className="w-full p-2 rounded-md bg-gray-800 text-white border border-cyan-400"
+            className="w-full p-2 rounded-md bg-slate-700 text-white focus:ring focus:outline-none focus:ring-violet-700"
             value={username || ""}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
 
         <div>
-          <label className="text-cyan-200 text-sm">
+          <label className="text-slate-700 text-sm">
             {t("Account.settings.email")}
           </label>
           <input
             type="email"
-            className="w-full p-2 rounded-md bg-gray-800 text-white border border-cyan-400"
+            className="w-full p-2 rounded-md bg-slate-700 text-white focus:ring focus:outline-none focus:ring-violet-700"
             value={email || ""}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
         <div>
-          <label className="text-cyan-200 text-sm">
+          <label className="text-slate-700 text-sm">
             {t("Account.settings.newPassword")}
           </label>
           <input
             type="password"
-            className="w-full p-2 rounded-md bg-gray-800 text-white border border-cyan-400"
+            className="w-full p-2 rounded-md bg-slate-700 text-white focus:ring focus:outline-none focus:ring-violet-700"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t("Account.settings.newPassPlaceholder")}

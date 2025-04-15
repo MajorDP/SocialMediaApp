@@ -37,7 +37,7 @@ function LoginForm({ setIsLogin }: ILoginForm) {
           ~
         </span>
       </Link>
-      <h2 className="text-center text-xl font-semibold text-cyan-200">
+      <h2 className="text-center text-xl font-semibold text-slate-700">
         {t("Auth.loginMsg")}
       </h2>
 
@@ -74,7 +74,7 @@ function LoginForm({ setIsLogin }: ILoginForm) {
       </button>
 
       <button
-        className="block mt-4 text-slate-200 text-xs cursor-pointer"
+        className="block mt-4 text-slate-700 text-xs cursor-pointer"
         onClick={(e) => {
           e.preventDefault();
           setIsLogin((prev) => !prev);

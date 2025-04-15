@@ -57,7 +57,7 @@ function User() {
 
   return (
     <div className="w-full md:w-[80%] m-auto overflow-y-auto scrollbar-hide pb-20 h-screen">
-      <div className="flex flex-col bg-gray-800 border border-slate-600 rounded-xl">
+      <div className="flex flex-col rounded-xl">
         <div className="flex flex-col items-center gap-4 p-5">
           <div className="w-16 sm:w-[8rem]">
             <img
@@ -69,7 +69,7 @@ function User() {
             />
           </div>
           <div className="flex flex-col justify-center sm:justify-around sm:my-auto text-center">
-            <p className="truncate text-white font-medium text-lg sm:text-2xl">
+            <p className="truncate text-slate-700 font-medium text-lg sm:text-2xl">
               {user?.username}
             </p>
             <p className="text-xs sm:text-sm truncate text-slate-300">
@@ -82,20 +82,20 @@ function User() {
             {
               //@ts-expect-error id is always there
               !friends.friends.includes(user?.id) ? (
-                <button className=" px-2 py-1 bg-green-600 hover:bg-green-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg border border-green-900">
+                <button className=" px-2 py-1 bg-green-600 hover:bg-green-500 hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg">
                   Add as friend
                 </button>
               ) : (
-                <button className=" px-2 py-1 bg-red-600 hover:bg-red-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg border border-red-900">
+                <button className=" px-2 py-1 bg-red-600 hover:bg-red-500 hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg">
                   Remove friend
                 </button>
               )
             }
 
-            <button className=" px-2 py-1 bg-blue-600 hover:bg-blue-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg border border-blue-900">
+            <button className=" px-2 py-1 bg-blue-600 hover:bg-blue-500 hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg">
               Follow
             </button>
-            <button className=" px-2 py-1 bg-blue-600 hover:bg-blue-500 hover:text-black hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg border border-blue-900">
+            <button className=" px-2 py-1 bg-blue-600 hover:bg-blue-500 hover:scale-105 duration-300 cursor-pointer rounded-xl shadow-lg">
               Unfollow
             </button>
           </div>

@@ -90,7 +90,7 @@ function MoodSelector() {
   });
 
   const [isOpenMood, setIsOpenMood] = useState(!isUpdatedToday);
-  const [isOpenPost, setIsOpenPost] = useState(!isUpdatedToday);
+  const [isOpenPost, setIsOpenPost] = useState(false);
 
   useEffect(() => {
     if (isUpdatedToday && user?.mood) {
@@ -118,7 +118,7 @@ function MoodSelector() {
 
   return (
     <div
-      className={`bg-slate-800 p-6 md:rounded-lg shadow-lg flex flex-col transition-all duration-300 ease-in-out overflow-hidden ${
+      className={`bg-slate-700 p-6 md:rounded-lg shadow-lg flex flex-col transition-all duration-300 ease-in-out overflow-hidden ${
         isOpenMood || isOpenPost
           ? "max-h-[40rem]"
           : "max-h-[10rem] md:max-h-[5rem]"
@@ -158,7 +158,7 @@ function MoodSelector() {
         <div className="flex flex-col h-[18rem] overflow-y-auto scrollbar-hide md:grid md:grid-cols-3 gap-4">
           {moods.map((mood) =>
             selectedMood.toOpen === mood.label ? (
-              <div className="bg-slate-900 h-full w-full grid grid-cols-2 gap-1">
+              <div className="bg-slate-700 h-full w-full grid grid-cols-2 gap-1">
                 {mood.submoods.map((submood) => (
                   <button
                     className={`${
@@ -219,7 +219,7 @@ function MoodSelector() {
                 return { ...prev, desc: e.target.value };
               })
             }
-            className="w-1/2 px-2 py-1 m-auto text-sm mt-2 md:mt-0 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-200 focus:border-transparent resize-none transition-all duration-200"
+            className="w-1/2 px-2 py-1 m-auto text-sm mt-2 md:mt-0 bg-gray-800 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-700/50 focus:border-transparent resize-none transition-all duration-200"
           />
           <button
             className="mt-2 px-4 sm:px-6 py-2 rounded-full disabled:bg-gray-600 bg-violet-700 hover:bg-violet-600 font-medium flex items-center space-x-2 cursor-pointer hover:scale-105 duration-200"

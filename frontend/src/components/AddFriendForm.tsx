@@ -26,11 +26,11 @@ function AddFriendForm({ id }: IAddFriendForm) {
   };
   return (
     <>
-      <h2 className="text-center pt-4 pb-2 font-semilight text-sm">
+      <h2 className="text-center pt-4 pb-2 font-semilight text-sm text-slate-700">
         {t("Account.friends.addFriends")}
       </h2>
       <form
-        className="w-44 h-8 m-auto flex items-center justify-between border border-black rounded-md bg-slate-600 px-2 text-sm"
+        className="w-44 h-8 m-auto flex items-center justify-between rounded-md bg-slate-700 px-2 text-sm"
         onSubmit={handleSubmit}
       >
         <input

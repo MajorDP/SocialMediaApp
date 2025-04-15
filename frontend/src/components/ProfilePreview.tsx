@@ -50,11 +50,11 @@ const ProfilePreview = () => {
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa8khy-blRnHeXGcPBjvyrlA2s2SumbWnHxw&s"
             alt="userImg"
-            className="w-full rounded-full shadow-md shadow-cyan-600/50"
+            className="w-full rounded-full shadow-md shadow-violet-700/50"
           />
         </div>
         <div className="flex flex-col justify-center sm:justify-around sm:my-auto text-center">
-          <p className="truncate text-white text-lg sm:text-2xl">
+          <p className="truncate text-slate-700 text-lg sm:text-2xl">
             {user?.username}
           </p>
           <p className="text-xs sm:text-sm truncate text-slate-300">

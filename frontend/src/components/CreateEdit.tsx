@@ -180,7 +180,11 @@ const CreateEdit = () => {
 
   return (
     <div className="w-full h-full flex items-center px-2 sm:px-4">
-      <div className="w-full max-w-2xl m-auto bg-gray-800 rounded-lg shadow-xl">
+      <div
+        className={`w-full max-w-2xl m-auto ${
+          isEditing && "bg-slate-700 rounded-lg shadow-xl"
+        }`}
+      >
         <p className="text-center p-2 text-lg sm:text-xl text-white">
           {isEditing && t("CreateEdit.edit")}
         </p>
@@ -190,7 +194,7 @@ const CreateEdit = () => {
               value={message}
               onChange={(e) => handleMessageChange(e)}
               placeholder={t("CreateEdit.placeholder")}
-              className="w-full min-h-[100px] sm:min-h-[120px] bg-[#c1d1ff] rounded-lg text-sm md:text-base p-3 sm:p-4 text-slate-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-cyan-200 focus:border-transparent resize-none"
+              className="w-full min-h-[100px] sm:min-h-[120px] bg-[#c1d1ff] rounded-lg text-sm md:text-base p-3 sm:p-4 text-slate-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-violet-700 focus:border-transparent resize-none"
             />
             {error && (
               <p className="text-center text-sm text-red-500 font-light">

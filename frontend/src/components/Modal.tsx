@@ -8,7 +8,7 @@ function Modal({ isOpen, onClose, children }: IModal) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
         className="bg-black opacity-30 absolute inset-0 z-0"
         onClick={onClose}

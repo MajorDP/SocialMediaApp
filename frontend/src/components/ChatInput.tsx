@@ -48,7 +48,7 @@ function ChatInput({
 
   return (
     <form
-      className="w-full sm:w-[80%] flex flex-row items-center m-auto ring-1 rounded-xl px-2 py-1 gap-3 h-fit relative bg-gray-800"
+      className="w-full sm:w-[80%] flex flex-row items-center m-auto ring-1 rounded-xl px-2 py-1 gap-3 h-fit relative bg-slate-700"
       onSubmit={handleSend}
     >
       {image && (
@@ -92,7 +92,7 @@ function ChatInput({
 
       <div className="w-full h-10">
         <textarea
-          className="ring-1 focus:ring-cyan-200 duration-200 transition-all rounded-md px-2 py-1 h-full w-full resize-none scrollbar-hide focus:outline-0 leading-relaxed text-xs"
+          className="ring-1 focus:ring-violet-700/50 duration-200 transition-all rounded-md px-2 py-1 h-full w-full resize-none scrollbar-hide focus:outline-0 leading-relaxed text-xs"
           value={message}
           onChange={handleMessageChange}
         />
