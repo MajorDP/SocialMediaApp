@@ -31,12 +31,11 @@ function ChatNew() {
         setTempChatError("Could not get temporary chats.");
         return;
       }
-
       setTempChats(chats);
     }
 
     getTempChats();
-  }, [user]);
+  }, [user, height]);
 
   if (isLoading) {
     return <Spinner />;
@@ -70,7 +69,7 @@ function ChatNew() {
             style={{
               height: height,
             }}
-            className="transition-all sm:duration-500 flex flex-col overflow-x-hidden overflow-y-scroll scrollbar-hide"
+            className="transition-all sm:duration-500 flex flex-col gap-1 overflow-x-hidden overflow-y-scroll scrollbar-hide"
           >
             {friends &&
               friends.friends.map((friend) => (
@@ -82,7 +81,7 @@ function ChatNew() {
                     })
                   }
                   key={friend.id}
-                  className="p-3 rounded-lg bg-slate-700 shadow-lg max-w-fit duration-200 cursor-pointer transform hover:scale-[1.01] flex flex-row justify-between min-w-full"
+                  className="p-3 rounded-lg bg-slate-100 shadow-lg max-w-fit duration-200 cursor-pointer transform hover:scale-[1.01] flex flex-row justify-between min-w-full"
                 >
                   <div className="flex items-center space-x-3">
                     <img
@@ -91,10 +90,10 @@ function ChatNew() {
                       className="h-10 w-10 rounded-full ring-2 shadow-lg shadow-violet-700"
                     />
                     <div className="flex-1">
-                      <h3 className="font-medium text-slate-50">
+                      <h3 className="font-medium text-slate-700">
                         {friend.username}
                       </h3>
-                      <span className="text-sm text-slate-100">
+                      <span className="text-sm text-slate-700">
                         {friend.status}
                       </span>
                     </div>
@@ -119,21 +118,21 @@ function ChatNew() {
                         username: otherUser.username,
                       })
                     }
-                    className="p-3 rounded-lg bg-slate-700 shadow-lg max-w-fit duration-200 cursor-pointer transform hover:scale-[1.01] flex flex-row justify-between min-w-full"
+                    className="p-3 rounded-lg bg-slate-100 shadow-lg max-w-fit duration-200 cursor-pointer transform hover:scale-[1.01] flex flex-row justify-between min-w-full"
                   >
                     <div className="flex items-center space-x-3">
                       <img
                         src={otherUser.img}
                         alt="Profile"
-                        className="h-10 w-10 rounded-full ring-2 shadow-lg shadow-violet-700"
+                        className="h-10 w-10 rounded-full ring-2 shadow-lg shadow-orange-700"
                       />
                       <div className="flex-1">
-                        <h3 className="font-medium text-slate-50">
+                        <h3 className="font-medium text-slate-700">
                           {otherUser.username}
                         </h3>
                       </div>
                     </div>
-                    <div className="flex items-center text-slate-50">
+                    <div className="flex items-center text-slate-700">
                       <Clock size={16} className="mr-1" />
                       <span className="text-sm">{t("Chat.openChat")}</span>
                     </div>

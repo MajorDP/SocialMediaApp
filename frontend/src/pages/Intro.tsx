@@ -37,7 +37,7 @@ function Intro() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#4ca6ff] to-[#382dd8]">
+    <div className="min-h-screen bg-[#c1d1ff]">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -68,7 +68,7 @@ function Intro() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-[#c1d1ff] p-6 rounded-lg transform hover:scale-[1.02] transition-all duration-200"
+              className="bg-white p-6 rounded-lg transform hover:scale-[1.02] transition-all duration-200"
             >
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#382dd8] to-violet-700 flex items-center justify-center mb-4">
                 <feature.icon size={24} className="text-white" />

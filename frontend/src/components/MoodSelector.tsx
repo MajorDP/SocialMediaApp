@@ -156,51 +156,39 @@ function MoodSelector() {
         } overflow-hidden`}
       >
         <div className="flex flex-col h-[18rem] overflow-y-auto scrollbar-hide md:grid md:grid-cols-3 gap-4">
-          {moods.map((mood) =>
-            selectedMood.toOpen === mood.label ? (
-              <div className="bg-slate-700 h-full w-full grid grid-cols-2 gap-1">
-                {mood.submoods.map((submood) => (
-                  <button
-                    className={`${
-                      selectedMood.mood === submood.label && "scale-95"
-                    } ${
-                      mood.color
-                    } text-slate-900 h-15 sm:h-full rounded-lg w-full space-x-0 lg:space-x-2 flex flex-col lg:flex-row justify-center items-center hover:opacity-90 shadow-md cursor-pointer text-xs lg:text-base`}
-                    onClick={() =>
-                      setSelectedMood((prev) => {
-                        return { ...prev, mood: submood.label };
-                      })
-                    }
-                  >
-                    <mood.icon size={24} />
-                    <p>
-                      {t(
-                        `MoodSelector.moods.${mood.label.toLowerCase()}.submoods.${submood.label
-                          .toLowerCase()
-                          .split(" ")
-                          .join("")}`
-                      )}
-                    </p>
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <button
-                key={mood.label}
-                className={`${mood.color} text-slate-900 h-full p-4 rounded-lg flex items-center justify-center space-x-2 hover:opacity-90 shadow-md cursor-pointer text-xs md:text-base`}
-                onClick={() =>
-                  setSelectedMood((prev) => {
-                    return { ...prev, mood: "", toOpen: mood.label };
-                  })
-                }
-              >
-                <mood.icon size={24} />
-                <span>
-                  {t(`MoodSelector.moods.${mood.label.toLowerCase()}.main`)}
-                </span>
-              </button>
-            )
-          )}
+          {moods.map((mood, index) => (
+            <div
+              className="bg-slate-700 grid grid-cols-2 gap-1 h-full w-full"
+              key={index}
+            >
+              {mood.submoods.map((submood, index) => (
+                <button
+                  key={index}
+                  className={`${
+                    selectedMood.mood === submood.label &&
+                    "scale-95 opacity-70 duration-200 transition-opacity"
+                  } ${
+                    mood.color
+                  } text-slate-900 h-15 sm:h-full rounded-lg w-full space-x-0 lg:space-x-2 flex flex-col lg:flex-row justify-center items-center shadow-md cursor-pointer text-xs lg:text-base`}
+                  onClick={() =>
+                    setSelectedMood((prev) => {
+                      return { ...prev, mood: submood.label };
+                    })
+                  }
+                >
+                  <mood.icon size={24} />
+                  <p>
+                    {t(
+                      `MoodSelector.moods.${mood.label.toLowerCase()}.submoods.${submood.label
+                        .toLowerCase()
+                        .split(" ")
+                        .join("")}`
+                    )}
+                  </p>
+                </button>
+              ))}
+            </div>
+          ))}
         </div>
 
         <div

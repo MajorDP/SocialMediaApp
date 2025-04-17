@@ -149,7 +149,7 @@ function PostSmall({ post, setPosts, isEditable = false }: IPostItem) {
         <div className="w-full mt-5 flex justify-center underline">
           <Link
             to={`/post/${post.id}`}
-            className="text-xs text-slate-900 transition-all duration-150"
+            className="text-xs text-slate-50 transition-all duration-150"
           >
             {t("Post.seeAll")} ({post.comments.length})
           </Link>

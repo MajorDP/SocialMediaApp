@@ -30,19 +30,19 @@ function CommentForm({ pid, handleSetPosts }: ICommentForm) {
   };
   return (
     <form
-      className="my-5 flex flex-col justify-center w-full sm:w-[90%] m-auto bg-gray-800 p-3 rounded-xl shadow-lg"
+      className="my-5 flex flex-col justify-center w-full sm:w-[90%] m-auto bg-slate-700 p-3 rounded-xl shadow-lg"
       onSubmit={(e) => handleSubmit(e)}
     >
       <p className="text-[14px] sm:text-xs mb-2 text-white font-medium">
         {t("Post.leaveAComment")}{" "}
-        <span className="block sm:inline text-[12px] sm:text-xs text-white">
+        <span className="block sm:inline text-[12px] sm:text-xs opacity-50">
           {t("Post.maxChars")}
         </span>
       </p>
       <textarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        className="bg-gray-800 text-white text-sm px-3 py-2 resize-none rounded-md focus:outline-none ring-1 focus:ring-violet-700 transition-all duration-200 scrollbar-hide"
+        className="text-white text-sm px-3 py-2 resize-none rounded-md focus:outline-none ring-1 focus:ring-violet-700 transition-all duration-200 scrollbar-hide"
         maxLength={200}
       />
       {error && <p className="text-center text-xs text-red-500">{error}</p>}

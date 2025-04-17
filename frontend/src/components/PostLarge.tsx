@@ -37,7 +37,7 @@ function PostLarge({ post, setPost }: IPostItem) {
     : null;
 
   return (
-    <div className="flex flex-col lg:flex-row w-full md:max-w-[80%] bg-slate-800 shadow-inner p-2 sm:p-3 rounded-2xl ">
+    <div className="flex flex-col lg:flex-row w-full md:max-w-[80%] bg-slate-700 shadow-inner p-2 sm:p-3 rounded-2xl ">
       <div className="w-full">
         <div className="flex flex-row w-full p-3">
           <Link

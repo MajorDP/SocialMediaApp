@@ -14,11 +14,11 @@ function Comments({ comments, showAll }: IComments) {
     <ul
       className={`flex flex-col gap-5  rounded-xl p-2 mt-5 lg:ml-0 border-t h-[18rem] overflow-y-scroll scrollbar-hide`}
     >
-      <h2 className="text-center text-xs text-slate-900">
+      <h2 className="text-center text-xs text-slate-50 opacity-50">
         {t("Post.comments")}
       </h2>
       {displayedComments.length === 0 && (
-        <p className="m-auto flex flex-col text-center text-[14px] text-white">
+        <p className="m-auto flex flex-col text-center text-[14px] text-white opacity-50">
           {t("Post.noComments")}{" "}
           <span className="text-gray-200">{t("Post.beFirst")}</span>
         </p>
